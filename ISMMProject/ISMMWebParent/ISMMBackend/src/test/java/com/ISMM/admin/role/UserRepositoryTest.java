@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import com.ISMM.admin.repository.UserRepository;
+import com.ISMM.admin.service.UserService;
 import com.ISMM.common.domain.Role;
 import com.ISMM.common.domain.User;
 
@@ -19,8 +20,13 @@ import com.ISMM.common.domain.User;
 @Rollback(false)
 public class UserRepositoryTest {
 
+	/*		RUN *ROLEREPOSITORYTEST* BEFORE RUNNING THESE TESTS IN ORDER TO POPULATE
+	 * 			THE ROLES THAT THE USERS ARE CREATED WITH, OTHERWISE EACH USER WILL HAVE
+	 * 			NO ROLES ASSIGNED
+	 */
+	
 	@Autowired
-	public UserRepository userRepo;
+	private UserRepository userRepo;
 	
 	@Autowired
 	private TestEntityManager entityManager;
@@ -77,8 +83,8 @@ public class UserRepositoryTest {
 
 		testingUser.setEnabled(true);
 		testingUser.setEmail("UpdatedEmail@email.com");
-		
 		userRepo.save(testingUser);
+		
 		
 		System.out.println(testingUser);
 	}
@@ -92,7 +98,7 @@ public class UserRepositoryTest {
 		Role roleMechanic = new Role(2);
 		
 		testSecondUser.getUserRoles().remove(roleMechanic);
-		//testSecondUser.getUserRoles().add(frontDesk);
+		testSecondUser.getUserRoles().add(roleFrontDesk);
 		
 		userRepo.save(testSecondUser);
 		
@@ -106,10 +112,6 @@ public class UserRepositoryTest {
 		userRepo.deleteById(userId);
 		
 	}
-	
-	
-	
-	
 	
 	
 	

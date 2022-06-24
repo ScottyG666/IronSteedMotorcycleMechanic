@@ -1,12 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
     <title>IronSteedMM Admin</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
   
+  	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to Iron Steed Motorcycle Mechanics Admin panel</h1>
+    <div>
+        <nav>
+            <!--Image for the website-->
+            <a th:href="@{/}">
+                <img th:src="@{./images/MotorcycleLogo.png}">
+            </a>
+
+            <!-- Expanded navigational list-->
+            <div class="nav-list-container">
+                <ul>
+                    <!--Model for how to structure the items within the list with the accompanying bootstrap classes-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users}">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/customers}">Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/salesReport}">Sales Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/settings}">Settings</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+    
+    <div>
+    	
+    </div>
 </body>
 </html>
