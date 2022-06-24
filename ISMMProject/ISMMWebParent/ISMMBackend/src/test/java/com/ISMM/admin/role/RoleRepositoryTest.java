@@ -43,7 +43,7 @@ public class RoleRepositoryTest {
 	 */
 	
 	@Test
-	public void testCreateRestRoles() {
+	public void testCreateAdditionalRoles() {
 		Role roleMechanic = new Role("Mechanic", "Performes maintenence and service "
 				+ "activities.");
 		

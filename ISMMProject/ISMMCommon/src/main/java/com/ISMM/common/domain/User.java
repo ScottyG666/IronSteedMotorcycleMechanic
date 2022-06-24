@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class User {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
@@ -35,6 +35,8 @@ public class User {
 	
 	@Column(length = 64)
 	private String photos;
+	
+	//@Column(nullable = false)
 	private Boolean enabled;
 	
 	@ManyToMany
@@ -45,6 +47,8 @@ public class User {
 			)
 	private Set<Role> userRoles = new HashSet<>();
 
+	//Constructors
+	public User() {}
 	
 	
 	public User(String email, String pasword, String firstName, String lastName) {
@@ -54,13 +58,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public User() {}
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -120,6 +123,18 @@ public class User {
 		this.userRoles = userRoles;
 	}
 	
-	
+	public void addRole (Role role ) {
+		this.userRoles.add(role);
+	}
 
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", userRoles=" + userRoles + ", enabled= " + enabled + "]";
+	}
+
+	
+	
+	
 }
