@@ -1,0 +1,20 @@
+:root{
+	--pageAccentColor: #254fa8;
+	--textContrastColor: white;
+}
+
+.display-users-table{
+	width:100%;
+}
+
+table {
+	width: 95%;
+	margin: auto;
+}
+
+
+th {
+	height: 3em;
+	background-color: var(--pageAccentColor);
+	color: var(--textContrastColor)
+}
