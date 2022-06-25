@@ -14,7 +14,7 @@
         <nav>
             <!--Image for the website-->
             <a th:href="@{/}">
-                <img th:src="@{./images/MotorcycleLogo.png}">
+                <img th:src="@{/images/MotorcycleLogo.png}">
             </a>
 
             <!-- Expanded navigational list-->
@@ -42,8 +42,18 @@
     
     <div>
         <h2>Manage Users | Create New User</h2>
-        <a th:users="@{/users/new}">Create New User</a>
     </div>
     
+    <form th:action="@{/users/save}" method="post">
+        <div>
+            <label for="user-email">Email</label>
+            <div>
+                <input type="email" name="Users Email input" id=""/>
+            </div>
+
+            <input type="submit"  value="Save"> 
+            <input type="button" value="Cancel">
+        </div>
+    </form>
 </body>
 </html>

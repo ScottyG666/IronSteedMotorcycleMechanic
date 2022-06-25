@@ -4,20 +4,32 @@
 }
 
 
+.company-logo {
+	height: 6em;
+}
+
+
+nav {
+    background-color: var(--pageAccentColor);
+}
+
+.nav-item a {
+	text-decoration: none;
+	color: var(--textContrastColor);
+}
+
+.nav-item a:hover {
+	color:black;
+}
+
+/*
+
 html, body {
 	height: 100%;
 }
 
 body {
 	margin: 0;
-}
-
-nav {
-    height: 7em;
-    background-color: var(--pageAccentColor);
-    display: flex;
-    justify-content: space-between;
-    
 }
 
 nav >a, a> img {
@@ -40,7 +52,4 @@ nav >a, a> img {
 
 }
 
-.nav-item a {
-	text-decoration: none;
-	color: var(--textContrastColor);
-}
+*/

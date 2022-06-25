@@ -50,7 +50,7 @@ public class RoleRepositoryTest {
 		Role roleFrontDesk = new Role("Front Desk", "Manage appointments, payments, walk-ins, "
 				+ "and other clerical duties.");
 		
-		Role roleWarehouse = new Role("Warehouse", "Recieve inventory from shipper and "
+		Role roleWarehouse = new Role("Warehouse", "Receive inventory from shipper and "
 				+ "update inventory");
 		
 		
