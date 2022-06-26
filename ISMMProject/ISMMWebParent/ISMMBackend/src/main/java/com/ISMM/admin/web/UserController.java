@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ISMM.admin.service.RoleService;
 import com.ISMM.admin.service.UserService;
 import com.ISMM.common.domain.User;
 
@@ -17,6 +18,9 @@ public class UserController {
 	
 	@Autowired 
 	private UserService userService;
+	
+	@Autowired 
+	private RoleService roleService;
 	
 	@GetMapping("/users")
 	public String listAll (ModelMap model) {
@@ -29,9 +33,8 @@ public class UserController {
 	@GetMapping("/users/new")
 	public String newUser(ModelMap model) {
 		
-		User user = new User();
-		
-		model.put("newUser", user);
+		model.put("newUser", new User());
+		model.put("listOfRoles", roleService.retreiveListOfRoles());
 		
 		return "user_form";
 	}
