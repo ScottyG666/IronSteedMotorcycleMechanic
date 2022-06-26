@@ -13,8 +13,7 @@ nav {
     background-color: var(--pageAccentColor);
 }
 
-.nav-item a {
-	text-decoration: none;
+#topNavbar ul li a {
 	color: var(--textContrastColor);
 }
 

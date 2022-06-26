@@ -5,35 +5,37 @@
     <title>Home ISMM Admin</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
   
-  	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
- 	
-	
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
 
- 	<link th:href="@{/css/users.css}" type="text/css" rel="stylesheet">
+
+  	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
  	
 
 </head>
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <!--Image for the website-->
             <a  class="navbar-brand " th:href="@{/}">
                 <img class="company-logo" th:src="@{/images/MotorcycleLogo.png}">
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
-				<span class="navbar-toggler-icon"></span>
+				<span  class="navbar-toggler-icon"></span>
 			</button>
 
             <!-- Expanded navigational list-->
             <div class="collapse navbar-collapse" id="topNavbar">		<!--nav-list-container-->
                 <ul class="navbar-nav">
                     <!--Model for how to structure the items within the list with the accompanying bootstrap classes-->
-                    <li class="nav-item gray-lighter">
-                        <a class="nav-link" th:href="@{/users}">Users</a>
+                    <li class="nav-item dropdown">
+                        <a  class="nav-link dropdown-toggle" th:href="@{/users}">Users</a>
+                        <div class="dropdown-menu">
+							<a class="dropdown-item" th:href="@{/users/new}">Create New</a>
+							<a class="dropdown-item" th:href="@{/users}">View All</a>
+						</div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/customers}">Customers</a>

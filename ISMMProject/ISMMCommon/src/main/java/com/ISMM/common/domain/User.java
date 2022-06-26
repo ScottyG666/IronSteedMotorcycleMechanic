@@ -25,7 +25,7 @@ public class User {
 	
 	//Passwords will be encrypted with a Password Encoder that has a length of 64
 	@Column(length = 64, nullable = false)
-	private String pasword;
+	private String password;
 
 	@Column(name = "first_name",length = 45, nullable = false)
 	private String firstName;
@@ -53,7 +53,7 @@ public class User {
 	
 	public User(String email, String pasword, String firstName, String lastName) {
 		this.email = email;
-		this.pasword = pasword;
+		this.password = pasword;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
@@ -75,12 +75,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPasword() {
-		return pasword;
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPasword(String pasword) {
-		this.pasword = pasword;
+		this.password = pasword;
 	}
 
 	public String getFirstName() {

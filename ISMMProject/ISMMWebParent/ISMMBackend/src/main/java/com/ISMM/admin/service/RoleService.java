@@ -1,5 +1,9 @@
 package com.ISMM.admin.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,5 +23,15 @@ public class RoleService {
 		return savedRole;
 	}
 	
+	
+	
+	public List<Role> listRoles() {
+	
+		
+		List<Role> listOfRoles = StreamSupport.stream(roleRepo.findAll()::spliterator, false)
+											  .Collect(Collectors.toList());
+		
+		return null;
+	}
 	
 }
