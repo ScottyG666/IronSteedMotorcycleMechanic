@@ -1,4 +1,4 @@
-package com.ISMM.admin.role;
+package com.ISMM.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -111,6 +111,14 @@ public class UserRepositoryTest {
 		Integer userId = 2;
 		userRepo.deleteById(userId);
 		
+	}
+	
+	@Test
+	public void testGetUserByEmail () {
+		String email = "test.user@email.com";
+		User user = userRepo.getUserByEmail(email);
+		
+		assertThat(user).isNotNull();
 	}
 	
 	

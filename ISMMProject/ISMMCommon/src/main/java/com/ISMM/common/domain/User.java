@@ -79,8 +79,8 @@ public class User {
 		return password;
 	}
 
-	public void setPasword(String pasword) {
-		this.password = pasword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -130,7 +130,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+		return "User [id=" + id + ", email=" + email + ", Password= " + password + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", userRoles=" + userRoles + ", enabled= " + enabled + "]";
 	}
 
