@@ -1,0 +1,10 @@
+#passwordContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+#passwordEyeContainer {
+    height: 100%;
+    margin-left: 5px;
+}

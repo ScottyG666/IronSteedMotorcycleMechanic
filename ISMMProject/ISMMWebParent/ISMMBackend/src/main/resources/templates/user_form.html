@@ -9,7 +9,10 @@
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
 
   	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
-  	
+    <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/a7bea4f05b.js" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -81,8 +84,11 @@
                 <!--Password input field -->
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label" >Password:</label>
-                    <div class="col-sm-8">
-                        <input type="password" th:field="*{password}" name="Users Password" class="form-control" required minlength="8" maxlength="20" />
+                    <div id="passwordContainer" class="col-sm-8">
+                        <input type="password" id="password" class="form-control" th:field="*{password}" required minlength="8" maxlength="20" name="Users Password" />
+                        <div id="passwordEyeContainer">
+                            <i id="passwordEyeIcon" class="far fa-eye"></i>
+                        </div>
                     </div>
                 </div>
                 <!--Lists each of the availabale roles for employees, can select multiple roles-->
@@ -116,11 +122,10 @@
         document.querySelector("#buttonCancel").addEventListener("click" , () => {
             window.location = "[[@{/users}]]";
             });
-
-
-        function checkEmailUnique (form) {
-
-        }
     </script>
+
+    <script th:src="@{/js/user_validation.js}"></script>
+    <script th:src="@{/js/user_form.js}"></script>
+
 </body>
 </html>
