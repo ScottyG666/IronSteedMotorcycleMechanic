@@ -5,6 +5,9 @@ emailTextBox.addEventListener('blur' , () => {
     var userEmail = {
         'username' : emailTextBox.value
     }
+    checkIfUserExists(userEmail)
 })
 
-async function checkIfUserExists (user) 
+async function checkIfUserExists (user) {
+    
+}

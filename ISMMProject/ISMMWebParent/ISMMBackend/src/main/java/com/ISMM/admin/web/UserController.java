@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +17,7 @@ import com.ISMM.admin.service.UserService;
 import com.ISMM.common.domain.User;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
 	
@@ -25,7 +27,7 @@ public class UserController {
 	@Autowired 
 	private RoleService roleService;
 	
-	@GetMapping("/users")
+	@GetMapping("")
 	public String listAll (ModelMap model) {
 		List<User> listOfUsers = userService.listAll();
 		model.put("listOfUsers", listOfUsers);
@@ -33,7 +35,7 @@ public class UserController {
 		return "users";
 	}
 	
-	@GetMapping("/users/new")
+	@GetMapping("/new")
 	public String newUser(ModelMap model) {
 		
 		User user = new User();
@@ -45,7 +47,7 @@ public class UserController {
 		return "user_form";
 	}
 	
-	@PostMapping("/users/save")
+	@PostMapping("/save")
 	public String postNewUserForm(User user, RedirectAttributes redirectAttributes) {
 		System.out.println(user);
 		userService.saveUser(user);
@@ -55,9 +57,11 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/users/check_email")
-	public String checkDuplicateEmail(@Param("email") String email) {
+	@PostMapping("/check_email")
+	public Boolean checkDuplicateEmail(@Param("email") String email) {
 			
-		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
+		return null;
+		
+		//return userService.isEmailUnique(email) ? "OK" : "Duplicated";
 	}
 }
