@@ -1,7 +1,7 @@
+var emailTextBox = document.querySelector("#email-validation");
 
 
 emailTextBox.addEventListener('blur' , () => {
-	var emailTextBox = document.querySelector("#email-validation");
     var userEmail = {
         'email' : emailTextBox.value
     }
@@ -9,16 +9,20 @@ emailTextBox.addEventListener('blur' , () => {
 })
 
 
-async function checkIfUserExists (user) {
-    fetch('/users/check_email', {
+function checkIfUserExists (user) {
+    fetch('/ISMMAdmin/users/validate-User', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(user)
-	}).then( response => response.json())
-	  .then(data => {
-		console.log(data.body)
+	}).then( (response) => response.json())
+	  .then((data) => {
+		if(data === 'OK') {
+			console.log('its true bitch')
+		} else {
+			console.log(data)
+		}
 	  })
 /*
 	let asyncResponse = await asyncResponse.json();

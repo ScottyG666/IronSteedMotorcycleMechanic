@@ -57,13 +57,11 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	@PostMapping("/check_email")
+	@PostMapping("/validate-User")
 	@ResponseBody
-	public Boolean checkDuplicateEmail(@RequestBody User user) {
-		user = userService.findByEmail(user.getEmail());
+	public String checkDuplicateEmail(@RequestBody User user) {
 		
-		return (user != null);
-		
-		//return userService.isEmailUnique(email) ? "OK" : "Duplicated";
+				
+		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
 	}
 }
