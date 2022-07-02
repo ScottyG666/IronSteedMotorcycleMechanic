@@ -47,6 +47,7 @@ public class UserController {
 		return "user_form";
 	}
 	
+	
 	@PostMapping("/save")
 	public String postNewUserForm(User user, RedirectAttributes redirectAttributes) {
 		System.out.println(user);
