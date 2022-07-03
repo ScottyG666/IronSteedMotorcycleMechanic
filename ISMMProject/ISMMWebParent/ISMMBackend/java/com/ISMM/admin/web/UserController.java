@@ -3,11 +3,11 @@ package com.ISMM.admin.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,6 +57,13 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	@PostMapping("/users/check_email")
+	@ResponseBody
+	public String checkDuplicateEmail(@Param("email") String email) {
+		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
+	}
+	
+	/*
 	@PostMapping("/validate-User")
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
@@ -64,4 +71,6 @@ public class UserController {
 				
 		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
 	}
+	
+	*/
 }

@@ -8,12 +8,13 @@ emailTextBox.addEventListener('blur' , () => {
     checkIfUserExists(userEmail)
 })
 
-
+let csrfValue = document.querySelectorAll('input[name=csrf_token]');
 function checkIfUserExists (user) {
     fetch('/ISMMAdmin/users/validate-User', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			"X-CSRF-Token": csrfValue
 		},
 		body: JSON.stringify(user)
 	}).then( (response) => response.json())
@@ -22,17 +23,7 @@ function checkIfUserExists (user) {
 			console.log('its true bitch')
 		} else {
 			console.log(data)
+			console.log(csrfValue)
 		}
 	  })
-/*
-	let asyncResponse = await asyncResponse.json();
-
-	if (asyncResponse === true) {
-		emailTextBox.style.transition = '0.5s';
-		emailTextBox.style.boxShadow = '0 0 8px 3px red;';
-	} else {
-		emailTextBox.style.transition = '0.5s';
-		emailTextBox.style.boxShadow = 'none;';
-	}
-	*/
 }

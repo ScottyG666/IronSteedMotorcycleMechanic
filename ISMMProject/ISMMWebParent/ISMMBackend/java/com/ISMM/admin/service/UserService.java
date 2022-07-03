@@ -49,5 +49,12 @@ public class UserService {
 		
 		return userRepo.getUserByEmail(email);
 	}
+
+
+
+	public boolean isEmailUnique(String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+		return userByEmail == null;
+	}
 	
 }

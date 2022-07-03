@@ -58,7 +58,7 @@
         </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-            th:object="${newUser}">
+            th:object="${newUser}" onsubmit="return checkEmailUnique(this)">
                 <div class="border border-secondary rounded p-3">
                     <!--Email input field-->
                     <div class="form-group row">
@@ -118,14 +118,43 @@
                 </div>
             </form>
         </div>
+
+
+        <script th:src="@{/js/user_form.js}"></script>
         <script type="text/javascript" >
             document.querySelector("#buttonCancel").addEventListener("click" , () => {
                 window.location = "[[@{/users}]]";
                 });
+                
+            function checkEmailUnique(form) {
+                url = "[[@{/users/check_email}]]";
+                userEmail = $("#email").val();
+                csrfValue = $("input[name='_csrf']").val();
+                params = {email : userEmail , _csrf : csrfValue};
+
+                $.post(url, params, function(response) {
+                    alert('Response from server: ' + response);
+                });
+
+                return false;
+            } 
         </script>
 
+        
+        <!--
+            13:45
         <script th:src="@{/js/user_validation.js}"></script>
-        <script th:src="@{/js/user_form.js}"></script>
+          url = '[[@{/ISMMAdmin/users/validate-User}]]';
+                    userEmail = $('#email').val();
+                    csrfValue = $("input[name='_csrf']").val();
+                    params = {email: userEmail, _csrf: csrfValue};
 
+                    $.post(url, params, function(response) {
+                        if(response == 'OK')
+                        alert('Response from server: ' + response);
+                    });
+
+                    return false;
+-->
     </body>
 </html>
