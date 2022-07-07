@@ -10,7 +10,7 @@ emailTextBox.addEventListener('blur' , () => {
 
 let csrfValue = document.querySelectorAll('input[name=csrf_token]');
 function checkIfUserExists (user) {
-    fetch('/ISMMAdmin/users/validate-User', {
+    fetch('/ISMMAdmin/users/check_email', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
