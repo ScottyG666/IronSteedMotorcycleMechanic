@@ -7,7 +7,10 @@
   
  	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
-
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/js/common.js}" ></script>
+	
+	
   	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
     <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
 
@@ -55,7 +58,7 @@
             
             <div>
                 <h2>Manage Users | Create New User</h2>
-        </div>
+            </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
             th:object="${newUser}" onsubmit="return checkEmailUnique(this);">
@@ -125,12 +128,13 @@
             document.querySelector("#buttonCancel").addEventListener("click" , () => {
                 window.location = "[[@{/users}]]";
                 });
-                
-            function checkEmailUnique(form) {
-                url = "[[@{/users/check_email}]]";
+
+                function checkEmailUnique(form) {
+	
+                url = "[[@{ISMMAdmin/users/check_email}]]";
                 userEmail = $("#email").val();
                 csrfValue = $("input[name='_csrf']").val();
-                params = {email : userEmail , _csrf : csrfValue};
+                params = {email : userEmail, _csrf: csrfValue };
 
                 $.post(url, params, function(response) {
                     alert('Response from server: ' + response);
@@ -141,20 +145,6 @@
         </script>
 
         
-        <!--
-            13:45
-        <script th:src="@{/js/user_validation.js}"></script>
-          url = '[[@{/ISMMAdmin/users/validate-User}]]';
-                    userEmail = $('#email').val();
-                    csrfValue = $("input[name='_csrf']").val();
-                    params = {email: userEmail, _csrf: csrfValue};
-
-                    $.post(url, params, function(response) {
-                        if(response == 'OK')
-                        alert('Response from server: ' + response);
-                    });
-
-                    return false;
--->
+       
     </body>
 </html>

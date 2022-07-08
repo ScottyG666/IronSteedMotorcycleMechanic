@@ -57,7 +57,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	@PostMapping("/users/check_email")
+	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@Param("email") String email) {
 		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
