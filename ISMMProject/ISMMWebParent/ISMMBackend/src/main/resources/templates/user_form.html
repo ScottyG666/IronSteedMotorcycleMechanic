@@ -131,7 +131,7 @@
 
                 function checkEmailUnique(form) {
 	
-                url = "[[@{ISMMAdmin/users/check_email}]]";
+                url = "[[@{/users/check_email}]]";
                 userEmail = $("#email").val();
                 csrfValue = $("input[name='_csrf']").val();
                 params = {email : userEmail, _csrf: csrfValue };

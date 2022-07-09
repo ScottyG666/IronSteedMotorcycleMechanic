@@ -60,17 +60,11 @@ public class UserController {
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@Param("email") String email) {
+		
+		Boolean wasUserRetrieved = userService.isEmailUnique(email);
+		
 		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
 	}
 	
-	/*
-	@PostMapping("/validate-User")
-	@ResponseBody
-	public String checkDuplicateEmail(@RequestBody User user) {
-		
-				
-		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
-	}
-	
-	*/
+
 }
