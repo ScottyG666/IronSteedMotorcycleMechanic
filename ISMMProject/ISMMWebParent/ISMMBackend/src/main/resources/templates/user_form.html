@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
-<head>
-    <meta charset='utf-8'>
-    <title>Create New User</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-  
- 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
-	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
-	<script type="text/javascript" th:src="@{/js/common.js}" ></script>
-	
-	
-  	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
-    <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
+    <head>
+        <meta charset='utf-8'>
+        <title>Create New User</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />	
+        <link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
+        <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
+        <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
 
-    <script src="https://kit.fontawesome.com/a7bea4f05b.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/a7bea4f05b.js" crossorigin="anonymous"></script>
 
 
-</head>
+    </head>
     <body>
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-dark">
@@ -67,7 +64,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" >Email:</label>
                         <div class="col-sm-8">
-                            <input id="email-validation" type="email" th:field="*{email}" name="Users Email input" class="form-control" required minlength="8" maxlength="128" />
+                            <input type="email" th:field="*{email}" name="Users Email input" class="form-control" required minlength="8" maxlength="128" />
                         </div>
                     </div>
                     <!--First name input field-->
@@ -120,8 +117,30 @@
                     </div>
                 </div>
             </form>
+            
+            
         </div>
+        
+        
+        <!--This stretch of divs is for styalizing the alert for a duplicate email-->
+        <div class="modal fade text-center" id="modalDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalTitle">Warning</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
+                    <div class="modal-body">
+                        <span id="modalBody"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script th:src="@{/js/user_form.js}"></script>
         <script type="text/javascript" >
@@ -129,22 +148,32 @@
                 window.location = "[[@{/users}]]";
                 });
 
-                function checkEmailUnique(form) {
-	
-                url = "[[@{/users/check_email}]]";
-                userEmail = $("#email").val();
-                csrfValue = $("input[name='_csrf']").val();
-                params = {email : userEmail, _csrf: csrfValue };
+            function checkEmailUnique(form) {
 
-                $.post(url, params, function(response) {
-                    alert('Response from server: ' + response);
-                });
+            url = "[[@{/users/check_email}]]";
+            userEmail = $("#email").val();
+            csrfValue = $("input[name='_csrf']").val();
+            params = {email : userEmail, _csrf: csrfValue };
+            
+            true) return false;
+            
+            $.post(url, params, function(response) {
+                if( response == 'OK') {
+                    form.submit();
+                } else if ( response == 'Duplicated') {
+                    showWarningModal( 'There is another user having he email: ' + userEmail);
+					
+    
+                  /*  alert( 'There is another user having he email: ' + userEmail);
+                */
+                
+                }
+            });
 
-                return false;
-            } 
+            return false;
+        
+        } 
         </script>
 
-        
-       
     </body>
 </html>

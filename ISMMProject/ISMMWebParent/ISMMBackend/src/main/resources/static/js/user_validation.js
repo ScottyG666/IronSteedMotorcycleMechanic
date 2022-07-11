@@ -1,40 +1,26 @@
-var emailTextBox = document.querySelector("#email-validation");
- 
+document.getElementById('#create-user').addEventListener('submit', checkEmailUnique)
 
-emailTextBox.addEventListener('blur' , () => {
-    var userEmail = {
-        'email' : emailTextBox.value
-    }
-    checkIfUserExists(userEmail)
-})
 
-let csrfValue = document.querySelectorAll('input[name=_csrf]');
-function checkIfUserExists (user) {
-
-	const token = document.querySelector('meta[name="_csrf"]').content;
-	const header = document.querySelector('meta[name="_csrf_header"]').content;
+function checkEmailUnique(event) {
 	
-    fetch('/ISMMAdmin/users/check_email', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			header : token
-		},
-		body: JSON.stringify(user)
-	}).then( (response) => response.json())
-	  .then((data) => {
-		if(data === 'OK') {
-			console.log('its true bitch')
-		} else {
-			console.log(data)
-		}
-	  })
+	url = "[[@{/users/check_email}]]";
+	userEmail = $("#email").val();
+	csrfValue = $("input[name='_csrf']").val();
+	params = {email : userEmail, _csrf: csrfValue };
 
-	  /*
-	  
-	  checking validation when form is submited and responding with an alert.
-	  this is the solution provided by the instructor using JQuery
-	      
-            
+	$.post(url, params, function(response) {
+		
+		if (repsonse == "OK") {
+			form.submit();
+		} else {
+			
+		}
+
+		alert('Response from server: ' + response);
+	});
+
+	event.preventDefault();
+} 
+ /*
+onsubmit="return checkEmailUnique(this);
 */
-}
