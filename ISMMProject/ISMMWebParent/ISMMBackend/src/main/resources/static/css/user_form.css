@@ -8,3 +8,7 @@
     height: 100%;
     margin-left: 5px;
 }
+
+.duplicatedUserShadow {
+    box-shadow : 0 0  8px 3px #ff4747;
+} 

@@ -1,5 +1,6 @@
-document.getElementById('#create-user').addEventListener('submit', checkEmailUnique)
+let emailInputBox =  document.getElementById('emailInput');
 
+emailInputBox.addEventListener('blur' , checkEmailUnique() )
 
 function checkEmailUnique(event) {
 	
@@ -10,17 +11,14 @@ function checkEmailUnique(event) {
 
 	$.post(url, params, function(response) {
 		
-		if (repsonse == "OK") {
-			form.submit();
-		} else {
+		if (response == "OK") {
+			emailInputBox.className -= ' duplicatedUserShadow'
+
+		} else if (response = "Duplicated") {
 			
+			emailInputBox.className += ' duplicatedUserShadow'
 		}
 
 		alert('Response from server: ' + response);
 	});
-
-	event.preventDefault();
 } 
- /*
-onsubmit="return checkEmailUnique(this);
-*/
