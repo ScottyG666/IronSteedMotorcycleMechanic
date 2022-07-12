@@ -1,24 +1,41 @@
-let emailInputBox =  document.getElementById('emailInput');
 
-emailInputBox.addEventListener('blur' , checkEmailUnique() )
+$(document).ready(function(){
+    $("select,input").change(function ()
+    {
+		let emailInputBox =  document.querySelector('#emailInput')
 
-function checkEmailUnique(event) {
-	
-	url = "[[@{/users/check_email}]]";
-	userEmail = $("#email").val();
-	csrfValue = $("input[name='_csrf']").val();
-	params = {email : userEmail, _csrf: csrfValue };
+		emailInputBox.addEventListener('blur' , checkEmailUnique() )
 
-	$.post(url, params, function(response) {
-		
-		if (response == "OK") {
-			emailInputBox.className -= ' duplicatedUserShadow'
-
-		} else if (response = "Duplicated") {
+		function checkEmailUnique() {
 			
-			emailInputBox.className += ' duplicatedUserShadow'
-		}
+			url = "check_email";
+			userEmail = $("#email").val();
+			csrfValue = $("input[name='_csrf']").val();
+			params = {email : userEmail, _csrf: csrfValue };
 
-		alert('Response from server: ' + response);
-	});
-} 
+			$.post(url, params, function(response) {
+				
+				if (response == "OK") {
+					// toruskit.com for danger shadow examples
+					emailInputBox.className -= ' duplicatedUserShadow'
+
+					alert('Response from server: ' + response);
+
+				} else if (response = "Duplicated") {
+					
+					emailInputBox.className += ' duplicatedUserShadow'
+					alert('Response from server: ' + response);
+
+				} else {
+				alert('Response from server: ' + response);
+					
+				}
+
+			});
+		} 
+	})
+    // Other event handlers.
+});
+
+
+
