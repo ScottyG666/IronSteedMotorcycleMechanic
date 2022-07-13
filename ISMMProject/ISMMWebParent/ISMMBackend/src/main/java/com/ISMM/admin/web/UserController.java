@@ -48,7 +48,7 @@ public class UserController {
 	}
 	
 	
-	@PostMapping("/save")
+	@PostMapping("/saSSSe")
 	public String postNewUserForm(User user, RedirectAttributes redirectAttributes) {
 		System.out.println(user);
 		userService.saveUser(user);
@@ -60,8 +60,6 @@ public class UserController {
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@Param("email") String email) {
-		
-		Boolean wasUserRetrieved = userService.isEmailUnique(email);
 		
 		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
 	}
