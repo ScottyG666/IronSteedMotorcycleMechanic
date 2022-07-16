@@ -3,11 +3,11 @@ package com.ISMM.admin.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -59,7 +59,9 @@ public class UserController {
 	
 	@PostMapping("/check_email")
 	@ResponseBody
-	public String checkDuplicateEmail(String email) {
+	public String checkDuplicateEmail(@RequestBody User user) {
+		
+		String email = user.getEmail();
 		
 		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
 	}
