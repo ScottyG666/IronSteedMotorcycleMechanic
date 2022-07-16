@@ -20,9 +20,9 @@ emailInputBox.addEventListener('blur' , () => {
 	.then( (responseEntity) => responseEntity.text())
 	.then( (data) => {
 		if (data == 'OK') {
-			console.log('its kosher')
+			emailInputBox.className = 'form-control'
 		} else if (data == 'Duplicated') {
-			console.log("Duplicated email!")
+			emailInputBox.className = 'form-control shadow-danger-custom';
 		}
 	})
 })
