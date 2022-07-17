@@ -23,6 +23,7 @@ emailInputBox.addEventListener('blur' , () => {
 			emailInputBox.className = 'form-control'
 		} else if (data == 'Duplicated') {
 			emailInputBox.className = 'form-control shadow-danger-custom';
+			alert('The email ' + userEmail + ' is already in use by another user.')
 		}
 	})
 })
