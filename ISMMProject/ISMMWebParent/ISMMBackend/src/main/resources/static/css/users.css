@@ -4,18 +4,7 @@
 }
 
 
-.display-users-table{
-	width:100%;
-}
-
-table {
-	width: 95%;
-	margin: auto;
-}
-
-
-th {
-	height: 3em;
-	background-color: var(--pageAccentColor);
-	color: var(--textContrastColor)
-}
+*.icon-white {color:white}
+*.icon-silver {color:silver}
+*.icon-green {color:green}
+*.icon-dark {color:gray}
