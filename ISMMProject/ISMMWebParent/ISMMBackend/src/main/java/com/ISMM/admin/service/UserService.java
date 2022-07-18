@@ -2,6 +2,7 @@ package com.ISMM.admin.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +52,17 @@ public class UserService {
 	public boolean isEmailUnique(String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
 		return userByEmail == null;
+	}
+
+
+
+	public User getById(Integer userId) throws UserNotFoundException {
+		try {
+			return userRepo.findById(userId).get();			
+		} catch (NoSuchElementException e) {
+			throw new UserNotFoundException("Could not find any user with ID " + userId);
+		}
+		
 	}
 	
 }

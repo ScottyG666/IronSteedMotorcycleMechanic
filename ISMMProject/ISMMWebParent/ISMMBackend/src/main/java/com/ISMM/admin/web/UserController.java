@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.service.RoleService;
+import com.ISMM.admin.service.UserNotFoundException;
 import com.ISMM.admin.service.UserService;
 import com.ISMM.common.domain.User;
 
@@ -41,7 +43,7 @@ public class UserController {
 		User user = new User();
 		user.setEnabled(true);
 		
-		model.put("newUser", user);
+		model.put("user", user);
 		model.put("listOfRoles", roleService.retreiveListOfRoles());
 		
 		return "user_form";
@@ -66,5 +68,17 @@ public class UserController {
 		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
 	}
 	
+	@GetMapping("/edit/{id}" )
+	public String editUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
+		try {
+			model.put("user", userService.getById(userId));
+			return "user_form";
+		} catch (UserNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+			return "redirect:/users";
+		}
+		
+		
+	}
 
 }
