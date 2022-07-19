@@ -2,13 +2,11 @@
 <html xmlns="http://www.thymeleaf.org">
     <head>
         <meta charset='utf-8'>
-        <title>Create New User</title>
+        <title>[[${pageTitle}]]</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
-    
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />	
         <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
-
         <link rel="stylesheet"  type="text/css" th:href="@{/fontawesome/all.css}">
 
 
@@ -52,11 +50,13 @@
             </nav>
             
             <div>
-                <h2>Manage Users | Create New User</h2>
+                <h2>Manage Users | [[${pageTitle}]]</h2>
             </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-            th:object="${user}" >
+            th:object="${user}">
+
+                <input type="hidden"  th:field="*{id}">
                 <div class="border border-secondary rounded p-3">
                     <!--Email input field-->
                     <div class="form-group row">
@@ -120,5 +120,6 @@
         
         <script th:src="@{/js/user_form.js}"></script>
         <script th:src="@{/js/user_validation.js}"></script>
+
     </body>
 </html>

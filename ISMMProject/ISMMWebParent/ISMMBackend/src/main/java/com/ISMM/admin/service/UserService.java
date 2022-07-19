@@ -47,15 +47,6 @@ public class UserService {
 		return userRepo.getUserByEmail(email);
 	}
 
-
-
-	public boolean isEmailUnique(String email) {
-		User userByEmail = userRepo.getUserByEmail(email);
-		return userByEmail == null;
-	}
-
-
-
 	public User getById(Integer userId) throws UserNotFoundException {
 		try {
 			return userRepo.findById(userId).get();			
@@ -65,4 +56,27 @@ public class UserService {
 		
 	}
 	
-}
+	/*
+	 * If the Email is unique, True is returned to show that the Email is available within the database 
+	 * 	for use by a new user
+	 * 
+	 * If there is an ID present we are editing an existing user
+	 */
+	public boolean isEmailUnique(Integer userId,String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+		Boolean isCreatingNewUser = (userId == null);
+		
+		if (userByEmail == null) return true;
+		
+		if(isCreatingNewUser) {
+			if (userByEmail != null) return false;
+		} else {
+			if (userByEmail.getId() != userId) {
+				return false;
+			}
+		} 
+		
+		return userByEmail == null;
+	}
+	
+	}

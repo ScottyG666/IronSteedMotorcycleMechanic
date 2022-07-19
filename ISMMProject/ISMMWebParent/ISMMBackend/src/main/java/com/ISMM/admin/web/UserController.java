@@ -45,6 +45,7 @@ public class UserController {
 		
 		model.put("user", user);
 		model.put("listOfRoles", roleService.retreiveListOfRoles());
+		model.put("pageTitle", "Create New User");
 		
 		return "user_form";
 	}
@@ -63,15 +64,18 @@ public class UserController {
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
 		
-		String email = user.getEmail();
 		
-		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
+		
+		return userService.isEmailUnique(user.getId() , user.getEmail()) ? "OK" : "Duplicated";
 	}
 	
 	@GetMapping("/edit/{id}" )
 	public String editUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
 		try {
 			model.put("user", userService.getById(userId));
+			model.put("pageTitle", "Edit User (ID : " + userId + " )");
+			model.put("listOfRoles", roleService.retreiveListOfRoles());
+
 			return "user_form";
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
