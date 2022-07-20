@@ -62,7 +62,13 @@ public class UserService {
 	public boolean isEmailUnique(Integer userId,String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
 		
-		if (userByEmail == null) return true;
+		//Email does not already exist in the DB
+		if (userByEmail == null) {
+			return true;
+		} else {
+			
+			
+		}
 		
 		if (userId != null) {
 			if (userByEmail != null) {
