@@ -63,10 +63,17 @@ public class UserController {
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
-		
+		return userService.isEmailUnique(user.getId() , user.getEmail()) ? "OK" : "Duplicated";
+	}
+	
+	@PostMapping("/validate_form")
+	@ResponseBody
+	public String checkFormInputsValid(@RequestBody User user) {
 		
 		
 		return userService.isEmailUnique(user.getId() , user.getEmail()) ? "OK" : "Duplicated";
+	
+	
 	}
 	
 	@GetMapping("/edit/{id}" )

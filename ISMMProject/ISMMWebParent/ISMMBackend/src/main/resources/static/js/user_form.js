@@ -11,7 +11,5 @@ eyeIcon.addEventListener('click', () => {
 });
 
 
-document.querySelector("#buttonCancel").addEventListener("click" , () => {
-    window.location = "[[@{/users}]]";
-    });
+
 

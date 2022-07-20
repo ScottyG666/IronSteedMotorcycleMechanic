@@ -121,5 +121,10 @@
         <script th:src="@{/js/user_form.js}"></script>
         <script th:src="@{/js/user_validation.js}"></script>
 
+        <script>
+            document.querySelector("#buttonCancel").addEventListener("click" , () => {
+                window.location = "[[@{/users}]]";
+                });
+        </script>
     </body>
 </html>

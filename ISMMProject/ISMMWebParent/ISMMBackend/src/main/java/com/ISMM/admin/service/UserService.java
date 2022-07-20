@@ -57,26 +57,26 @@ public class UserService {
 	}
 	
 	/*
-	 * If the Email is unique, True is returned to show that the Email is available within the database 
-	 * 	for use by a new user
-	 * 
-	 * If there is an ID present we are editing an existing user
+	 * 	This method is used to check if the email is unique when creating a User
 	 */
 	public boolean isEmailUnique(Integer userId,String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
-		Boolean isCreatingNewUser = (userId == null);
 		
 		if (userByEmail == null) return true;
 		
-		if(isCreatingNewUser) {
-			if (userByEmail != null) return false;
-		} else {
-			if (userByEmail.getId() != userId) {
-				return false;
+		if (userId != null) {
+			if (userByEmail != null) {
+				return true;
+			} else {
+				if (  ) {
+					
+				}
 			}
-		} 
+			
+		} else {
+			
+		}
 		
-		return userByEmail == null;
 	}
 	
 	}
