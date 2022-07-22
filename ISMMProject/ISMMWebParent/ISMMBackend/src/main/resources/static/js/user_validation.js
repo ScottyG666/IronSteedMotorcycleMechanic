@@ -10,7 +10,6 @@ emailInputBox.addEventListener('blur' , () => {
 		"email" : userEmail
 
 	}
-
 	fetch('/ISMMAdmin/users/check_email' , {
 		method : 'POST' ,
 		headers : {
@@ -32,15 +31,13 @@ emailInputBox.addEventListener('blur' , () => {
 
 
 
-var form = document.querySelector('form');
-form.onsubmit = (e) => {
-	e.preventDefault;
-	//preventSubmission();
 
-}
+function formValidationCheck(event) {
+	var form = document.querySelector('#userForm')
+	
+	event.preventDefault();
+	var CSRFToken = document.querySelector('input[name$="_csrf"]').value;
 
-function preventSubmission() {
-    var CSRFToken = document.querySelector('input[name$="_csrf"]').value;
 	var userEmail = emailInputBox.value;
 	var userId = document.querySelector('input[name$="id"]').value;
 
@@ -48,7 +45,7 @@ function preventSubmission() {
 		"id" : userId,
 		"email" : userEmail
 	}
-
+	
 	fetch('/ISMMAdmin/users/check_email' , {
 		method : 'POST' ,
 		headers : {
@@ -60,18 +57,9 @@ function preventSubmission() {
 	.then( (responseEntity) => responseEntity.text())
 	.then( (data) => {
 		if (data == 'OK') {
-			console.log('Form submission');
-			form.submit();
+			form.submit()
 		} else if (data == 'Duplicated') {
-			alert('Please change the email ' + userEmail + ' to proceed.')
-		}
+			alert('Please change the email ' + userEmail + 'to proceed with submitting this form') 
+		} 
 	})
 }
-
-
-
-
-
-
-
-

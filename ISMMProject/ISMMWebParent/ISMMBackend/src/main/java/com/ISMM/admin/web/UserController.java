@@ -52,8 +52,7 @@ public class UserController {
 	
 	
 	@PostMapping("/save")
-	public String postNewUserForm(User user, RedirectAttributes redirectAttributes) {
-		System.out.println(user);
+	public String postUserForm(User user, RedirectAttributes redirectAttributes) {
 		userService.saveUser(user);
 		
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully!");
@@ -63,17 +62,7 @@ public class UserController {
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
-		return userService.isEmailUnique(user.getId() , user.getEmail()) ? "OK" : "Duplicated";
-	}
-	
-	@PostMapping("/validate_form")
-	@ResponseBody
-	public String checkFormInputsValid(@RequestBody User user) {
-		
-		
-		return userService.isEmailUnique(user.getId() , user.getEmail()) ? "OK" : "Duplicated";
-	
-	
+		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
 	}
 	
 	@GetMapping("/edit/{id}" )

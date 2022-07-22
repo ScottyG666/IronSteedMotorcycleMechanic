@@ -29,10 +29,19 @@ public class UserService {
 		return listOfUsers;
 	}
 
-
-
 	public void saveUser(User user) {
-		encodePassword(user);
+		Boolean isUpdatingUser = (user.getId() != null);
+		
+		if(isUpdatingUser) {
+			User existingUser = userRepo.findById(user.getId()).get();
+			if (user.getPassword().isEmpty()) {
+				user.setPassword(existingUser.getPassword());
+			} else {
+				encodePassword(user);
+			}
+		} else {
+			encodePassword(user);
+		}
 		userRepo.save(user);
 	}
 	
@@ -57,32 +66,62 @@ public class UserService {
 	}
 	
 	/*
-	 * 	This method is used to check if the email is unique when creating a User
+	 * 	This method is used to check if the email is unique when creating or editing a User
+	 * 	++If the email is the email of an existing user :
+	 * 		--this will return true if the email matches the retrieved user OR the Email does NOT
+	 * 			belong in the DataBase already
+	 * 		--This will return false if it matches an email from a user in the database that is 
+	 * 			NOT the retrieved user
+	 * 
 	 */
-	public boolean isEmailUnique(Integer userId,String email) {
-		User userByEmail = userRepo.getUserByEmail(email);
+	public boolean isEmailUnique(User user) {
+		User userByEmail = userRepo.getUserByEmail(user.getEmail());
 		
-		//Email does not already exist in the DB
-		if (userByEmail == null) {
-			return true;
-		} else {
-			
-			
-		}
-		
-		if (userId != null) {
-			if (userByEmail != null) {
+		if (userByEmail != null) {
+			if (userByEmail.getId().equals(user.getId())) {
 				return true;
 			} else {
-				if (  ) {
-					
-				}
+				return false;
 			}
-			
 		} else {
-			
+			return true;			
 		}
 		
+		
 	}
+
 	
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

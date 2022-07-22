@@ -16,5 +16,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 */
 	public User getUserByEmail(@Param("email") String email);
 	
+	public User getUserById (@Param("id") Integer id);
+	
+	
+	public Long countById(Integer id) ;
 	
 }
