@@ -65,15 +65,15 @@ public class UserService {
 		
 	}
 	
+	
+	
+	public boolean isEmailUnique(String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+		
+		return userByEmail == null;
+		
+	}
 	/*
-	 * 	This method is used to check if the email is unique when creating or editing a User
-	 * 	++If the email is the email of an existing user :
-	 * 		--this will return true if the email matches the retrieved user OR the Email does NOT
-	 * 			belong in the DataBase already
-	 * 		--This will return false if it matches an email from a user in the database that is 
-	 * 			NOT the retrieved user
-	 * 
-	 */
 	public boolean isEmailUnique(User user) {
 		User userByEmail = userRepo.getUserByEmail(user.getEmail());
 		
@@ -89,7 +89,7 @@ public class UserService {
 		
 		
 	}
-
+*/
 	
 	public void delete (Integer id) throws UserNotFoundException{
 		

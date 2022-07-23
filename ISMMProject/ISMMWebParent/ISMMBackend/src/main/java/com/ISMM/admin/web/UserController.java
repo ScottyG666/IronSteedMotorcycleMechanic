@@ -59,11 +59,19 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	
+	@PostMapping("/check_email")
+	@ResponseBody
+	public String checkDuplicateEmail(@RequestBody String email) {
+		return userService.isEmailUnique(email) ? "OK" : "Duplicated";
+	}
+	
+	/*
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
 		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
-	}
+	}*/
 	
 	@GetMapping("/edit/{id}" )
 	public String editUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
