@@ -93,7 +93,7 @@
                             <a  th:href="@{'/users/edit/' + ${user.id}}" class="fas fa-edit fa-2x icon-green"
                                 title="Edit this user" ></a>
                              &nbsp;
-                            <a  href="" class="fas fa-trash fa-2x icon-dark" ></a>
+                            <a  th:href="@{'/users/delete/' +  ${user.id}}" class="fas fa-trash fa-2x icon-dark" ></a>
                         </td>
                     </tr>
                 </tbody>
