@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.ISMM.admin.repository.UserRepository;
 import com.ISMM.common.domain.User;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -84,23 +87,6 @@ public class UserService {
 		
 		return true;
 	}
-	/*
-	public boolean isEmailUnique(User user) {
-		User userByEmail = userRepo.getUserByEmail(user.getEmail());
-		
-		if (userByEmail != null) {
-			if (userByEmail.getId().equals(user.getId())) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return true;			
-		}
-		
-		
-	}
-*/
 	
 	public void delete (Integer id) throws UserNotFoundException{
 		
@@ -115,7 +101,10 @@ public class UserService {
 	}
 	
 	
-	
+	public void updateUserEnabledStatus (Integer id ,Boolean enabled) {
+		
+		userRepo.updateEnabledStatus(id, enabled);
+	}
 	
 	
 	

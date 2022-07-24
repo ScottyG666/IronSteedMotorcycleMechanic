@@ -57,7 +57,7 @@
             </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-            th:object="${user}" onsubmit="return checkEmailUnique(this);" >
+            th:object="${user}"  onsubmit="return checkEmailUnique(this);">
 
                 <input type="hidden"  th:field="*{id}">
                 <div class="border border-secondary rounded p-3">
@@ -150,7 +150,7 @@
             document.querySelector("#buttonCancel").addEventListener("click" , () => {
                 window.location = "[[@{/users}]]";
                 });
-
+                
             function checkEmailUnique(form) {
                 var url = "[[@{/users/check_email}]]";
                 var userEmail = $("#email").val();
@@ -161,6 +161,7 @@
                 $.post(url, params , (response) => {
                     if (response == "OK" ) {
                         form.submit();
+                        return false;
                     } else if (response == "Duplicated") {
                         showModalDIalog("Warning", "There is another user using the Email: " + userEmail );
                     }
@@ -175,7 +176,9 @@
                 $("#modalBody").text(message)
                 $("#modalDialog").modal();
             }
+            
         </script>
         <script th:src="@{/js/user_form.js}"></script>
+
     </body>
     </html>
