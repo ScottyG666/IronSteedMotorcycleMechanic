@@ -67,11 +67,22 @@ public class UserService {
 	
 	
 	
-	public boolean isEmailUnique(String email) {
+	public boolean isEmailUnique(Integer id, String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
+				
+		if (userByEmail == null) return true;
 		
-		return userByEmail == null;
+		Boolean isCreatingNew = (id == null);
+
+		if (isCreatingNew) {
+			if (userByEmail != null) return false;
+		} else {
+			if(userByEmail.getId() != id) {
+				return false;
+			}
+		}
 		
+		return true;
 	}
 	/*
 	public boolean isEmailUnique(User user) {
