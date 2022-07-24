@@ -4,11 +4,14 @@
         <meta charset='utf-8'>
         <title>[[${pageTitle}]]</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+        <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
+
+        <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
         <link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />	
-        <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
         <link rel="stylesheet"  type="text/css" th:href="@{/fontawesome/all.css}">
-
 
     </head>
     <body>
@@ -54,7 +57,7 @@
             </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
-            th:object="${user}" onsubmit="return formValidationCheck(event)"  id="userForm">
+            th:object="${user}"  onsubmit="return checkEmailUnique(this);">
 
                 <input type="hidden"  th:field="*{id}">
                 <div class="border border-secondary rounded p-3">
@@ -62,7 +65,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" >Email:</label>
                         <div class="col-sm-8">
-                            <input type="email" id="emailInput" th:field="*{email}" name="Users Email input" class="form-control" required minlength="8" maxlength="128" />
+                            <input type="email" th:field="*{email}" name="Users Email input" class="form-control" required minlength="8" maxlength="128" />
                         </div>
                     </div>
                     <!--First name input field-->
@@ -122,15 +125,60 @@
                 </div>
             </form>
         
+            <div class="modal fade text-center" id="modalDialog"> 
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalTitle"></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div> 
+                            <span id="modalBody"></span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
         </div>
 
-        <script th:src="@{/js/user_form.js}"></script>
-        <script th:src="@{/js/user_validation.js}"></script>
         <script>
             document.querySelector("#buttonCancel").addEventListener("click" , () => {
                 window.location = "[[@{/users}]]";
                 });
+                
+            function checkEmailUnique(form) {
+                var url = "[[@{/users/check_email}]]";
+                var userEmail = $("#email").val();
+                var userId = $("#id").val();
+                var csrfValue = $("input[name='_csrf']").val();
+                params = {id: userId, email: userEmail, _csrf: csrfValue};
+
+                $.post(url, params , (response) => {
+                    if (response == "OK" ) {
+                        form.submit();
+                        return false;
+                    } else if (response == "Duplicated") {
+                        showModalDIalog("Warning", "There is another user using the Email: " + userEmail );
+                    }
+                });
+                
+                return false;
+                    }  
+                    
+                    
+         	function showModalDIalog (title, message) {
+                $("#modalTitle").text(title);
+                $("#modalBody").text(message)
+                $("#modalDialog").modal();
+            }
+            
         </script>
+        <script th:src="@{/js/user_form.js}"></script>
+
     </body>
-</html>
+    </html>

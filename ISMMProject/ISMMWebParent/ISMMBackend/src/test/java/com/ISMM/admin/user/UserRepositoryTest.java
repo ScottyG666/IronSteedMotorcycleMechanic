@@ -130,10 +130,18 @@ public class UserRepositoryTest {
 		
 	}
 	
+	@Test 
+	public void testDisableUser() {
+		Integer id = 26;
+		userRepo.updateEnabledStatus(id, false);
+	}
 	
 	
-	
-	
+	@Test 
+	public void testEnableUser() {
+		Integer id = 26;
+		userRepo.updateEnabledStatus(id, true);
+	}
 	
 	
 	

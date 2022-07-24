@@ -3,12 +3,12 @@ package com.ISMM.admin.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -59,11 +59,20 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
+	
+	@PostMapping("/check_email")
+	@ResponseBody
+	public String checkDuplicateEmail(@Param("id") Integer id, @Param("email") String email) {
+		
+		return userService.isEmailUnique(id, email) ? "OK" : "Duplicated";
+	}
+	
+	/*
 	@PostMapping("/check_email")
 	@ResponseBody
 	public String checkDuplicateEmail(@RequestBody User user) {
 		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
-	}
+	}*/
 	
 	@GetMapping("/edit/{id}" )
 	public String editUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
@@ -95,6 +104,36 @@ public class UserController {
 		return "redirect:/users";
 	}
 		
+	
+	@GetMapping("/{id}/enabled/{status}")
+	public String updateUserEnabledStatus ( @PathVariable("id") Integer id,
+											@PathVariable("status") Boolean enabled, RedirectAttributes redirectAttributes) {
+		userService.updateUserEnabledStatus(id, enabled);
+		String status = enabled ? "enabled" : "disabled";
+		String message = "The user ID " + id + " has been " + status;
+		redirectAttributes.addFlashAttribute("message" , message);
+		
+		return "redirect:/users";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

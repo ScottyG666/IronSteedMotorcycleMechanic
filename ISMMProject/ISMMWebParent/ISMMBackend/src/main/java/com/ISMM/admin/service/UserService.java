@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.ISMM.admin.repository.UserRepository;
 import com.ISMM.common.domain.User;
 
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -65,31 +68,25 @@ public class UserService {
 		
 	}
 	
-	/*
-	 * 	This method is used to check if the email is unique when creating or editing a User
-	 * 	++If the email is the email of an existing user :
-	 * 		--this will return true if the email matches the retrieved user OR the Email does NOT
-	 * 			belong in the DataBase already
-	 * 		--This will return false if it matches an email from a user in the database that is 
-	 * 			NOT the retrieved user
-	 * 
-	 */
-	public boolean isEmailUnique(User user) {
-		User userByEmail = userRepo.getUserByEmail(user.getEmail());
+	
+	
+	public boolean isEmailUnique(Integer id, String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+				
+		if (userByEmail == null) return true;
 		
-		if (userByEmail != null) {
-			if (userByEmail.getId().equals(user.getId())) {
-				return true;
-			} else {
+		Boolean isCreatingNew = (id == null);
+
+		if (isCreatingNew) {
+			if (userByEmail != null) return false;
+		} else {
+			if(userByEmail.getId() != id) {
 				return false;
 			}
-		} else {
-			return true;			
 		}
 		
-		
+		return true;
 	}
-
 	
 	public void delete (Integer id) throws UserNotFoundException{
 		
@@ -104,7 +101,10 @@ public class UserService {
 	}
 	
 	
-	
+	public void updateUserEnabledStatus (Integer id ,Boolean enabled) {
+		
+		userRepo.updateEnabledStatus(id, enabled);
+	}
 	
 	
 	
