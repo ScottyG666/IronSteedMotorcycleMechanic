@@ -88,13 +88,6 @@ public class UserController {
 		return userService.isEmailUnique(id, email) ? "OK" : "Duplicated";
 	}
 	
-	/*
-	@PostMapping("/check_email")
-	@ResponseBody
-	public String checkDuplicateEmail(@RequestBody User user) {
-		return userService.isEmailUnique(user) ? "OK" : "Duplicated";
-	}*/
-	
 	@GetMapping("/edit/{id}" )
 	public String editUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
 		try {
@@ -112,6 +105,8 @@ public class UserController {
 	@GetMapping("/delete/{id}" )
 	public String deleteUser(@PathVariable(name = "id") Integer userId, ModelMap model, RedirectAttributes redirectAttributes) {
 		
+		String uploadDir = "user-photos/" + userId;
+		FileUploadUtil.deleteDir(uploadDir);
 		try {
 			userService.delete(userId);
 			
@@ -120,8 +115,7 @@ public class UserController {
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			
-		}
-		
+		}		
 		return "redirect:/users";
 	}
 		

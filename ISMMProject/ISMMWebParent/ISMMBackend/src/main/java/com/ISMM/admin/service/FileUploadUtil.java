@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
@@ -52,4 +53,33 @@ public class FileUploadUtil {
 			System.out.println("Could not list directory: " + dirPath);
 		}
 	}
+	
+	public static void deleteDir (String dir) {
+		Path dirPath = Paths.get(dir);
+		
+		try {
+			FileUtils.deleteDirectory(dirPath.toFile());			
+		} catch (IOException ex) {
+			System.out.println("Could not find directory: " + dirPath);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
