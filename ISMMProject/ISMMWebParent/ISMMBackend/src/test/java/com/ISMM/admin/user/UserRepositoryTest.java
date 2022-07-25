@@ -2,19 +2,24 @@ package com.ISMM.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import com.ISMM.admin.repository.UserRepository;
 import com.ISMM.common.domain.Role;
 import com.ISMM.common.domain.User;
 
-@DataJpaTest
+@DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class UserRepositoryTest {
@@ -144,6 +149,22 @@ public class UserRepositoryTest {
 	}
 	
 	
+	/*
+	 * This test is ran with 23 users imported from sample data
+	 */
+	@Test
+	public void testListFirstPage() {
+		int pageNumber = 1;
+		int pageSize = 4;
+		
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<User> page = userRepo.findAll(pageable);
+		
+		List<User> listOfUsers = page.getContent();
+		listOfUsers.forEach(user -> System.out.println(user));
+		
+		assertThat(listOfUsers.size()).isEqualTo(pageSize);
+	}
 	
 	
 	

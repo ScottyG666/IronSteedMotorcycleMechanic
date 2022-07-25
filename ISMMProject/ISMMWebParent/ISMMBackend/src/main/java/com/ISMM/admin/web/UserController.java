@@ -1,9 +1,11 @@
 package com.ISMM.admin.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,10 +37,25 @@ public class UserController {
 	private RoleService roleService;
 	
 	@GetMapping("")
-	public String listAll (ModelMap model) {
-		List<User> listOfUsers = userService.listAll();
-		model.put("listOfUsers", listOfUsers);
+	public String listFirstPage (ModelMap model) {
+		return listByPage(1, model);
+	}
+	
+	@GetMapping("/page/{pageNum}")
+	public String listByPage(@PathVariable(name = "pageNum") Integer pageNum, ModelMap model) {
+		Page<User> page = userService.listByPage(pageNum);
+		List<User> listOfUsers = page.getContent();
+		long startCount = (pageNum - 1) * userService.USERS_PER_PAGE + 1;
+		long endCount = startCount + userService.USERS_PER_PAGE - 1;
 		
+		if(endCount > page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
+ 		
+		model.put("startCount", startCount);
+		model.put("endCount", endCount);
+		model.put("totalItems", page.getTotalElements());
+		model.put("listOfUsers", listOfUsers);
 		return "users";
 	}
 	
