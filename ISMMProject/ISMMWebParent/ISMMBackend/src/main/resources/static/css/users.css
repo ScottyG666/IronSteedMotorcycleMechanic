@@ -13,3 +13,7 @@
 .user-edit-icons {
 	display: flex;
 }
+
+#thumbnail {
+    width: 100px;
+}

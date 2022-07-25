@@ -13,3 +13,9 @@
 .shadow-danger-custom {
     box-shadow: 0 0 8px 3px red;
 }
+
+
+#thumbnail {
+    height: 200px;
+    width: 160px;
+}

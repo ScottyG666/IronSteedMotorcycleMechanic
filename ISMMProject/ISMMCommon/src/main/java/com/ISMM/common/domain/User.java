@@ -1,5 +1,6 @@
 package com.ISMM.common.domain;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +37,6 @@ public class User {
 	@Column(length = 64)
 	private String photos;
 	
-	//@Column(nullable = false)
 	private Boolean enabled;
 	
 	@ManyToMany
@@ -131,10 +131,14 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", Password= " + password + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userRoles=" + userRoles + ", enabled= " + enabled + "]";
+				+ ", userRoles=" + userRoles + ", enabled= " + enabled + ", Photos=" + photos +  "]";
 	}
 
-	
+	@Transient
+	public String getPhotosImagePath() {
+		if(id == null || photos == null) return "/images/default-user.png";
+		return "/user-photos/" + this.id + "/" + this.photos;
+	}
 	
 	
 }

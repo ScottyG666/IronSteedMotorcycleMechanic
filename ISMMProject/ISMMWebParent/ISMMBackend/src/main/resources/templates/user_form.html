@@ -57,6 +57,7 @@
             </div>
         
             <form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+            enctype="multipart/form-data"
             th:object="${user}"  onsubmit="return checkEmailUnique(this);">
 
                 <input type="hidden"  th:field="*{id}">
@@ -146,11 +147,10 @@
         
         </div>
 
+        <script th:src="@{/js/user_form.js}"></script>
         <script>
-            document.querySelector("#buttonCancel").addEventListener("click" , () => {
-                window.location = "[[@{/users}]]";
-                });
-                
+            moduleURL = "[[@{/users}]]";
+
             function checkEmailUnique(form) {
                 var url = "[[@{/users/check_email}]]";
                 var userEmail = $("#email").val();
@@ -170,15 +170,7 @@
                 return false;
                     }  
                     
-                    
-         	function showModalDIalog (title, message) {
-                $("#modalTitle").text(title);
-                $("#modalBody").text(message)
-                $("#modalDialog").modal();
-            }
-            
         </script>
-        <script th:src="@{/js/user_form.js}"></script>
 
     </body>
     </html>
