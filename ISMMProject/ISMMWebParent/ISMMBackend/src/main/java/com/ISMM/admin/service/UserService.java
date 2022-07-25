@@ -32,7 +32,7 @@ public class UserService {
 		return listOfUsers;
 	}
 
-	public void saveUser(User user) {
+	public User saveUser(User user) {
 		Boolean isUpdatingUser = (user.getId() != null);
 		
 		if(isUpdatingUser) {
@@ -45,7 +45,7 @@ public class UserService {
 		} else {
 			encodePassword(user);
 		}
-		userRepo.save(user);
+		return userRepo.save(user);
 	}
 	
 	private void encodePassword(User user) {
