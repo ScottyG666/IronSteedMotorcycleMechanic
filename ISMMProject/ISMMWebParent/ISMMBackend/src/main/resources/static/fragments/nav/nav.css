@@ -21,34 +21,11 @@ nav {
 	color:black;
 }
 
-/*
-
-html, body {
-	height: 100%;
+#paginationNav{
+	padding: 5px 0;
+	margin-bottom: 5px;
 }
 
-body {
-	margin: 0;
+#paginationNavContent{
+	margin-bottom: 0;
 }
-
-nav >a, a> img {
-    height: 100%;
-}
-
-.nav-list-container {
-	display: flex;
-	width: 50%;
-	align-items: center;
-	margin-right: 15px;
-}
-
-.nav-list-container > ul {
-	width:100%;
-	display:flex;
-	align-items: center;
-	justify-content: space-between;
-	list-style-type: none;
-
-}
-
-*/
