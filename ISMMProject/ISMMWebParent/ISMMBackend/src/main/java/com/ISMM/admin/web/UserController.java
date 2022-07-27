@@ -38,20 +38,29 @@ public class UserController {
 	
 	@GetMapping("")
 	public String listFirstPage (ModelMap model) {
-		return listByPage(1, model);
+		return listByPage(1, model , "firstName" , "asc");
 	}
 	
 	@GetMapping("/page/{pageNum}")
-	public String listByPage(@PathVariable(name = "pageNum") Integer pageNum, ModelMap model) {
-		Page<User> page = userService.listByPage(pageNum);
+	public String listByPage(@PathVariable(name = "pageNum") Integer pageNum, ModelMap model,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir) {
+		
+		System.out.println("Sort Field: " + sortField);
+		System.out.println("Sort Order: " + sortDir);
+		
+		
+		Page<User> page = userService.listByPage(pageNum, sortField, sortDir);
 		List<User> listOfUsers = page.getContent();
-		long startCount = (pageNum - 1) * userService.USERS_PER_PAGE + 1;
-		long endCount = startCount + userService.USERS_PER_PAGE - 1;
+		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
+		long endCount = startCount + UserService.USERS_PER_PAGE - 1;
 		
 		if(endCount > page.getTotalElements()) {
 			endCount = page.getTotalElements();
 		}
  		
+		model.put("currentPage", pageNum);
+		model.put("totalPages", page.getTotalPages());
+
 		model.put("startCount", startCount);
 		model.put("endCount", endCount);
 		model.put("totalItems", page.getTotalElements());

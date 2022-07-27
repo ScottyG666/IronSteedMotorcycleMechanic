@@ -3,6 +3,10 @@
 	--textContrastColor: white;
 }
 
+thead {
+	background: var(--pageAccentColor);
+	color: var(--textContrastColor);
+}
 
 *.icon-white {color:white}
 *.icon-silver {color:silver}
