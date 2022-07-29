@@ -30,8 +30,17 @@ emailInputBox.addEventListener('blur' , () => {
 })
 
 
-$(document).ready(function() {
+$(function() {
 
+
+
+
+
+
+
+
+
+	/*
 	$("form").submit( () => {
 		var url = "[[@{/users/check_email}]]";
 		var userEmail = $("#email").val();
@@ -54,6 +63,6 @@ $(document).ready(function() {
 		return false;
 			}  
 			 )
-	
+	*/
 });
 
