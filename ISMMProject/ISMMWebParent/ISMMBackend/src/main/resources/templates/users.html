@@ -5,14 +5,13 @@
     <title>Home ISMM Admin</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
   
-  	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" ></script>
-
-
+    
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   	<link th:href="@{/fragments/nav/nav.css}" type="text/css" rel="stylesheet">
 	<link rel="stylesheet"  type="text/css" th:href="@{/fontawesome/all.css}">
-
     <link rel="stylesheet" type="text/css" th:href="@{/css/users.css}">
 
 </head>
@@ -62,18 +61,32 @@
         <div th:if="${message != null}" class="alert alert-success text-center">
             [[${message}]]
         </div>
+
+        <div>
+            <form th:action="@{/users/page/1}" class="form-inline m-3">
+                <input type="hidden" name="sortField" th:value="${sortField}" />
+                <input type="hidden" name="sortDir" th:value="${sortDir}" />
+                Filter: &nbsp;
+                <input type="search" name="keyWord" th:value="${keyWord}" class="form-control" required/>
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="btn btn-primary" />
+                &nbsp;&nbsp;
+                <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()" />
+
+            </form>
+        </div>
         
         <div class="display-users-table">
             <table class="table table-bordered table-striped table-hover table-responsive-xl">
                 <thead>
                     <tr>
-                        <th>User ID</th>
+                        <th th:replace="fragments/users/users :: column_link('id' , 'User ID')" />
                         <th>Photos</th>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th th:replace="fragments/users/users :: column_link('email' , 'E-mail')" />
+                        <th th:replace="fragments/users/users :: column_link('firstName' , 'First Name')" />
+                        <th th:replace="fragments/users/users :: column_link('lastName' , 'Last Name')" />
                         <th>Roles</th>
-                        <th>Enabled</th>
+                        <th th:replace="fragments/users/users :: column_link('enabled' , 'Enabled')" />
                         <th></th>
                     </tr>
                 </thead>
@@ -125,30 +138,30 @@
     </div>
 
         <!--Navigation for bootstrap pagination pages-->
-    <div>
+    <div th:if="${totalPages > 1}">
         <nav id="paginationNav">
             <ul class="pagination justify-content-center" id="paginationNavContent">
                 <!--Button for jumping to the first users within the pagination list page-->
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled' } " >
-                    <a class="page-link" th:href="@{/users/page/1}">First</a>
+                    <a th:replace="fragments/users/users :: page_link(1 , 'First')" ></a>
                 </li>
                 <!--Button for jumping to the previous sequential pagination list page-->
                 <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled' } ">
-                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1}}">Previous</a>
+                    <a th:replace="fragments/users/users :: page_link(${currentPage} -1, 'Previous')" ></a>
                 </li>
 
 
                 <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
                     th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a class="page-link" th:href="@{'/users/page/' + ${i}}" >[[${i}]]</a>
+                    <a th:replace="fragments/users/users :: page_link(${i} , ${i})" ></a>
                 </li>
 
                 <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled' } ">
-                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1}}">Next</a>
+                    <a th:replace="fragments/users/users :: page_link(${currentPage} +1 , 'Next')" ></a>
                 </li>
 
                 <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled' } " >
-                    <a class="page-link" th:href="@{'/users/page/' + ${totalPages}}">Last</a>
+                    <a th:replace="fragments/users/users :: page_link(${totalPages} , 'Last')" ></a>
                 </li>
             </ul>
           </nav>
@@ -187,6 +200,9 @@
             });
         }); 
 
+        function clearFilter() {
+            window.location = "[[@{/users}]]"
+        }
     </script>
 </body>
 </html>
