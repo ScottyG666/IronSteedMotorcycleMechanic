@@ -38,18 +38,19 @@ public class UserController {
 	
 	@GetMapping("")
 	public String listFirstPage (ModelMap model) {
-		return listByPage(1, model , "firstName" , "asc");
+		return listByPage(1, model , "firstName" , "asc", null);
 	}
 	
 	@GetMapping("/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") Integer pageNum, ModelMap model,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir) {
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
+			@Param("keyWord") String keyWord) {
 		
 		System.out.println("Sort Field: " + sortField);
 		System.out.println("Sort Order: " + sortDir);
 		
 		
-		Page<User> page = userService.listByPage(pageNum, sortField, sortDir);
+		Page<User> page = userService.listByPage(pageNum, sortField, sortDir, keyWord);
 		List<User> listOfUsers = page.getContent();
 		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
 		long endCount = startCount + UserService.USERS_PER_PAGE - 1;
@@ -57,6 +58,8 @@ public class UserController {
 		if(endCount > page.getTotalElements()) {
 			endCount = page.getTotalElements();
 		}
+		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
  		
 		model.put("currentPage", pageNum);
 		model.put("totalPages", page.getTotalPages());
@@ -65,6 +68,11 @@ public class UserController {
 		model.put("endCount", endCount);
 		model.put("totalItems", page.getTotalElements());
 		model.put("listOfUsers", listOfUsers);
+		model.put("sortField", sortField);
+		model.put("sortDir", sortDir);
+		model.put("reverseSortDir", reverseSortDir);
+		model.put("keyWord", keyWord);
+
 		return "users";
 	}
 	
@@ -100,10 +108,9 @@ public class UserController {
 			
 			userService.saveUser(user);			
 		}
-		
-		
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully!");
-		return "redirect:/users";
+		
+		return userService.getRedirectURLOfAffectedUser(user);
 	}
 	
 	

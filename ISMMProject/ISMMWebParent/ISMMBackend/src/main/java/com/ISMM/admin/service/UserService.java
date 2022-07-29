@@ -38,13 +38,17 @@ public class UserService {
 		return listOfUsers;
 	}
 	
-	public Page<User> listByPage(int pageNum, String sortField, String sortDir) {
+	public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyWord) {
 		
 		Sort sort = Sort.by(sortField);
 		
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		
 		Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
+		
+		if(keyWord != null ) {
+			return userRepo.findAll(keyWord, pageable);
+		}
 		return userRepo.findAll(pageable);
 	}
 
@@ -123,7 +127,10 @@ public class UserService {
 	}
 	
 	
-	
+	public String getRedirectURLOfAffectedUser (User user) {
+		String firstPartOfEmail = user.getEmail().split("@")[0];
+		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyWord=" + firstPartOfEmail;
+	}
 	
 	
 	
