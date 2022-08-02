@@ -12,6 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 
+	
+	/**
+	 * 
+	 * @param uploadDir
+	 * @param fileName
+	 * @param multipartFile
+	 * @throws IOException
+	 */
 	public static void saveFile(String uploadDir , String fileName, MultipartFile multipartFile) throws IOException {
 
 //		Converts String Path name to URI
@@ -29,10 +37,8 @@ public class FileUploadUtil {
 			//Copy method accepts (InputStream to read from, Target for the file path, and an optional for how the copy
 			//			Should be done)
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			
 		} catch (IOException ex) {
 			throw new IOException("Could not save file: " + fileName , ex);
-			
 		}
 	}
 	

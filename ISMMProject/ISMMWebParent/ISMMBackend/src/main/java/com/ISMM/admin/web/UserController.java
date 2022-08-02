@@ -144,9 +144,7 @@ public class UserController {
 		FileUploadUtil.deleteDir(uploadDir);
 		try {
 			userService.delete(userId);
-			
 			redirectAttributes.addFlashAttribute("message" ,"The user ID " + userId + " has been deleted.");
-			
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			
