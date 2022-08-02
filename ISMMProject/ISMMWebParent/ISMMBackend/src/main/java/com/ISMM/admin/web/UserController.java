@@ -1,8 +1,9 @@
 package com.ISMM.admin.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.admin.service.RoleService;
+import com.ISMM.admin.service.UserCSVExporter;
 import com.ISMM.admin.service.UserNotFoundException;
 import com.ISMM.admin.service.UserService;
 import com.ISMM.common.domain.User;
@@ -165,7 +167,13 @@ public class UserController {
 	}
 	
 	
-	
+	@GetMapping("/export/csv")
+	public void exportToCSV( HttpServletResponse response) throws IOException {
+		List<User> lstOfUsers = userService.listAll();
+		UserCSVExporter exporter = new UserCSVExporter();
+		
+		exporter.export(lstOfUsers, response);
+	}
 	
 	
 	

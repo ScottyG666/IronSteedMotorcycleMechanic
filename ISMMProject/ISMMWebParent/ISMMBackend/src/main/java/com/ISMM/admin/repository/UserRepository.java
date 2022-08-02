@@ -22,13 +22,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ',"
 			+ " u.lastName) LIKE %?1%")
 	public Page<User> findAll(String keyword, Pageable pageable);
-	/*
-	 *  u.firstName LIKE %?1% OR u.lastName LIKE %?1%" 
-			+ " OR u.email LIKE %?1%")
-	 */
-	
-	
-	
 	
 	@Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1 ")
 	@Modifying

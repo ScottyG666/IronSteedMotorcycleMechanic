@@ -17,6 +17,11 @@
 	</properties>
 	<dependencies>
 	<!-- See Parent Project for dependencies  -->
+		<dependency>
+			<groupId>net.sf.supercsv</groupId>
+			<artifactId>super-csv</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 	
 	</dependencies>
 
