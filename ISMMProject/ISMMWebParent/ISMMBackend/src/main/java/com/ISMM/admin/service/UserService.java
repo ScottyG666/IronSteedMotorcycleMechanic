@@ -33,7 +33,7 @@ public class UserService {
 	public List<User> listAll() {
 		List<User> listOfUsers = new ArrayList<>();
 		
-		userRepo.findAll().forEach(listOfUsers::add);
+		userRepo.findAll(Sort.by("firstName").ascending()).forEach(listOfUsers::add);
 		
 		return listOfUsers;
 	}
