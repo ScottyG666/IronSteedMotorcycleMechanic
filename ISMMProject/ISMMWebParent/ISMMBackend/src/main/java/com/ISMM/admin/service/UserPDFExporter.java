@@ -40,14 +40,28 @@ public class UserPDFExporter extends AbstractExporter{
 		 PdfPTable table = new PdfPTable(6);
 		 table.setWidthPercentage(100f);
 		 table.setSpacingBefore(10);
+		 table.setWidths(new float[] {1.2f, 3.5f, 3.0f, 3.0f, 3.0f, 1.7f});
 		 
 		 writeTableHeader(table);
+		 writeTableData( table, listToExport);
 		 
 		 document.add(table);
 		 
 		 document.close();
 		 
 	 }
+
+	private void writeTableData(PdfPTable table, List<User> listUsers) {
+		for (User user : listUsers) {
+			table.addCell(String.valueOf(user.getId()));
+			table.addCell(user.getEmail());
+			table.addCell(user.getFirstName());
+			table.addCell(user.getLastName());
+			table.addCell(user.getUserRoles().toString());
+			table.addCell(String.valueOf(user.getEnabled()));
+		}
+		
+	}
 
 	private void writeTableHeader(PdfPTable table) {
 		PdfPCell cell = new PdfPCell();
@@ -57,7 +71,7 @@ public class UserPDFExporter extends AbstractExporter{
 		Font font = FontFactory.getFont(FontFactory.HELVETICA);
 		font.setColor(Color.WHITE);
 		
-		cell.setPhrase(new Phrase("User ID" , font));
+		cell.setPhrase(new Phrase("ID" , font));
 		table.addCell(cell);
 		
 		cell.setPhrase(new Phrase("E-mail" , font));
