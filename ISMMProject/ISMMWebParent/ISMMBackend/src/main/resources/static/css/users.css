@@ -35,9 +35,11 @@ thead {
 	/*medium screen */
 	div.full-details {display : block}
 	div.less-details {display : none}
+	.hideable-column {display : none}
 }
 
 
 @media screen and (min-width: 1024px)  {
 	div.less-details {display : none}
+	th, td .hideable-column {display : table-cell}
 }
