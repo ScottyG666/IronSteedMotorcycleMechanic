@@ -1,0 +1,14 @@
+:root{
+	--pageAccentColor: #254fa8;
+	--textContrastColor: white;
+}
+
+.logoImage {
+    background-color: var(--pageAccentColor);
+    border-radius: 25px;
+}
+
+.loginForm {
+    max-width: 350px;
+    margin : 0 auto;
+}
