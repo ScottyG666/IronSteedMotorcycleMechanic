@@ -4,6 +4,12 @@
 }
 
 
+*.icon-white {color:white}
+*.icon-silver {color:silver}
+*.icon-green {color:green}
+*.icon-dark {color:gray}
+
+
 .company-logo {
 	height: 6em;
 }
@@ -13,7 +19,7 @@ nav {
     background-color: var(--pageAccentColor);
 }
 
-#topNavbar ul li a {
+#topNavbar ul li >a {
 	color: var(--textContrastColor);
 }
 
