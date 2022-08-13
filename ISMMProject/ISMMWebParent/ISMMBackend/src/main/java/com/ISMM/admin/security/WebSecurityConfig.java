@@ -19,6 +19,7 @@ import com.ISMM.admin.security.service.ISMMUserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Bean
 	public UserDetailsService userDetailsService () {
 		return new ISMMUserDetailsService();
@@ -30,7 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * 
+	 * @return A {@linkplain DaoAuthenticationProvider} Object with the UserDetailsService assigned to an instance of 
+	 * 			ISMMUserDetailsService and the PasswordEncoder assigned to a BCryptPasswordEncoder.
+	 * 			
+	 */
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
@@ -40,12 +47,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 	
-	
+	/**
+	 * Passing the custom created authenticationProvider() created above into the {@linkplain AuthenticationManagerBuilder}
+	 * 		as the authenticationProvider
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
+	/**
+	 * 	Authentication configuration for access to the Admin Control panel. The form submitted
+	 * 		via the .loginPage with a designated input fields assigned with names.
+	 * 		-Email designated as the Username field for authentication
+	 * 
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
@@ -58,9 +74,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 			.and()
 				.logout()
-				.permitAll();
+				.permitAll()
+			.and()
+				.rememberMe();
 	}
 
+	
+	/**
+	 * Allows access to these specified folders without authenticating the user, IE: the Login page
+	 * 	 still able to be styalized.
+	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/images/**", "/js/**" , "/webjars/**", "/css/**" );
