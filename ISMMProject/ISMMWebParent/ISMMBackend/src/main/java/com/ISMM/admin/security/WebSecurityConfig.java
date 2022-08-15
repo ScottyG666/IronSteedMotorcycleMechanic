@@ -78,6 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.rememberMe()
 				.key("AbcDefgHijklmnOpqrs_1234567890")
+				//Reduces the token validity from 2 weeks (default) to one week 
+				//	(7 days * 24 hours * 60 minutes * 60 seconds)
 				.tokenValiditySeconds(7 * 24 * 60 * 60);
 	}
 
