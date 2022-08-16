@@ -3,4 +3,13 @@ $( function() {
         e.preventDefault();
         document.logoutForm.submit();
     })
-})
+customizeDropdownMenu();
+
+});
+
+
+function customizeDropdownMenu () {
+    $(".dropdown > a").click(function() {
+        location.href = this.href;
+    })
+}
