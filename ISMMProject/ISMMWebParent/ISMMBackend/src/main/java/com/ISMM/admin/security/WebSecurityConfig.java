@@ -81,12 +81,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//Reduces the token validity from 2 weeks (default) to one week 
 				//	(7 days * 24 hours * 60 minutes * 60 seconds)
 				.tokenValiditySeconds(7 * 24 * 60 * 60);
+		
 	}
 
 	
 	/**
 	 * Allows access to these specified folders without authenticating the user, IE: the Login page
-	 * 	 still able to be styalized.
+	 * 	 still able to be stylized.
 	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
