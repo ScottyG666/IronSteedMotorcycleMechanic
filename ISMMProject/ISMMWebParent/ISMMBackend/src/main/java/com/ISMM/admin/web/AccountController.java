@@ -17,7 +17,9 @@ public class AccountController {
 	@Autowired 
 	private UserService userService;
 	
-	@GetMapping("/account")
+	//AuthentiationPrincipal security annotation to grab the object representing the current logged
+	//	in user
+	@GetMapping("")
 	public String viewDetails(@AuthenticationPrincipal ISMMUserDetails loggedUser, 
 							  ModelMap model) {
 		String email = loggedUser.getUsername();

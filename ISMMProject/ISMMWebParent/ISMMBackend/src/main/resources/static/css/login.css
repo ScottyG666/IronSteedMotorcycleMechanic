@@ -6,6 +6,7 @@
 .logoImage {
     background-color: var(--pageAccentColor);
     border-radius: 25px;
+    max-width: 450px;
 }
 
 .loginForm {
