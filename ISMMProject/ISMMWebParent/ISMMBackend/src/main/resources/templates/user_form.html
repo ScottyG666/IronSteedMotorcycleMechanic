@@ -57,7 +57,7 @@
                     </div>
                     <!--Lists each of the availabale roles for employees, can select multiple roles-->
                     <div class="form-group row">
-                        <label class="col-sm-4 col-form-label" >Roles:</label>
+                        <label class="col-sm-4 col-form-label" >Assigned Roles:</label>
                         <div class="col-sm-8">
                             <th:block th:each="role : ${listOfRoles}">
                                 <input type="checkbox" name="Users Role" th:field="*{userRoles}"
