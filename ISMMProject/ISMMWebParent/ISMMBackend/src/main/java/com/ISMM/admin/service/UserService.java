@@ -68,6 +68,32 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
+	
+	/**
+	 * 	Limits the fields the user is able to edit within their own profile.
+	 * 	Fields that persist if left empty: Password & Photos
+	 * 	Fields that get saved every time: First name and Last name
+	 * @param userInForm
+	 * @return A User Object for re-displaying to the console
+	 */
+	public User updateAccount(User userInForm) {
+		User userInDB =  userRepo.findById(userInForm.getId()).get();
+		
+		if(!userInForm.getPassword().isEmpty()) {
+			userInDB.setPassword(userInForm.getPassword());
+		}
+		
+		if(userInForm.getPhotos() != null) {
+			userInDB.setPhotos(userInForm.getPhotos());
+		}
+		
+		userInDB.setFirstName(userInForm.getFirstName());
+		userInDB.setLastName(userInForm.getLastName());
+		
+		return userRepo.save(userInDB);
+	
+	}
+	
 	private void encodePassword(User user) {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
