@@ -10,6 +10,7 @@ eyeIcons.forEach( (eyeIcon) => {
 				document.querySelector("#password").type = 'text'
 			} else {
 				document.querySelector("#confirmPassword").type = 'text'
+
 			}
 		} else {
 			eyeIcon.classList.replace('fa-eye-slash', 'fa-eye')
@@ -53,7 +54,13 @@ function showImageThumbnail(fileInput) {
 	reader.readAsDataURL(file);
 }
 
-
+function checkPasswordMatch(confirmPasswordField) {
+	if (confirmPasswordField.value != $("#password").val()) {
+		confirmPasswordField.setCustomValidity("Passwords do not match!")
+	} else {
+		confirmPasswordField.setCustomValidity("")
+	}
+}
                     
 function showModalDIalog (title, message) {
     $("#modalTitle").text(title);
