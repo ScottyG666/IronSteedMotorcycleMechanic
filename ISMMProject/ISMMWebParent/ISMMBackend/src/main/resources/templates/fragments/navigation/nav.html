@@ -22,13 +22,25 @@
             <!-- Expanded navigational list-->
             <div class="collapse navbar-collapse" id="topNavbar">		<!--nav-list-container-->
                 <ul class="navbar-nav">
-                    <!--Model for how to structure the items within the list with the accompanying bootstrap classes-->
-                    <li class="nav-item">
-                        <a  class="nav-link" th:href="@{/users}">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/customers}">Customers</a>
-                    </li>
+                    <!--Users Navigational link, seen only by Admins-->
+                    <th:block sec:authorize="hasAuthority('Admin')">
+                        <li class="nav-item">
+                            <a  class="nav-link" th:href="@{/users}">Users</a>
+                        </li>
+                    </th:block>
+                    <!--Customers navigational block, seen by Admins and editors-->
+                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Editor')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/customers}">Customers</a>
+                        </li>
+                    </th:block>
+
+                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Salesperson' , 'Editor' , 'Shipper')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/customers}">Customers</a>
+                        </li>
+                    </th:block>
+
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/salesReport}">Sales Report</a>
                     </li>
