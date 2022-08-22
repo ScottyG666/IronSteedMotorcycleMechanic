@@ -16,6 +16,10 @@
                     <h2>Your Account Details</h2>
                 </div>
 
+                <div th:if="${message != null}" class="alert alert-success text-center">
+                    [[${message}]]
+                </div>
+
                 <input type="hidden"  th:field="*{id}">
                 <div class="border border-secondary rounded p-3">
                     <!--Email input field-->
@@ -49,7 +53,7 @@
 
                             <input  type="password" th:field="*{password}" id="password" 
                                     class="form-control" placeholder="Leave blank to keep current password"
-                                    required minlength="8" maxlength="20"
+                                    minlength="8" maxlength="20"
                                     oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"/>
                                 
                             <div id="passwordEyeContainer">
@@ -64,7 +68,7 @@
                         <div id="passwordContainer" class="col-sm-8">
 
                             <input  type="password" id="confirmPassword" class="form-control"
-                                    required minlength="8" maxlength="20"
+                                    minlength="8" maxlength="20"
                                     oninput="checkPasswordMatch(this)"/>
 
                             <div id="passwordEyeContainer">

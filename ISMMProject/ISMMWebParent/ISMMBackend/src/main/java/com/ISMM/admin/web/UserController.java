@@ -190,21 +190,4 @@ public class UserController {
 		
 		exporter.export(listOfUsers, response);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

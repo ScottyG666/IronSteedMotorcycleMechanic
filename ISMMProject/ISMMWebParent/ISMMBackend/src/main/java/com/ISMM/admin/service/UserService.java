@@ -81,6 +81,7 @@ public class UserService {
 		
 		if(!userInForm.getPassword().isEmpty()) {
 			userInDB.setPassword(userInForm.getPassword());
+			encodePassword(userInDB);
 		}
 		
 		if(userInForm.getPhotos() != null) {
