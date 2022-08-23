@@ -4,19 +4,19 @@
 <body>
     <div class="container-fluid">
         <div th:replace="fragments/navigation/nav :: menu"></div>
-    </div>
-
-    <div>
-        <h2>Iron Steed Motorcycle Mechanics Control Panel</h2>
-        Welcome 
+        
+        <div>
+            <h2>Iron Steed Motorcycle Mechanics Control Panel</h2>
+            Welcome 
             <a th:href="@{/account}" sec:authentication="principal.fullName"></a>
             &nbsp;
             <span sec:authentication="principal.authorities" ></span>
+        </div>
+        
+        
+        <div th:replace="fragments/footer/footer :: footer"></div>
+        
+        
     </div>
-
-
-    <div th:replace="fragments/footer/footer :: footer"></div>
-    
-
 </body>
 </html>
