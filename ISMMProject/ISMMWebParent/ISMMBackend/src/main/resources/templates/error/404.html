@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+<head th:replace="fragments/headers/header :: page_head('Error - ISMM Admin')"></head>
+
+
+<body>
+    <div class="container-fluid text-center">
+        <div th:replace="fragments/navigation/nav :: menu"></div>
+
+        <div class=" m-3">
+            <h2>Sorry, the requested page could not be found</h2>
+        </div>
+        
+        <div th:replace="fragments/footer/footer :: footer"></div>
+    </div>
+    
+</body>
+</html>
