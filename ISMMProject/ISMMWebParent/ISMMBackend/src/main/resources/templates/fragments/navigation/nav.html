@@ -35,19 +35,18 @@
                         </li>
                     </th:block>
 
-                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Salesperson' , 'Editor' , 'Shipper')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Salesperson', 'Assistant' , 'Editor' , 'Shipper')">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/customers}">Customers</a>
+                            <a class="nav-link" th:href="@{/salesReport}">Sales Report</a>
                         </li>
                     </th:block>
-
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/salesReport}">Sales Report</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/settings}">Settings</a>
-                    </li>
-                    <li>
+                
+                        <th:block sec:authorize="hasAuthority('Admin')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/settings}">Settings</a>
+                        </li>
+                    </th:block>
+                        <li>
                         <span class="fas fa-user fa-2x icon-silver"></span>
                     </li>
                     <li class="nav-item dropdown">

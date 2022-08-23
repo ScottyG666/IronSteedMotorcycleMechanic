@@ -77,7 +77,7 @@ public class UserController {
 		model.put("reverseSortDir", reverseSortDir);
 		model.put("keyWord", keyWord);
 
-		return "users";
+		return "users/users";
 	}
 	
 	@GetMapping("/new")
@@ -90,7 +90,7 @@ public class UserController {
 		model.put("listOfRoles", roleService.retreiveListOfRoles());
 		model.put("pageTitle", "Create New User");
 		
-		return "user_form";
+		return "users/user_form";
 	}
 	
 	@PostMapping("/save")
@@ -132,7 +132,7 @@ public class UserController {
 			model.put("pageTitle", "Edit User (ID : " + userId + " )");
 			model.put("listOfRoles", roleService.retreiveListOfRoles());
 
-			return "user_form";
+			return "users/user_form";
 		} catch (UserNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/users";
