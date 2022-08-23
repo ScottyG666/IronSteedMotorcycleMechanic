@@ -8,18 +8,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadUtil.class);
 	
-	/**
-	 * 
-	 * @param uploadDir
-	 * @param fileName
-	 * @param multipartFile
-	 * @throws IOException
-	 */
+	
 	public static void saveFile(String uploadDir , String fileName, MultipartFile multipartFile) throws IOException {
 
 //		Converts String Path name to URI
@@ -51,7 +48,9 @@ public class FileUploadUtil {
 					try {
 						Files.delete(file);						
 					} catch (IOException ex) {
-						System.out.println("Could not delete file: " + file);
+						LOGGER.error("Could not delete file: " + file);
+						
+						//System.out.println("Could not delete file: " + file);
 					}
 				}
 			});
@@ -66,7 +65,10 @@ public class FileUploadUtil {
 		try {
 			FileUtils.deleteDirectory(dirPath.toFile());			
 		} catch (IOException ex) {
-			System.out.println("Could not find directory: " + dirPath);
+			
+			LOGGER.error("Could not find directory: " + dirPath);
+			
+			//System.out.println("Could not find directory: " + dirPath);
 		}
 		
 	}
