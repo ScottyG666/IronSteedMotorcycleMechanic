@@ -28,6 +28,14 @@
                             <a  class="nav-link" th:href="@{/users}">Users</a>
                         </li>
                     </th:block>
+
+                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Editor')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/categories}">Categories</a>
+                        </li>
+                    </th:block>
+
+
                     <!--Customers navigational block, seen by Admins and editors-->
                     <th:block sec:authorize="hasAnyAuthority('Admin' , 'Editor')">
                         <li class="nav-item">
