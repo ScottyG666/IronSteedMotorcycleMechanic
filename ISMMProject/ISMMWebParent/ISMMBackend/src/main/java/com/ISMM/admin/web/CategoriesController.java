@@ -23,5 +23,14 @@ public class CategoriesController {
 		model.put("listCategories", listCategories);
 		return "categories/categories";  
 	}
+	
+	@GetMapping("/categories/new") 
+	public String newCategory (ModelMap model) {
+		
+		model.put("category", new Category());
+		model.put("pageTitle", "Create New Category");
+		
+		return "categories/category_form";
+	}
 
 }
