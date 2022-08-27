@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ISMM.admin.service.CategoryService;
 import com.ISMM.common.domain.Category;
 
 @Controller
+@RequestMapping("/categories")
 public class CategoriesController {
 
 	@Autowired 
 	CategoryService catService;
 
-	@GetMapping("/categories")
+	@GetMapping("")
 	public String listAll(ModelMap model) {
 		List<Category> listCategories = catService.listAll();
 		
@@ -24,13 +26,13 @@ public class CategoriesController {
 		return "categories/categories";  
 	}
 	
-	@GetMapping("/categories/new") 
+	@GetMapping("/new") 
 	public String newCategory (ModelMap model) {
 		
 		model.put("category", new Category());
 		model.put("pageTitle", "Create New Category");
 		
-		return "categories/category_form";
+		return "categories/categories_form";
 	}
 
 }
