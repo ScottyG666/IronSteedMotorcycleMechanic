@@ -23,6 +23,11 @@ public class CategoryService {
 		return (List<Category>) catRepo.findAll();
 	}
 	
+	public Category save(Category category) {
+		return catRepo.save(category);
+	}
+	
+	
 	public List<Category> listCategoriesUsedInForm() {
 		List<Category> categoriesUsedInForm = new ArrayList<>();
 		
