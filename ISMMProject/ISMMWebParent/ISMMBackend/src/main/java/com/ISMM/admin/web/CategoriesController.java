@@ -28,8 +28,10 @@ public class CategoriesController {
 	
 	@GetMapping("/new") 
 	public String newCategory (ModelMap model) {
-		
+		List<Category> listCategories = catService.listCategoriesUsedInForm();
 		model.put("category", new Category());
+		model.put("listCategories", listCategories);
+
 		model.put("pageTitle", "Create New Category");
 		
 		return "categories/categories_form";
