@@ -1,4 +1,4 @@
-package com.ISMM.admin.service;
+package com.ISMM.admin.exceptions;
 
 public class UserNotFoundException extends Exception {
 
