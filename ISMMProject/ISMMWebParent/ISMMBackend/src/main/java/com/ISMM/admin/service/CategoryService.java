@@ -2,6 +2,7 @@ package com.ISMM.admin.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -20,9 +21,49 @@ public class CategoryService {
 	CategoryRepository catRepo;
 	
 	public List<Category> listAll() {
-		return (List<Category>) catRepo.findAll();
+		List<Category> rootCategories = catRepo.listRootCategories();
+		
+		return listHierarchicalCategories(rootCategories); 
 	}
 	
+	private List<Category> listHierarchicalCategories(List<Category> rootCategories) { //
+		List<Category> hierarchicalCategories = new ArrayList<>();
+		
+		for (Category rootCategory : rootCategories) {
+			hierarchicalCategories.add(Category.copyFull(rootCategory));
+			
+			Set<Category> children = rootCategory.getChildren(); //		sortSubCategories(rootCategory.getChildren(), sortDir);
+			
+			for (Category subCategory : children) {
+				String name = "--" + subCategory.getName();
+				hierarchicalCategories.add(Category.copyFull(subCategory, name));
+				
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1); //, sortDir
+			}
+		}
+		
+		return hierarchicalCategories;
+	}
+	
+	private void listSubHierarchicalCategories(List<Category> hierarchicalCategories,
+			Category parent, int subLevel) { //, String sortDir
+		Set<Category> children = parent.getChildren(); //		sortSubCategories(parent.getChildren(), sortDir);
+		int newSubLevel = subLevel + 1;
+		
+		for (Category subCategory : children) {
+			String name = "";
+			for (int i = 0; i < newSubLevel; i++) {				
+				name += "--";
+			}
+			name += subCategory.getName();
+		
+			hierarchicalCategories.add(Category.copyFull(subCategory, name));
+			
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel); //, sortDir
+		}
+		
+	}
+
 	public Category save(Category category) {
 		return catRepo.save(category);
 	}
@@ -45,7 +86,7 @@ public class CategoryService {
 					String name = "--" + subCategory.getName();
 					categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 					
-					listChildren(categoriesUsedInForm,subCategory, 1);
+					listSubCategoriesUsedInForm(categoriesUsedInForm,subCategory, 1);
 				}
 			}
 		}
@@ -53,7 +94,8 @@ public class CategoryService {
 		return categoriesUsedInForm;
 	}
 	
-	private void listChildren(List<Category> categoriesUsedInForm, Category parent, int sublevel) {
+	private void listSubCategoriesUsedInForm(	List<Category> categoriesUsedInForm, 
+												Category parent, int sublevel) {
 		int newSubLevel = sublevel + 1;
 		
 		Set<Category> children = parent.getChildren();
@@ -66,7 +108,7 @@ public class CategoryService {
 			}
 			name += subCategory.getName();
 			categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
-			listChildren(categoriesUsedInForm, subCategory, newSubLevel);
+			listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
 		}
 	}
 	

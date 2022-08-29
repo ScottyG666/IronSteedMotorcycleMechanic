@@ -55,8 +55,8 @@ public class CategoryRepositoryTest {
 		
 		Category secondaryParent = new Category(2);
 
-		Category cameras = new Category("Cameras", secondaryParent);
 		Category smartphones = new Category("Smartphones", secondaryParent);
+		Category cameras = new Category("Cameras", secondaryParent);
 		catRepo.saveAll(List.of(cameras, smartphones));
 	}
 	
@@ -129,6 +129,14 @@ public class CategoryRepositoryTest {
 			}
 			System.out.println(subCategory.getName());
 		}
+	}
+	
+	
+	@Test 
+	public void testListRootCategories() {
+		List<Category> rootCategories = catRepo.listRootCategories();
+		
+		rootCategories.forEach(cat -> System.out.println(cat.getName()));
 	}
 	
 }

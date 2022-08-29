@@ -12,9 +12,14 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.ISMM.common.domain.Category;
 
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
+	
+	
+	@Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
+	public List<Category> listRootCategories();
+
 	@Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
 	public List<Category> findRootCategories(Sort sort);
-
+	
 	@Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
 	public Page<Category> findRootCategories(Pageable pageable);
 	

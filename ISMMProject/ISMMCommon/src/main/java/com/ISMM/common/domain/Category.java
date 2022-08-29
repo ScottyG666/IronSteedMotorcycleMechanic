@@ -1,5 +1,6 @@
 package com.ISMM.common.domain;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -67,6 +68,22 @@ public class Category {
 		copyCategory.setName(name);
 		return copyCategory;
 	}
+	
+	public static Category copyFull(Category category) {
+		Category copyCategory = new Category();
+		copyCategory.setId(category.getId());
+		copyCategory.setName(category.getName());
+		copyCategory.setImage(category.getImage());
+		copyCategory.setAlias(category.getAlias());
+		copyCategory.setEnabled(category.isEnabled());
+		return copyCategory;
+	}
+	
+	public static Category copyFull(Category subCategory, String name2) {
+		Category copyCategory = Category.copyFull(subCategory);
+		return copyCategory;
+	}
+
 	
 	public Integer getId() {
 		return id;
