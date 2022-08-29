@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.service.CategoryService;
 import com.ISMM.admin.service.FileUploadUtil;
@@ -44,7 +45,8 @@ public class CategoriesController {
 	}
 	
 	@PostMapping("/save")
-	public String saveCategory(Category category, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+	public String saveCategory(	Category category, @RequestParam("fileImage") MultipartFile multipartFile,
+								RedirectAttributes rA) throws IOException {
 		
 		
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -55,6 +57,7 @@ public class CategoriesController {
 		String uploadDir = "../category-images/" + savedCategory.getId();
 		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		
+		rA.addFlashAttribute("message", "The category has been saved successfully!");
 		return "redirect:/categories";
 	}
 
