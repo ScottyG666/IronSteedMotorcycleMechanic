@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ISMM.admin.exceptions.CategoryNotFoundException;
 import com.ISMM.admin.repository.CategoryRepository;
 import com.ISMM.common.domain.Category;
 
@@ -112,6 +113,13 @@ public class CategoryService {
 		}
 	}
 	
+	public Category get(Integer id) throws CategoryNotFoundException {
+		try {
+			return catRepo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new CategoryNotFoundException("Could not find any category with ID " + id);
+		}
+	}
 }
 
 
