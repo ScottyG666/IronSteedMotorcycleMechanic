@@ -113,6 +113,33 @@ public class CategoryService {
 		}
 	}
 	
+	
+	public String checkUnique(Integer id, String name, String alias) {
+		boolean isCreatingNew = (id == null || id == 0);
+
+		Category categoryByName = catRepo.findByName(name);
+
+		if (isCreatingNew) {
+			if (categoryByName != null) {
+				return "DuplicateName";
+			} else {
+				Category categoryByAlias = catRepo.findByAlias(alias);
+				if (categoryByAlias != null) {
+					return "DuplicateAlias";	
+				}
+			}
+		} else {
+			if (categoryByName != null && categoryByName.getId() != id) {
+				return "DuplicateName";
+			}
+			Category categoryByAlias = catRepo.findByAlias(alias);
+			if (categoryByAlias != null && categoryByAlias.getId() != id) {
+				return "DuplicateAlias";
+			}
+		}
+		return "OK";
+	}
+	
 	public Category get(Integer id) throws CategoryNotFoundException {
 		try {
 			return catRepo.findById(id).get();
