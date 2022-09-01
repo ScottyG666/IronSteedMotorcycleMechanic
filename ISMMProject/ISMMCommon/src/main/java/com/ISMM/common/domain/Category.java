@@ -56,6 +56,14 @@ public class Category {
 		this.parent = parent;
 	}
 	
+	
+	
+	public Category(Integer id, String name, String alias) {
+		this.id = id;
+		this.name = name;
+		this.alias = alias;
+	}
+
 	public static Category copyIdAndName(Category category) {
 		Category copyCategory = new Category();
 		copyCategory.setId(category.getId());
@@ -79,8 +87,9 @@ public class Category {
 		return copyCategory;
 	}
 	
-	public static Category copyFull(Category subCategory, String name2) {
-		Category copyCategory = Category.copyFull(subCategory);
+	public static Category copyFull(Category category, String name) {
+		Category copyCategory = Category.copyFull(category);
+		copyCategory.setName(name);
 		return copyCategory;
 	}
 
