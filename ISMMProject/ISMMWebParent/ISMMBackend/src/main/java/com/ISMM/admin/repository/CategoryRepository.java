@@ -13,7 +13,7 @@ import com.ISMM.common.domain.Category;
 
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
 	
-	
+	//To be deleted
 	@Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
 	public List<Category> listRootCategories();
 
