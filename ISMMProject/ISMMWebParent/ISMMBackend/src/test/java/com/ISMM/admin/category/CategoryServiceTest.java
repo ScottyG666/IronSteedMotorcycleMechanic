@@ -27,7 +27,7 @@ public class CategoryServiceTest {
 	@Test
 	public void testUniqueInNewModelReturnDuplicateName() {
 		Integer id = null;
-		String name = "Computers" ;
+		String name = "UniqueName" ;
 		String alias = "abc" ;
 		
 		Category cat = new Category(id, name, alias);
@@ -36,7 +36,8 @@ public class CategoryServiceTest {
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(null);
 		
 		
-		String result = catService.checkUnique(id, name, alias);
+		String result = catService.checkUnique(id, name , alias);
+		
 		assertThat(result).isEqualTo("DuplicateName");
 	}
 	
