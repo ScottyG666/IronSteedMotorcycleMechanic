@@ -63,15 +63,20 @@ public class FileUploadUtil {
 		try {
 			FileUtils.deleteDirectory(dirPath.toFile());			
 		} catch (IOException ex) {
-			
 			LOGGER.error("Could not find directory: " + dirPath);
-			
-			//System.out.println("Could not find directory: " + dirPath);
 		}
-		
 	}
 	
-	
+	public static void removeDir(String dir) {
+		cleanDir(dir);
+
+		try {
+			Files.delete(Paths.get(dir));
+		} catch (IOException e) {
+			LOGGER.error("Could not remove directory: " + dir);
+		}
+
+	}
 	
 	
 	

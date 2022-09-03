@@ -91,6 +91,36 @@ public class CategoriesController {
 		}
 	}
 	
+	@GetMapping("/{id}/enabled/{status}")
+	public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
+			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+		catService.updateCategoryEnabledStatus(id, enabled);
+		String status = enabled ? "enabled" : "disabled";
+		String message = "The category ID " + id + " has been " + status;
+		redirectAttributes.addFlashAttribute("message", message);
+
+		return "redirect:/categories";
+	}
+	
+	@GetMapping("/categories/delete/{id}")
+	public String deleteCategory(@PathVariable(name = "id") Integer id, 
+			ModelMap model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			catService.delete(id);
+			String categoryDir = "../category-images/" + id;
+			FileUploadUtil.removeDir(categoryDir);
+
+			redirectAttributes.addFlashAttribute("message", 
+					"The category ID " + id + " has been deleted successfully");
+		} catch (CategoryNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+
+		return "redirect:/categories";
+	}	
+	
+	
 	@PostMapping("/check_unique")
 	@ResponseBody
 	public String checkUnique(	@Param("id") Integer id, @Param("name") String name,

@@ -39,11 +39,6 @@ public class CategoryService {
 		return listHierarchicalCategories(rootCategories, sortDir);
 	}
 
-	
-	/*
-	 * Left off @ 16:30 On #75
-	 */
-	
 	private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir) { //
 		List<Category> hierarchicalCategories = new ArrayList<>();
 		
@@ -184,4 +179,17 @@ public class CategoryService {
 
 		return sortedChildren;
 	}
+	
+	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
+		catRepo.updateEnabledStatus(id, enabled);
 	}
+	
+	public void delete(Integer id) throws CategoryNotFoundException {
+		Long countById = catRepo.countById(id);
+		if (countById == null || countById == 0) {
+			throw new CategoryNotFoundException("Could not find any category with ID " + id);
+		}
+
+		catRepo.deleteById(id);
+	}
+}
