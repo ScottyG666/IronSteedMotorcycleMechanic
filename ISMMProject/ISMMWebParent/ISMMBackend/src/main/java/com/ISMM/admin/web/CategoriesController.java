@@ -102,7 +102,7 @@ public class CategoriesController {
 		return "redirect:/categories";
 	}
 	
-	@GetMapping("/categories/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteCategory(@PathVariable(name = "id") Integer id, 
 			ModelMap model,
 			RedirectAttributes redirectAttributes) {
