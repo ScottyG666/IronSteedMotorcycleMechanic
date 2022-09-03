@@ -36,7 +36,7 @@ public class CategoryService {
 
 		List<Category> rootCategories = catRepo.findRootCategories(sort);
 
-		return listHierarchicalCategories(rootCategories);
+		return listHierarchicalCategories(rootCategories, sortDir);
 	}
 
 	
@@ -44,19 +44,19 @@ public class CategoryService {
 	 * Left off @ 16:30 On #75
 	 */
 	
-	private List<Category> listHierarchicalCategories(List<Category> rootCategories) { //
+	private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir) { //
 		List<Category> hierarchicalCategories = new ArrayList<>();
 		
 		for (Category rootCategory : rootCategories) {
 			hierarchicalCategories.add(Category.copyFull(rootCategory));
 			
-			Set<Category> children = sortSubCategories(rootCategory.getChildren());	//, sortDir
+			Set<Category> children = sortSubCategories(rootCategory.getChildren(), sortDir);
 			
 			for (Category subCategory : children) {
 				String name = "--" + subCategory.getName();
 				hierarchicalCategories.add(Category.copyFull(subCategory, name));
 				
-				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1); //, sortDir
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1, sortDir);
 			}
 		}
 		
@@ -64,8 +64,8 @@ public class CategoryService {
 	}
 	
 	private void listSubHierarchicalCategories(List<Category> hierarchicalCategories,
-			Category parent, int subLevel) { //, String sortDir
-		Set<Category> children = sortSubCategories(parent.getChildren());		//, sortDir
+			Category parent, int subLevel, String sortDir) { 
+		Set<Category> children = sortSubCategories(parent.getChildren(), sortDir);
 		int newSubLevel = subLevel + 1;
 		
 		for (Category subCategory : children) {
@@ -77,7 +77,7 @@ public class CategoryService {
 		
 			hierarchicalCategories.add(Category.copyFull(subCategory, name));
 			
-			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel); //, sortDir
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel, sortDir); 
 		}
 		
 	}

@@ -36,7 +36,9 @@ public class CategoriesController {
 		}
 		List<Category> listCategories = catService.listAll(sortDir);
 		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		model.put("listCategories", listCategories);
+		model.put("reverseSortDir", reverseSortDir);
 		return "categories/categories";  
 	}
 	
