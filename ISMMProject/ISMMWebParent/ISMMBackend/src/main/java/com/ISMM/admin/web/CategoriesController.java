@@ -30,8 +30,11 @@ public class CategoriesController {
 	CategoryService catService;
 
 	@GetMapping("")
-	public String listAll(ModelMap model) {
-		List<Category> listCategories = catService.listAll();
+	public String listAll(@Param("sortDir") String sortDir, ModelMap model) {
+		if (sortDir ==  null || sortDir.isEmpty()) {
+			sortDir = "asc";
+		}
+		List<Category> listCategories = catService.listAll(sortDir);
 		
 		model.put("listCategories", listCategories);
 		return "categories/categories";  

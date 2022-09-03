@@ -25,18 +25,32 @@ public class CategoryService {
 	@Autowired
 	CategoryRepository catRepo;
 	
-	public List<Category> listAll() {
-		List<Category> rootCategories = catRepo.findRootCategories(Sort.by("name").ascending());
+	public List<Category> listAll(String sortDir) {
+		Sort sort = Sort.by("name");
+
+		if (sortDir.equals("asc")) {
+			sort = sort.ascending();
+		} else if (sortDir.equals("desc")) {
+			sort = sort.descending();
+		}
+
+		List<Category> rootCategories = catRepo.findRootCategories(sort);
+
 		return listHierarchicalCategories(rootCategories);
 	}
 
+	
+	/*
+	 * Left off @ 16:30 On #75
+	 */
+	
 	private List<Category> listHierarchicalCategories(List<Category> rootCategories) { //
 		List<Category> hierarchicalCategories = new ArrayList<>();
 		
 		for (Category rootCategory : rootCategories) {
 			hierarchicalCategories.add(Category.copyFull(rootCategory));
 			
-			Set<Category> children = rootCategory.getChildren(); //		sortSubCategories(rootCategory.getChildren(), sortDir);
+			Set<Category> children = sortSubCategories(rootCategory.getChildren());	//, sortDir
 			
 			for (Category subCategory : children) {
 				String name = "--" + subCategory.getName();
@@ -51,7 +65,7 @@ public class CategoryService {
 	
 	private void listSubHierarchicalCategories(List<Category> hierarchicalCategories,
 			Category parent, int subLevel) { //, String sortDir
-		Set<Category> children = parent.getChildren(); //		sortSubCategories(parent.getChildren(), sortDir);
+		Set<Category> children = sortSubCategories(parent.getChildren());		//, sortDir
 		int newSubLevel = subLevel + 1;
 		
 		for (Category subCategory : children) {
@@ -83,7 +97,7 @@ public class CategoryService {
 			if(category.getParent() == null) {
 				categoriesUsedInForm.add(Category.copyIdAndName(category));
 				
-				Set<Category> children = category.getChildren();
+				Set<Category> children = sortSubCategories(category.getChildren());
 				
 				for (Category subCategory : children) {
 					
@@ -101,8 +115,7 @@ public class CategoryService {
 	private void listSubCategoriesUsedInForm(	List<Category> categoriesUsedInForm, 
 												Category parent, int sublevel) {
 		int newSubLevel = sublevel + 1;
-		
-		Set<Category> children = parent.getChildren();
+		Set<Category> children = sortSubCategories(parent.getChildren());
 		
 		for (Category subCategory : children) {
 			String name = "";
@@ -113,6 +126,14 @@ public class CategoryService {
 			name += subCategory.getName();
 			categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 			listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
+		}
+	}
+	
+	public Category get(Integer id) throws CategoryNotFoundException {
+		try {
+			return catRepo.findById(id).get();
+		} catch (NoSuchElementException ex) {
+			throw new CategoryNotFoundException("Could not find any category with ID " + id);
 		}
 	}
 	
@@ -143,18 +164,10 @@ public class CategoryService {
 		return "OK";
 	}
 	
-	public Category get(Integer id) throws CategoryNotFoundException {
-		try {
-			return catRepo.findById(id).get();
-		} catch (NoSuchElementException ex) {
-			throw new CategoryNotFoundException("Could not find any category with ID " + id);
-		}
-	}
-	
 	private SortedSet<Category> sortSubCategories(Set<Category> children) {
 		return sortSubCategories(children, "asc");
 	}
-	
+
 	private SortedSet<Category> sortSubCategories(Set<Category> children, String sortDir) {
 		SortedSet<Category> sortedChildren = new TreeSet<>(new Comparator<Category>() {
 			@Override
@@ -166,22 +179,9 @@ public class CategoryService {
 				}
 			}
 		});
-		
+
 		sortedChildren.addAll(children);
-		
+
 		return sortedChildren;
-	}
-	
-	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
-		catRepo.updateEnabledStatus(id, enabled);
-	}
-	
-	public void delete(Integer id) throws CategoryNotFoundException {
-		Long countById = catRepo.countById(id);
-		if (countById == null || countById == 0) {
-			throw new CategoryNotFoundException("Could not find any category with ID " + id);
-		}
-		
-		catRepo.deleteById(id);
 	}
 	}
