@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.exceptions.CategoryNotFoundException;
+import com.ISMM.admin.service.CategoryPageInfo;
 import com.ISMM.admin.service.CategoryService;
 import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.common.domain.Category;
@@ -30,17 +31,33 @@ public class CategoriesController {
 	CategoryService catService;
 
 	@GetMapping("")
-	public String listAll(@Param("sortDir") String sortDir, ModelMap model) {
+	public String listFirstPage(@Param("sortDir") String sortDir, ModelMap model) {
+		return listByPage(1, sortDir, model);
+	}
+	
+	@GetMapping("/page/{pageNum}") 
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
+			@Param("sortDir") String sortDir, ModelMap model) {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
-		List<Category> listCategories = catService.listAll(sortDir);
-		
+		CategoryPageInfo pageInfo = new CategoryPageInfo();
+		List<Category> listCategories = catService.listByPage(pageInfo, pageNum, sortDir);
+
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-		model.put("listCategories", listCategories);
-		model.put("reverseSortDir", reverseSortDir);
-		return "categories/categories";  
+
+		model.addAttribute("totalPages", pageInfo.getTotalPages());
+		model.addAttribute("totalItems", pageInfo.getTotalElements());
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("sortField", "name");
+		model.addAttribute("sortDir", sortDir);
+
+		model.addAttribute("listCategories", listCategories);
+		model.addAttribute("reverseSortDir", reverseSortDir);
+
+		return "categories/categories";		
 	}
+	
 	
 	@GetMapping("/new") 
 	public String newCategory (ModelMap model) {
