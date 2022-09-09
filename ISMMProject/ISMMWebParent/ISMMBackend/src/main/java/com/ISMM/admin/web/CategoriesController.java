@@ -46,14 +46,14 @@ public class CategoriesController {
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
-		model.addAttribute("totalPages", pageInfo.getTotalPages());
-		model.addAttribute("totalItems", pageInfo.getTotalElements());
-		model.addAttribute("currentPage", pageNum);
-		model.addAttribute("sortField", "name");
-		model.addAttribute("sortDir", sortDir);
+		model.put("totalPages", pageInfo.getTotalPages());
+		model.put("totalItems", pageInfo.getTotalElements());
+		model.put("currentPage", pageNum);
+		model.put("sortField", "name");
+		model.put("sortDir", sortDir);
 
-		model.addAttribute("listCategories", listCategories);
-		model.addAttribute("reverseSortDir", reverseSortDir);
+		model.put("listCategories", listCategories);
+		model.put("reverseSortDir", reverseSortDir);
 
 		return "categories/categories";		
 	}
