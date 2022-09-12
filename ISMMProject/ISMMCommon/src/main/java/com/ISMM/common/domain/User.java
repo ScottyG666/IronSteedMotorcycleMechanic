@@ -15,13 +15,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.ISMM.common.model.IDBasedEntity;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends IDBasedEntity{
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
+
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
 	
