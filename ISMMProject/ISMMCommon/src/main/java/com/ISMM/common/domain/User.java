@@ -48,7 +48,7 @@ public class User extends IDBasedEntity{
 			)
 	private Set<Role> userRoles = new HashSet<>();
 
-	//Constructors
+	
 	public User() {}
 	
 	
@@ -132,7 +132,7 @@ public class User extends IDBasedEntity{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", Password= " + password + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userRoles=" + userRoles + ", enabled= " + enabled + ", Photos=" + photos +  "]";
+				+ ", userRoles=" + userRoles +  "]";
 	}
 
 	@Transient
