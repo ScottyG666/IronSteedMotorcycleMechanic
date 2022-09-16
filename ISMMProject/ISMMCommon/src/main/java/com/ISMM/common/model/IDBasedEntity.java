@@ -18,4 +18,8 @@ public abstract class IDBasedEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}	
+	
+	public boolean isNew() {
+		return this.id == null;
+	}
 }
