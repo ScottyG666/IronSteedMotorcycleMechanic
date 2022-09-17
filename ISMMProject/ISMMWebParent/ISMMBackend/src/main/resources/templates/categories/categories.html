@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/headers/header :: page_head('Categories - ISMM Admin')" />
+<head th:replace="fragments/headers/header :: page_head('Inventory - ISMM Admin')" />
 <body>
 	<div class="container-fluid">
 		<div th:replace="fragments/navigation/nav :: menu"></div>
 		<div>
-			<h2>Manage Categories</h2>	
+			<h2>Manage Inventory</h2>	
 
-			<a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
-			<a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+			<a th:href="@{/inventory/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
+			<a th:href="@{/inventory/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 
 		</div>
 
@@ -19,7 +19,7 @@
 
 
 		<div>
-			<form th:action="@{/categories/page/1}" class="form-inline m-3">
+			<form th:action="@{/inventory/page/1}" class="form-inline m-3">
 				Filter:&nbsp;
 				<input type="search" name="keyWord" th:value="${keyWord}" class="form-control" required/>
 				&nbsp;&nbsp;
@@ -38,9 +38,9 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>ID</th>
-						<th>Category Image</th>
+						<th>Item Image</th>
 						<th>
-							<a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
+							<a class="text-white" th:href="@{'/inventory/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
 							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Alias</th>
@@ -67,7 +67,7 @@
 			</table>
 		</div>
 
-		<div th:replace="fragments/lists/lists :: pagination('/categories', 'top-level Categories')"></div>
+		<div th:replace="fragments/lists/lists :: pagination('/inventory', 'top-level Items')"></div>
 
 
 		<div th:replace="fragments/modal_fragments/modal :: confirm_modal"></div>
@@ -78,7 +78,7 @@
 	</div>
 	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
-		moduleURL = "[[@{/categories}]]";
+		moduleURL = "[[@{/inventory}]]";
 
 		$(document).ready(function() {
 			$(".link-delete").on("click", function(e) {

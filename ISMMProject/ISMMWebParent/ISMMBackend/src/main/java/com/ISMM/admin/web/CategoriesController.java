@@ -24,7 +24,7 @@ import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.common.domain.Category;
 
 @Controller
-@RequestMapping("/categories")
+@RequestMapping("/inventory")
 public class CategoriesController {
 
 	@Autowired 
@@ -87,7 +87,7 @@ public class CategoriesController {
 			catService.save(category);
 		}	
 		rA.addFlashAttribute("message", "The category has been saved successfully!");
-		return "redirect:/categories";
+		return "redirect:/inventory";
 	}
 	
 	@GetMapping("/edit/{id}")
