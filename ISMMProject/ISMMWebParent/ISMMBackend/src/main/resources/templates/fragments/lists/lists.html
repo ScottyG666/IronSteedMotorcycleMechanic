@@ -11,27 +11,27 @@
                             [[${label}]]
     </a>
 
-    <div th:fragment="category_status" th:remove="tag">
-        <a th:if="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
-            th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"
-            title="Disable this category"
+    <div th:fragment="inventory_item_status" th:remove="tag">
+        <a th:if="${invItem.enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
+            th:href="@{'/inventory/' + ${invItem.id} + '/enabled/false'}"
+            title="Disable this Item"
             ></a>
 
-        <a th:if="${cat.enabled == false}" class="fas fa-circle fa-2x icon-dark" 
-            th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}"
-            title="Enable this category"
+        <a th:if="${invItem.enabled == false}" class="fas fa-circle fa-2x icon-dark" 
+            th:href="@{'/inventory/' + ${invItem.id} + '/enabled/true'}"
+            title="Enable this Item"
             ></a>	
     </div>
 
-    <div th:fragment="category_actions" th:remove="tag">
-		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
-			title="Edit this category"></a>
+    <div th:fragment="inventory_item_action" th:remove="tag">
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/inventory/edit/' + ${invItem.id}}"
+			title="Edit this Item"></a>
 		&nbsp; 
-        <th:block th:if="${cat.hasChildren== false}">
+        <th:block th:if="${invItem.hasChildren== false}">
             <a class="fas fa-trash fa-2x icon-dark link-delete" 
-                th:href="@{'/categories/delete/' + ${cat.id}}"
-                th:entityId="${cat.id}"
-                title="Delete this category"></a>	
+                th:href="@{'/inventory/delete/' + ${invItem.id}}"
+                th:entityId="${invItem.id}"
+                title="Delete this Item"></a>	
         </th:block>
 	</div>	
 

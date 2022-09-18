@@ -40,7 +40,7 @@
 						<th>ID</th>
 						<th>Item Image</th>
 						<th>
-							<a class="text-white" th:href="@{'/inventory/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Category Name</a>
+							<a class="text-white" th:href="@{'/inventory/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Item Name</a>
 							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Alias</th>
@@ -49,18 +49,18 @@
 					</tr>								
 				</thead>
 				<tbody>
-					<tr th:each="cat : ${listCategories}">
-						<td>[[${cat.id}]]</td>
+					<tr th:each="invItem : ${listInventoryItems}">
+						<td>[[${invItem.id}]]</td>
 						<td>
-							<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>
+							<img th:src="@{${invItem.imagePath}}" style="width: 100px" class="img-fluid"/>
 						</td>
-						<td>[[${cat.name}]]</td>
-						<td>[[${cat.alias}]]</td>
+						<td>[[${invItem.name}]]</td>
+						<td>[[${invItem.alias}]]</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: category_status" />
+							<div th:replace="fragments/lists/lists :: inventory_item_status" />
 						</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: category_actions" />
+							<div th:replace="fragments/lists/lists :: inventory_item_action" />
 						</td>					
 					</tr>
 				</tbody>
@@ -83,7 +83,7 @@
 		$(document).ready(function() {
 			$(".link-delete").on("click", function(e) {
 				e.preventDefault();
-				showDeleteConfirmModal($(this), 'category');
+				showDeleteConfirmModal($(this), 'inventory item');
 			});
 		});
 	</script>

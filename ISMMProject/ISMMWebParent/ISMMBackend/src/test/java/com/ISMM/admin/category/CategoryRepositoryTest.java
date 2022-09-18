@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.ISMM.admin.repository.CategoryRepository;
-import com.ISMM.common.domain.Category;
+import com.ISMM.admin.repository.InventoryRepository;
+import com.ISMM.common.domain.InventoryItem;
 
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -21,19 +21,19 @@ import com.ISMM.common.domain.Category;
 public class CategoryRepositoryTest {
 
 	@Autowired
-	private CategoryRepository catRepo;
+	private InventoryRepository catRepo;
 	
 	@Test
 	public void testCreateRootCategory() {
 		
-		 	Category category = new Category("Computer");
-			Category savedCategory = catRepo.save(category);
+		 	InventoryItem category = new InventoryItem("Computer");
+			InventoryItem savedCategory = catRepo.save(category);
 			
 			assertThat(savedCategory.getId()).isGreaterThan(0);
 			
 	
-			Category secondCategory = new Category("Electronics");
-			Category secondarySavedCategory = catRepo.save(secondCategory);
+			InventoryItem secondCategory = new InventoryItem("Electronics");
+			InventoryItem secondarySavedCategory = catRepo.save(secondCategory);
 			
 			assertThat(secondarySavedCategory.getId()).isGreaterThan(0);
 		
@@ -42,21 +42,21 @@ public class CategoryRepositoryTest {
 	
 	@Test
 	public void createSubCategorys() {
-		Category primaryParent = new Category(1);
-		Category primarySubCategory = new Category("Desktop", primaryParent);
-		Category primarySavedCategory = catRepo.save(primarySubCategory);
+		InventoryItem primaryParent = new InventoryItem(1);
+		InventoryItem primarySubCategory = new InventoryItem("Desktop", primaryParent);
+		InventoryItem primarySavedCategory = catRepo.save(primarySubCategory);
 		assertThat(primarySavedCategory.getId()).isGreaterThan(0);
 		
 		
-		Category laptops = new Category("Laptops", primaryParent);
-		Category components = new Category("Computer Components", primaryParent);
+		InventoryItem laptops = new InventoryItem("Laptops", primaryParent);
+		InventoryItem components = new InventoryItem("Computer Components", primaryParent);
 		catRepo.saveAll(List.of(laptops, components));
 		 
 		
-		Category secondaryParent = new Category(2);
+		InventoryItem secondaryParent = new InventoryItem(2);
 
-		Category smartphones = new Category("Smartphones", secondaryParent);
-		Category cameras = new Category("Cameras", secondaryParent);
+		InventoryItem smartphones = new InventoryItem("Smartphones", secondaryParent);
+		InventoryItem cameras = new InventoryItem("Cameras", secondaryParent);
 		catRepo.saveAll(List.of(cameras, smartphones));
 	}
 	
@@ -64,24 +64,24 @@ public class CategoryRepositoryTest {
 	
 	@Test 
 	public void creatingChildSubcategory () {
-		Category parentSubCategory = new Category(5);
-		Category childSubCategory = new Category("Memory", parentSubCategory);
+		InventoryItem parentSubCategory = new InventoryItem(5);
+		InventoryItem childSubCategory = new InventoryItem("Memory", parentSubCategory);
 		
-		Category savedSubCategoryChild = catRepo.save(childSubCategory);
+		InventoryItem savedSubCategoryChild = catRepo.save(childSubCategory);
 		assertThat(savedSubCategoryChild.getId()).isGreaterThan(0);
 	}
 	
 	@Test
 	public void createAdditionalChildSubCategorys() {
 		
-		Category smartphoneParent = new Category(7);
-		Category smartphoneSubCategory = new Category("IPhone", smartphoneParent);
-		Category savedSmartphoneSubCategory = catRepo.save(smartphoneSubCategory);
+		InventoryItem smartphoneParent = new InventoryItem(7);
+		InventoryItem smartphoneSubCategory = new InventoryItem("IPhone", smartphoneParent);
+		InventoryItem savedSmartphoneSubCategory = catRepo.save(smartphoneSubCategory);
 		assertThat(savedSmartphoneSubCategory.getId()).isGreaterThan(0);
 		
-		Category laptopParent = new Category(4);
-		Category laptopSubCategory = new Category("Gaming Laptops", laptopParent);
-		Category savedLaptopSubCategory = catRepo.save(laptopSubCategory);
+		InventoryItem laptopParent = new InventoryItem(4);
+		InventoryItem laptopSubCategory = new InventoryItem("Gaming Laptops", laptopParent);
+		InventoryItem savedLaptopSubCategory = catRepo.save(laptopSubCategory);
 		assertThat(savedLaptopSubCategory.getId()).isGreaterThan(0);
 		
 		
@@ -90,11 +90,11 @@ public class CategoryRepositoryTest {
 	
 	@Test
 	public void testGetCategory () {
-		Category category = catRepo.findById(2).get();
+		InventoryItem category = catRepo.findById(2).get();
 		System.out.println(category.getName());
 		
-		Set<Category> children = category.getChildren();
-		for (Category subCategory : children) {
+		Set<InventoryItem> children = category.getChildren();
+		for (InventoryItem subCategory : children) {
 			System.out.println(subCategory.getName());
 		}
 		assertThat(children.size()).isGreaterThan(0);
@@ -102,15 +102,15 @@ public class CategoryRepositoryTest {
 	
 	@Test
 	public void testPrintHierarchicalCategories () {
-		Iterable<Category> categories = catRepo.findAll();
+		Iterable<InventoryItem> categories = catRepo.findAll();
 		
-		for(Category category: categories ) {
+		for(InventoryItem category: categories ) {
 			if(category.getParent() == null) {
 				System.out.println(category.getName());
 				
-				Set<Category> children = category.getChildren();
+				Set<InventoryItem> children = category.getChildren();
 				
-				for (Category subCategory : children) {
+				for (InventoryItem subCategory : children) {
 					System.out.println("--" + subCategory.getName());
 					printChildren(subCategory, 1);
 				}
@@ -118,12 +118,12 @@ public class CategoryRepositoryTest {
 		}
 	}
 	
-	private void printChildren(Category parent, int sublevel) {
+	private void printChildren(InventoryItem parent, int sublevel) {
 		int newSubLevel = sublevel + 1;
 		
-		Set<Category> children = parent.getChildren();
+		Set<InventoryItem> children = parent.getChildren();
 		
-		for (Category subCategory : children) {
+		for (InventoryItem subCategory : children) {
 			for (int i = 0; i < newSubLevel;i++) {
 				System.out.print("--");
 			}
@@ -134,7 +134,7 @@ public class CategoryRepositoryTest {
 	
 	@Test 
 	public void testListRootCategories() {
-		List<Category> rootCategories = catRepo.findRootCategories();
+		List<InventoryItem> rootCategories = catRepo.findRootInventoryItems();
 		
 		rootCategories.forEach(cat -> System.out.println(cat.getName()));
 	}
@@ -143,7 +143,7 @@ public class CategoryRepositoryTest {
 	@Test
 	public void testFindByName() {
 		String name = "Computer";
-		Category foundCategory = catRepo.findByName(name);
+		InventoryItem foundCategory = catRepo.findByName(name);
 		
 		assertThat(foundCategory).isNotNull();
 		assertThat(foundCategory.getName()).isEqualTo(name);
@@ -153,7 +153,7 @@ public class CategoryRepositoryTest {
 	@Test
 	public void testFindByAlias() {
 		String alias = "Electronics";
-		Category foundCategory = catRepo.findByName(alias);
+		InventoryItem foundCategory = catRepo.findByName(alias);
 		
 		assertThat(foundCategory).isNotNull();
 		assertThat(foundCategory.getName()).isEqualTo(alias);

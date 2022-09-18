@@ -10,19 +10,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.ISMM.admin.repository.CategoryRepository;
-import com.ISMM.admin.service.CategoryService;
-import com.ISMM.common.domain.Category;
+import com.ISMM.admin.inventory.InventoryService;
+import com.ISMM.admin.repository.InventoryRepository;
+import com.ISMM.common.domain.InventoryItem;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 public class CategoryServiceTest {
 
 	@MockBean
-	private CategoryRepository catRepo;
+	private InventoryRepository catRepo;
 
 	@InjectMocks
-	private CategoryService catService;
+	private InventoryService catService;
 	
 	@Test
 	public void testUniqueInNewModelReturnDuplicateName() {
@@ -30,7 +30,7 @@ public class CategoryServiceTest {
 		String name = "UniqueName" ;
 		String alias = "abc" ;
 		
-		Category cat = new Category(id, name, alias);
+		InventoryItem cat = new InventoryItem(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(cat);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(null);
@@ -47,7 +47,7 @@ public class CategoryServiceTest {
 		String name = "NameABC" ;
 		String alias = "computers" ;
 		
-		Category cat = new Category(id, name, alias);
+		InventoryItem cat = new InventoryItem(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(null);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(cat);
@@ -64,7 +64,7 @@ public class CategoryServiceTest {
 		String name = "NameABC" ;
 		String alias = "computers" ;
 		
-		Category cat = new Category(id, name, alias);
+		InventoryItem cat = new InventoryItem(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(null);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(null);
