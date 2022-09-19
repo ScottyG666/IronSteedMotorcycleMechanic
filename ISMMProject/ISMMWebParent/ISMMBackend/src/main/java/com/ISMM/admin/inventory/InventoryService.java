@@ -18,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ISMM.admin.exceptions.InventoryItemNotFoundException;
-import com.ISMM.admin.repository.InventoryRepository;
 import com.ISMM.admin.service.InventoryPageInfo;
 import com.ISMM.common.domain.InventoryItem;
 

@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.ISMM.admin.repository.InventoryRepository;
+import com.ISMM.admin.inventory.InventoryRepository;
 import com.ISMM.common.domain.InventoryItem;
 
 @DataJpaTest(showSql = false)

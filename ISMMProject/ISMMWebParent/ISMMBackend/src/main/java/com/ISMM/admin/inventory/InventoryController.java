@@ -54,7 +54,7 @@ public class InventoryController {
 		model.put("listInventoryItems", listInventoryItems);
 		model.put("reverseSortDir", reverseSortDir);
 
-		return "categories/categories";		
+		return "categories/inventory_list";		
 	}
 	
 	
@@ -68,24 +68,24 @@ public class InventoryController {
 
 		model.put("pageTitle", "Create New Inventory Item");
 		
-		return "categories/category_form";
+		return "categories/inventory_item_form";
 	}
 	
 	@PostMapping("/save")
-	public String saveCategory(	InventoryItem ivnentoryItem, @RequestParam("fileImage") MultipartFile multipartFile,
+	public String saveCategory(	InventoryItem inventoryItem, @RequestParam("fileImage") MultipartFile multipartFile,
 								RedirectAttributes rA) throws IOException {
 		
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			ivnentoryItem.setImage(fileName);
+			inventoryItem.setImage(fileName);
 
-			InventoryItem savedInvItem = invService.save(ivnentoryItem);
+			InventoryItem savedInvItem = invService.save(inventoryItem);
 			String uploadDir = "../inventory-images/" + savedInvItem.getId();
 
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		} else {
-			invService.save(ivnentoryItem);
+			invService.save(inventoryItem);
 		}	
 		rA.addFlashAttribute("message", "The inventory item has been saved successfully!");
 		return "redirect:/inventory";
@@ -98,11 +98,11 @@ public class InventoryController {
 			InventoryItem invItem = invService.get(id);
 			List<InventoryItem> listInventoryItems = invService.listInventoryItemsUsedInForm();
 
-			model.put("invItem", invItem);
+			model.put("inventoryItem", invItem);
 			model.put("listInventoryItems", listInventoryItems);
 			model.put("pageTitle", "Edit Inventory Item (ID: " + id + ")");
 
-			return "categories/category_form";			
+			return "categories/inventory_item_form";			
 		} catch (InventoryItemNotFoundException ex) {
 			rA.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/inventory";

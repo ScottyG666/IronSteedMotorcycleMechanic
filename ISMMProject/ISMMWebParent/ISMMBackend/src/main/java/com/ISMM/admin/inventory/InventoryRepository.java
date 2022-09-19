@@ -1,4 +1,4 @@
-package com.ISMM.admin.repository;
+package com.ISMM.admin.inventory;
 
 import java.util.List;
 
