@@ -16,24 +16,24 @@ public class MvcConfig implements WebMvcConfigurer {
 		 * Exposes the absolute path *user-photos* directory under the Root of the ISMMBackend
 		 * 	to be accessible client side
 		 */
-		String dirName = "user-photos";
+		String userPhotosDirName = "user-photos";
 		
-		Path userPhotosDir = Paths.get(dirName);
+		Path userPhotosDir = Paths.get(userPhotosDirName);
 		
 		String userPhotosPath = userPhotosDir.toFile().getAbsolutePath();
 		
-		registry.addResourceHandler("/" + dirName + "/**")
+		registry.addResourceHandler("/" + userPhotosDirName + "/**")
 				.addResourceLocations("file:/" + userPhotosPath + "/");
 
 		
 		
-		String categoryImagesDirName = "../category-images";
-		Path categoryImagesDir = Paths.get(categoryImagesDirName);
+		String inventoryImagesDirName = "../inventory-images";
+		Path inventoryImagesDir = Paths.get(inventoryImagesDirName);
 
-		String categoryImagesPath = categoryImagesDir.toFile().getAbsolutePath();
+		String inventoryImagesPath = inventoryImagesDir.toFile().getAbsolutePath();
 
-		registry.addResourceHandler("/category-images/**")
-			.addResourceLocations("file:/" + categoryImagesPath + "/");
+		registry.addResourceHandler("/inventory-images/**")
+			.addResourceLocations("file:/" + inventoryImagesPath + "/");
 	}
 	
 

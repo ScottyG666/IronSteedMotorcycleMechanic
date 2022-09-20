@@ -158,7 +158,7 @@ public class InventoryItem extends IDBasedEntity{
 	public String getImagePath() {
 		if (this.id == null) return "/images/image-thumbnail.png";
 
-		return "../inventory-images/" + this.id + "/" + this.image;
+		return "/inventory-images/" + this.id + "/" + this.image;
 	}
 	
 	public boolean isHasChildren() {
