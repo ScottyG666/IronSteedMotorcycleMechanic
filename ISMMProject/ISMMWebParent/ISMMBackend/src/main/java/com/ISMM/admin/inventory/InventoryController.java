@@ -40,6 +40,8 @@ public class InventoryController {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
+		
+		
 		InventoryPageInfo pageInfo = new InventoryPageInfo();
 		List<InventoryItem> listInventoryItems = invService.listByPage(pageInfo, pageNum, sortDir);
 
@@ -54,7 +56,7 @@ public class InventoryController {
 		model.put("listInventoryItems", listInventoryItems);
 		model.put("reverseSortDir", reverseSortDir);
 
-		return "categories/inventory_list";		
+		return "inventory/inventory_list";		
 	}
 	
 	
@@ -68,7 +70,7 @@ public class InventoryController {
 
 		model.put("pageTitle", "Create New Inventory Item");
 		
-		return "categories/inventory_item_form";
+		return "inventory/inventory_item_form";
 	}
 	
 	@PostMapping("/save")
@@ -102,7 +104,7 @@ public class InventoryController {
 			model.put("listInventoryItems", listInventoryItems);
 			model.put("pageTitle", "Edit Inventory Item (ID: " + id + ")");
 
-			return "categories/inventory_item_form";			
+			return "inventory/inventory_item_form";			
 		} catch (InventoryItemNotFoundException ex) {
 			rA.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/inventory";
