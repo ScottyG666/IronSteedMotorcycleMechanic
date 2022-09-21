@@ -1,4 +1,4 @@
-package com.ISMM.admin.service;
+package com.ISMM.admin.users;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ISMM.admin.exceptions.UserNotFoundException;
-import com.ISMM.admin.repository.UserRepository;
 import com.ISMM.common.domain.User;
 
 @Service

@@ -31,12 +31,14 @@ public class InventoryController {
 
 	@GetMapping("")
 	public String listFirstPage(@Param("sortDir") String sortDir, ModelMap model) {
-		return listByPage(1, sortDir, model);
+		return listByPage(1, sortDir, null,  model);
 	}
 	
 	@GetMapping("/page/{pageNum}") 
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
-			@Param("sortDir") String sortDir, ModelMap model) {
+							@Param("sortDir") String sortDir,
+							@Param("keyword") String keyword,
+							ModelMap model) {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}

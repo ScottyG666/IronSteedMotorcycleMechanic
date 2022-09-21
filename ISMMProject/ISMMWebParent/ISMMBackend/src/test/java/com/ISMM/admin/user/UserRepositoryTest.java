@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
-import com.ISMM.admin.repository.UserRepository;
+import com.ISMM.admin.users.UserRepository;
 import com.ISMM.common.domain.Role;
 import com.ISMM.common.domain.User;
 

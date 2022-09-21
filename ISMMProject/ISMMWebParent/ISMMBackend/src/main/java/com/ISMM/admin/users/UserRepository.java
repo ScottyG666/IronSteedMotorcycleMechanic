@@ -1,4 +1,4 @@
-package com.ISMM.admin.repository;
+package com.ISMM.admin.users;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

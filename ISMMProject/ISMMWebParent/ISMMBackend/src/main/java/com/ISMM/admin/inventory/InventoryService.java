@@ -31,7 +31,8 @@ public class InventoryService {
 	@Autowired
 	InventoryRepository invRepo;
 	
-	public List<InventoryItem> listByPage(InventoryPageInfo pageInfo, int pageNum, String sortDir) {
+	public List<InventoryItem> listByPage(InventoryPageInfo pageInfo, int pageNum,
+										  String sortDir, String keyword) {
 		Sort sort = Sort.by("name");
 
 		if (sortDir.equals("asc")) {
