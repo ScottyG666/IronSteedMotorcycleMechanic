@@ -45,7 +45,7 @@ public class InventoryController {
 		
 		
 		InventoryPageInfo pageInfo = new InventoryPageInfo();
-		List<InventoryItem> listInventoryItems = invService.listByPage(pageInfo, pageNum, sortDir);
+		List<InventoryItem> listInventoryItems = invService.listByPage(pageInfo, pageNum, sortDir, keyword);
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 

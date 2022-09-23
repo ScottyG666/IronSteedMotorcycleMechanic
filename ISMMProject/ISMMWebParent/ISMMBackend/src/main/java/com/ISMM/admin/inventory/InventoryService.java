@@ -43,15 +43,33 @@ public class InventoryService {
 		
 		Pageable pageable = PageRequest.of(pageNum - 1, ROOT_INVENTORY_ITEM_PER_PAGE, sort);
 
-		Page<InventoryItem> pageInventoryItems = invRepo.findRootInventoryItems(pageable);
+		Page<InventoryItem> pageInventoryItems = null;
+		
+		if (keyword != null && !keyword.isEmpty()) {
+			pageInventoryItems = invRepo.search(keyword, pageable);	
+		} else {
+			pageInventoryItems = invRepo.findRootInventoryItems(pageable);
+		}
+		
 		List<InventoryItem> rootInventoryItems = pageInventoryItems.getContent();
 
 		pageInfo.setTotalElements(pageInventoryItems.getTotalElements());
 		pageInfo.setTotalPages(pageInventoryItems.getTotalPages());
-		return listHierarchicalInventory(rootInventoryItems, sortDir);
+				
+		if (keyword != null && !keyword.isEmpty()) {
+			List<InventoryItem> searchResult = pageInventoryItems.getContent();
+			for (InventoryItem item : searchResult) {
+				item.setHasChildren(item.getChildren().size() > 0);
+			}
+
+			return searchResult;
+
+		} else {
+			return listHierarchicalRootInventory(rootInventoryItems, sortDir);
+		}
 	}
 
-	private List<InventoryItem> listHierarchicalInventory(List<InventoryItem> rootInventoryItems, String sortDir) { //
+	private List<InventoryItem> listHierarchicalRootInventory(List<InventoryItem> rootInventoryItems, String sortDir) {
 		List<InventoryItem> hierarchicalInventory = new ArrayList<>();
 		
 		for (InventoryItem rootInventory : rootInventoryItems) {
