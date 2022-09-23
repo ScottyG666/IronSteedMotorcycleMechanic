@@ -1,4 +1,4 @@
-package com.ISMM.admin.web;
+package com.ISMM.admin.categories;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.exceptions.CategoryNotFoundException;
-import com.ISMM.admin.service.CategoryPageInfo;
-import com.ISMM.admin.service.CategoryService;
 import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.common.domain.Category;
 

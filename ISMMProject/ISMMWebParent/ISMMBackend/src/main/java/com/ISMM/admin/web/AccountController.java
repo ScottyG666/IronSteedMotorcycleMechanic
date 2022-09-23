@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.security.ISMMUserDetails;
 import com.ISMM.admin.service.FileUploadUtil;
-import com.ISMM.admin.service.UserService;
+import com.ISMM.admin.users.UserService;
 import com.ISMM.common.domain.User;
 
 @Controller

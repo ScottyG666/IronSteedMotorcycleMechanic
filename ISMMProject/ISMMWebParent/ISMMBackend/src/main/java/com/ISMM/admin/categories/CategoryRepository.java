@@ -1,4 +1,4 @@
-package com.ISMM.admin.repository;
+package com.ISMM.admin.categories;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.ISMM.admin.service;
+package com.ISMM.admin.categories;
 
 public class CategoryPageInfo {
 

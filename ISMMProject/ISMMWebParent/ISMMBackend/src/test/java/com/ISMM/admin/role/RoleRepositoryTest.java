@@ -37,6 +37,7 @@ public class RoleRepositoryTest {
 	
 	/*
 	 * Initializes the other roles within the Motorcycle mechanic shop including:
+	 * 	++ Shop Manager
 	 * 	++ Mechanic
 	 * 	++ Front Desk
 	 * 	++ Warehouse
@@ -44,16 +45,20 @@ public class RoleRepositoryTest {
 	
 	@Test
 	public void testCreateAdditionalRoles() {
+		
+		Role roleShopManager = new Role("Shop Manager", "Oversees hiring, training, and evaluating"
+				+ " mechanics and support staff.");
+		
 		Role roleMechanic = new Role("Mechanic", "Performes maintenence and service "
 				+ "activities.");
 		
 		Role roleFrontDesk = new Role("Front Desk", "Manage appointments, payments, walk-ins, "
 				+ "and other clerical duties.");
 		
-		Role roleWarehouse = new Role("Warehouse", "Receive inventory from shipper and "
-				+ "update inventory");
+		Role roleMechanicSupportStaff = new Role("Mechanic Support Staff", "Assist mechanics with "
+				+ "repetative tasks.");
 		
 		
-		repo.saveAll(List.of(roleMechanic, roleFrontDesk, roleWarehouse));
+		repo.saveAll(List.of(roleShopManager, roleMechanic, roleFrontDesk, roleMechanicSupportStaff));
 	}
 }

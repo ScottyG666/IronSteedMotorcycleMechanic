@@ -1,4 +1,4 @@
-package com.ISMM.admin.service;
+package com.ISMM.admin.categories;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ISMM.admin.exceptions.CategoryNotFoundException;
-import com.ISMM.admin.repository.CategoryRepository;
 import com.ISMM.common.domain.Category;
 
 @Service

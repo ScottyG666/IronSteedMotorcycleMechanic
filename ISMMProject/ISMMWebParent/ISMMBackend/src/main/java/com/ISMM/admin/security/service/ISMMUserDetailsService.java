@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ISMM.admin.repository.UserRepository;
 import com.ISMM.admin.security.ISMMUserDetails;
+import com.ISMM.admin.users.UserRepository;
 import com.ISMM.common.domain.User;
 
 @Service

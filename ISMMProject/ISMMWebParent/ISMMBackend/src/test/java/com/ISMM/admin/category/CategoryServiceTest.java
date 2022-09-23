@@ -10,8 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.ISMM.admin.repository.CategoryRepository;
-import com.ISMM.admin.service.CategoryService;
+import com.ISMM.admin.categories.CategoryRepository;
+import com.ISMM.admin.categories.CategoryService;
 import com.ISMM.common.domain.Category;
 
 @ExtendWith(MockitoExtension.class)

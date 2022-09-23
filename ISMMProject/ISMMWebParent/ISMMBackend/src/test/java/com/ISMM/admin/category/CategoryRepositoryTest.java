@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.ISMM.admin.repository.CategoryRepository;
+import com.ISMM.admin.categories.CategoryRepository;
 import com.ISMM.common.domain.Category;
 
 @DataJpaTest(showSql = false)
