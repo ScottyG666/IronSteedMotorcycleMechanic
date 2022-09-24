@@ -17,8 +17,8 @@ import javax.persistence.Transient;
 import com.ISMM.common.model.IDBasedEntity;
 
 @Entity
-@Table(name="inventory")
-public class InventoryItem extends IDBasedEntity{
+@Table(name="categories")
+public class Category extends IDBasedEntity{
 	
 
 	@Column(length=128, nullable=false, unique=false)
@@ -34,52 +34,52 @@ public class InventoryItem extends IDBasedEntity{
 	
 	@OneToOne()
 	@JoinColumn(name="parent_id")
-	private InventoryItem parent;
+	private Category parent;
 	
 	@OneToMany(mappedBy = "parent")
-	private Set<InventoryItem> children = new HashSet<>();
+	private Set<Category> children = new HashSet<>();
 
 	
-	public InventoryItem () {};
+	public Category () {};
 	
-	public InventoryItem(Integer id) {
+	public Category(Integer id) {
 		super();
 		this.id = id;
 	}
 	
-	public InventoryItem(String name) {
+	public Category(String name) {
 		this.name = name;
 		this.alias = name;
 		this.image = "default.png";
 	}
-	public InventoryItem(String name, InventoryItem parent) {
+	public Category(String name, Category parent) {
 		this(name);
 		this.parent = parent;
 	}
 	
 	
 	
-	public InventoryItem(Integer id, String name, String alias) {
+	public Category(Integer id, String name, String alias) {
 		this.id = id;
 		this.name = name;
 		this.alias = alias;
 	}
 
-	public static InventoryItem copyIdAndName(InventoryItem category) {
-		InventoryItem copyCategory = new InventoryItem();
+	public static Category copyIdAndName(Category category) {
+		Category copyCategory = new Category();
 		copyCategory.setId(category.getId());
 		copyCategory.setName(category.getName());
 		return copyCategory;
 	}
-	public static InventoryItem copyIdAndName(Integer id, String name) {
-		InventoryItem copyCategory = new InventoryItem();
+	public static Category copyIdAndName(Integer id, String name) {
+		Category copyCategory = new Category();
 		copyCategory.setId(id);
 		copyCategory.setName(name);
 		return copyCategory;
 	}
 	
-	public static InventoryItem copyFull(InventoryItem category) {
-		InventoryItem copyCategory = new InventoryItem();
+	public static Category copyFull(Category category) {
+		Category copyCategory = new Category();
 		copyCategory.setId(category.getId());
 		copyCategory.setName(category.getName());
 		copyCategory.setImage(category.getImage());
@@ -91,8 +91,8 @@ public class InventoryItem extends IDBasedEntity{
 		return copyCategory;
 	}
 	
-	public static InventoryItem copyFull(InventoryItem category, String name) {
-		InventoryItem copyCategory = InventoryItem.copyFull(category);
+	public static Category copyFull(Category category, String name) {
+		Category copyCategory = Category.copyFull(category);
 		copyCategory.setName(name);
 		return copyCategory;
 	}
@@ -138,19 +138,19 @@ public class InventoryItem extends IDBasedEntity{
 		this.enabled = enabled;
 	}
 
-	public InventoryItem getParent() {
+	public Category getParent() {
 		return parent;
 	}
 
-	public void setParent(InventoryItem parent) {
+	public void setParent(Category parent) {
 		this.parent = parent;
 	}
 
-	public Set<InventoryItem> getChildren() {
+	public Set<Category> getChildren() {
 		return children;
 	}
 
-	public void setChildren(Set<InventoryItem> children) {
+	public void setChildren(Set<Category> children) {
 		this.children = children;
 	}
 

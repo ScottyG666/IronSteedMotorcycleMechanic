@@ -1,4 +1,4 @@
-package com.ISMM.admin.inventory;
+package com.ISMM.admin.categories;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ISMM.admin.exceptions.InventoryItemNotFoundException;
+import com.ISMM.admin.exceptions.CategoryNotFoundException;
 import com.ISMM.admin.service.FileUploadUtil;
-import com.ISMM.admin.service.InventoryPageInfo;
-import com.ISMM.common.domain.InventoryItem;
+import com.ISMM.common.domain.Category;
 
 @Controller
-@RequestMapping("/inventory")
-public class InventoryController {
+@RequestMapping("/category")
+public class CategoryController {
 
 	@Autowired 
-	InventoryService invService;
+	CategoryService catService;
 
 	@GetMapping("")
 	public String listFirstPage(@Param("sortDir") String sortDir, ModelMap model) {
@@ -44,84 +43,84 @@ public class InventoryController {
 		}
 		
 		
-		InventoryPageInfo pageInfo = new InventoryPageInfo();
-		List<InventoryItem> listInventoryItems = invService.listByPage(pageInfo, pageNum, sortDir, keyword);
+		CategoryPageInfo pageInfo = new CategoryPageInfo();
+		List<Category> listCategories = catService.listByPage(pageInfo, pageNum, sortDir, keyword);
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
 		model.put("totalPages", pageInfo.getTotalPages());
-		model.put("totalItems", pageInfo.getTotalElements());
+		model.put("totals", pageInfo.getTotalElements());
 		model.put("currentPage", pageNum);
 		model.put("sortField", "name");
 		model.put("sortDir", sortDir);
 
-		model.put("listInventoryItems", listInventoryItems);
+		model.put("listCategories", listCategories);
 		model.put("reverseSortDir", reverseSortDir);
 
-		return "inventory/inventory_list";		
+		return "categories/categories";		
 	}
 	
 	
 	@GetMapping("/new") 
 	public String newCategory (ModelMap model) {
 
-		model.put("inventoryItem", new InventoryItem());
+		model.put("Category", new Category());
 		
-		List<InventoryItem> listInventoryItems = invService.listInventoryItemsUsedInForm();
-		model.put("listInventoryItems", listInventoryItems);
+		List<Category> listCategories = catService.listCategoriesUsedInForm();
+		model.put("listCategories", listCategories);
 
-		model.put("pageTitle", "Create New Inventory Item");
+		model.put("pageTitle", "Create New Category ");
 		
-		return "inventory/inventory_item_form";
+		return "categories/category_form";
 	}
 	
 	@PostMapping("/save")
-	public String saveCategory(	InventoryItem inventoryItem, @RequestParam("fileImage") MultipartFile multipartFile,
+	public String saveCategory(	Category category, @RequestParam("fileImage") MultipartFile multipartFile,
 								RedirectAttributes rA) throws IOException {
 		
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			inventoryItem.setImage(fileName);
+			category.setImage(fileName);
 
-			InventoryItem savedInvItem = invService.save(inventoryItem);
-			String uploadDir = "../inventory-images/" + savedInvItem.getId();
+			Category savedcat = catService.save(category);
+			String uploadDir = "../category-images/" + savedcat.getId();
 
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		} else {
-			invService.save(inventoryItem);
+			catService.save(category);
 		}	
-		rA.addFlashAttribute("message", "The inventory item has been saved successfully!");
-		return "redirect:/inventory";
+		rA.addFlashAttribute("message", "The Category  has been saved successfully!");
+		return "redirect:/category";
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String editInventoryItem(@PathVariable(name = "id") Integer id, ModelMap model,
+	public String editCategory(@PathVariable(name = "id") Integer id, ModelMap model,
 			RedirectAttributes rA) {
 		try {
-			InventoryItem invItem = invService.get(id);
-			List<InventoryItem> listInventoryItems = invService.listInventoryItemsUsedInForm();
+			Category cat = catService.get(id);
+			List<Category> listCategories = catService.listCategoriesUsedInForm();
 
-			model.put("inventoryItem", invItem);
-			model.put("listInventoryItems", listInventoryItems);
-			model.put("pageTitle", "Edit Inventory Item (ID: " + id + ")");
+			model.put("Category", cat);
+			model.put("listCategories", listCategories);
+			model.put("pageTitle", "Edit Category  (ID: " + id + ")");
 
-			return "inventory/inventory_item_form";			
-		} catch (InventoryItemNotFoundException ex) {
+			return "categories/category_form";			
+		} catch (CategoryNotFoundException ex) {
 			rA.addFlashAttribute("message", ex.getMessage());
-			return "redirect:/inventory";
+			return "redirect:/category";
 		}
 	}
 	
 	@GetMapping("/{id}/enabled/{status}")
 	public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
 			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
-		invService.updateInventoryItemEnabledStatus(id, enabled);
+		catService.updateCategoryEnabledStatus(id, enabled);
 		String status = enabled ? "enabled" : "disabled";
-		String message = "The category ID " + id + " has been " + status;
+		String message = "The Category ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 
-		return "redirect:/inventory";
+		return "redirect:/category";
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -129,17 +128,17 @@ public class InventoryController {
 			ModelMap model,
 			RedirectAttributes redirectAttributes) {
 		try {
-			invService.delete(id);
-			String inventoryItemDir = "../inventory-images/" + id;
-			FileUploadUtil.removeDir(inventoryItemDir);
+			catService.delete(id);
+			String categoryDir = "../category-images/" + id;
+			FileUploadUtil.removeDir(categoryDir);
 
 			redirectAttributes.addFlashAttribute("message", 
-					"The item ID " + id + " has been deleted successfully");
-		} catch (InventoryItemNotFoundException ex) {
+					"The  ID " + id + " has been deleted successfully");
+		} catch (CategoryNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 		}
 
-		return "redirect:/inventory";
+		return "redirect:/category";
 	}	
 	
 	
@@ -147,7 +146,7 @@ public class InventoryController {
 	@ResponseBody
 	public String checkUnique(	@Param("id") Integer id, @Param("name") String name,
 								@Param("alias") String alias) {
-		return invService.checkUnique(id, name, alias);
+		return catService.checkUnique(id, name, alias);
 	}
 
 }

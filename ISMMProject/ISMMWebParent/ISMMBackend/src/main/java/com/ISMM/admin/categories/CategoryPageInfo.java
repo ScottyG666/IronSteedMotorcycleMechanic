@@ -1,6 +1,6 @@
-package com.ISMM.admin.service;
+package com.ISMM.admin.categories;
 
-public class InventoryPageInfo {
+public class CategoryPageInfo {
 
 	private int totalPages;
 	private long totalElements;
