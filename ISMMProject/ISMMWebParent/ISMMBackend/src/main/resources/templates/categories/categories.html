@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/headers/header :: page_head('Inventory - ISMM Admin')" />
+<head th:replace="fragments/headers/header :: page_head('Categories - ISMM Admin')" />
 <body>
 	<div class="container-fluid">
 		<div th:replace="fragments/navigation/nav :: menu"></div>
 		<div>
-			<h2>Manage Inventory</h2>	
+			<h2>Manage Categories</h2>	
 
-			<a th:href="@{/inventory/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
-			<a th:href="@{/inventory/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+			<a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
+			<a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 
 		</div>
 
@@ -19,7 +19,7 @@
 
 
 		<div>
-			<form th:action="@{/inventory/page/1}" class="form-inline m-3">
+			<form th:action="@{/category/page/1}" class="form-inline m-3">
 				Filter:&nbsp;
 				<input type="search" name="keyWord" th:value="${keyWord}" class="form-control" required/>
 				&nbsp;&nbsp;
@@ -40,7 +40,7 @@
 						<th>ID</th>
 						<th>Item Image</th>
 						<th>
-							<a class="text-white" th:href="@{'/inventory/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Item Name</a>
+							<a class="text-white" th:href="@{'/category/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
 							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Alias</th>
@@ -49,25 +49,25 @@
 					</tr>								
 				</thead>
 				<tbody>
-					<tr th:each="invItem : ${listInventoryItems}">
-						<td>[[${invItem.id}]]</td>
+					<tr th:each="cat : ${listCategories}">
+						<td>[[${cat.id}]]</td>
 						<td>
-							<img th:src="@{${invItem.imagePath}}" style="width: 100px" class="img-fluid"/>
+							<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>
 						</td>
-						<td>[[${invItem.name}]]</td>
-						<td>[[${invItem.alias}]]</td>
+						<td>[[${cat.name}]]</td>
+						<td>[[${cat.alias}]]</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: inventory_item_status" />
+							<div th:replace="fragments/lists/lists :: category_item_status" />
 						</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: inventory_item_action" />
+							<div th:replace="fragments/lists/lists :: category_item_action" />
 						</td>					
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div th:replace="fragments/lists/lists :: pagination('/inventory', 'top-level Items')"></div>
+		<div th:replace="fragments/lists/lists :: pagination('/category', 'top-level Categories')"></div>
 
 
 		<div th:replace="fragments/modal_fragments/modal :: confirm_modal"></div>
@@ -78,12 +78,12 @@
 	</div>
 	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
-		moduleURL = "[[@{/inventory}]]";
+		moduleURL = "[[@{/category}]]";
 
 		$(document).ready(function() {
 			$(".link-delete").on("click", function(e) {
 				e.preventDefault();
-				showDeleteConfirmModal($(this), 'inventory item');
+				showDeleteConfirmModal($(this), 'category');
 			});
 		});
 	</script>

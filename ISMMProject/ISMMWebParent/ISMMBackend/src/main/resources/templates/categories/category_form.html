@@ -7,12 +7,12 @@
             <div th:replace="fragments/navigation/nav :: menu"></div>
 
             <div>
-                <h2>Manage Inventory| [[${pageTitle}]]</h2>
+                <h2>Manage Categories| [[${pageTitle}]]</h2>
             </div>
         
-            <form th:action="@{/inventory/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+            <form th:action="@{/category/save}" method="post" style="max-width: 700px; margin: 0 auto;"
             enctype="multipart/form-data" onsubmit="return checkUnique(this)"
-            th:object="${inventoryItem}" >
+            th:object="${Category}" >
 
                 <input type="hidden"  th:field="*{id}">
                 <div class="border border-secondary rounded p-3">
@@ -37,8 +37,8 @@
                             <select class="form-control" th:field="*{parent}">
                                 <option value="0">[No Parent]</option>
                                 
-                                <th:block th:each="invItem : ${listInventoryItems}">
-                                <option th:value="${invItem.id}">[[${invItem.name}]]</option>
+                                <th:block th:each="cat : ${listCategories}">
+                                <option th:value="${cat.id}">[[${cat.name}]]</option>
                                 </th:block>
             
                             </select>
@@ -49,7 +49,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label" >Enabled:</label>
                         <div class="col-sm-8">
-                            <input type="checkbox" th:field="*{enabled}" name="Enable Inventory Item" class="m-2"  />
+                            <input type="checkbox" th:field="*{enabled}" name="Enable Category" class="m-2"  />
                         </div>
                     </div>
 
@@ -58,10 +58,10 @@
                         <div class="col-sm-8">
                             <input type="hidden" th:field="*{image}" >
                             <input  type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg"  
-                                    class="mb-2" th:required="${inventoryItem.imagePath == null}"/>
+                                    class="mb-2" th:required="${Category.imagePath == null}"/>
 
                             <div class="mt-2">
-                                <img    id="thumbnail" alt="Image preview" th:src="@{${inventoryItem.imagePath}}"
+                                <img    id="thumbnail" alt="Image preview" th:src="@{${Category.imagePath}}"
 						                class="img-fluid" />
                             </div>
                         </div>
@@ -80,26 +80,26 @@
 
         <script th:src="@{/js/common_form.js}"></script>
         <script>
-            moduleURL = "[[@{/inventory}]]";
+            moduleURL = "[[@{/category}]]";
 
             function checkUnique(form) {
-                invItemId = $("#id").val();
-                invItemName = $("#name").val();
-                invItemAlias = $("#alias").val();
+                catId = $("#id").val();
+                catName = $("#name").val();
+                catAlias = $("#alias").val();
 
                 csrfValue = $("input[name='_csrf']").val();
 
-                url = "[[@{/inventory/check_unique}]]";
+                url = "[[@{/category/check_unique}]]";
 
-                params = {id: invItemId, name: invItemName, alias: invItemAlias, _csrf: csrfValue};
+                params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue};
 
                 $.post(url, params, function(response) {
                     if (response == "OK") {
                         form.submit();
                     } else if (response == "DuplicateName") {
-                        showWarningModal("There is another item using the name " + invItemName);	
+                        showWarningModal("There is another item using the name " + catName);	
                     } else if (response == "DuplicateAlias") {
-                        showWarningModal("There is another item using the alias " + invItemAlias);
+                        showWarningModal("There is another item using the alias " + catAlias);
                     } else {
                         showErrorModal("Unknown response from server");
                     }

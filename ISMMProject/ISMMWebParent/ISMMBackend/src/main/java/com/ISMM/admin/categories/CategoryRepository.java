@@ -14,16 +14,16 @@ import com.ISMM.common.domain.Category;
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
 	
 	//To be deleted
-	@Query("SELECT i FROM category i WHERE i.parent.id is NULL")
+	@Query("SELECT i FROM Category i WHERE i.parent.id is NULL")
 	public List<Category> findRootCategories();
 
-	@Query("SELECT i FROM category i WHERE i.parent.id is NULL")
+	@Query("SELECT i FROM Category i WHERE i.parent.id is NULL")
 	public List<Category> findRootCategories(Sort sort);
 	
-	@Query("SELECT i FROM category i WHERE i.parent.id is NULL")
+	@Query("SELECT i FROM Category i WHERE i.parent.id is NULL")
 	public Page<Category> findRootCategories(Pageable pageable);
 	
-	@Query("SELECT i FROM category i WHERE i.name LIKE %?1%")
+	@Query("SELECT i FROM Category i WHERE i.name LIKE %?1%")
 	public Page<Category> search(String keyword, Pageable pageable);
 	
 	public Long countById(Integer id);
@@ -32,7 +32,7 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 	
 	public Category findByAlias(String alias);
 	
-	@Query("UPDATE category i SET i.enabled = ?2 WHERE i.id = ?1")
+	@Query("UPDATE Category i SET i.enabled = ?2 WHERE i.id = ?1")
 	@Modifying
 	public void updateEnabledStatus(Integer id, boolean enabled);	
 }

@@ -27,12 +27,12 @@ public class MvcConfig implements WebMvcConfigurer {
 
 		
 		
-		String inventoryImagesDirName = "../inventory-images";
+		String inventoryImagesDirName = "../category-images";
 		Path inventoryImagesDir = Paths.get(inventoryImagesDirName);
 
 		String inventoryImagesPath = inventoryImagesDir.toFile().getAbsolutePath();
 
-		registry.addResourceHandler("/inventory-images/**")
+		registry.addResourceHandler("/category-images/**")
 			.addResourceLocations("file:/" + inventoryImagesPath + "/");
 	}
 	

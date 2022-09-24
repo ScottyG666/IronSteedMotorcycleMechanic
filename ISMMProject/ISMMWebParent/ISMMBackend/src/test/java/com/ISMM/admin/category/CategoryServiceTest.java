@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ISMM.admin.categories.CategoryRepository;
 import com.ISMM.admin.categories.CategoryService;
-import com.ISMM.common.domain.InventoryItem;
+import com.ISMM.common.domain.Category;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -30,7 +30,7 @@ public class CategoryServiceTest {
 		String name = "UniqueName" ;
 		String alias = "abc" ;
 		
-		InventoryItem cat = new InventoryItem(id, name, alias);
+		Category cat = new Category(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(cat);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(null);
@@ -47,7 +47,7 @@ public class CategoryServiceTest {
 		String name = "NameABC" ;
 		String alias = "computers" ;
 		
-		InventoryItem cat = new InventoryItem(id, name, alias);
+		Category cat = new Category(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(null);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(cat);
@@ -64,7 +64,7 @@ public class CategoryServiceTest {
 		String name = "NameABC" ;
 		String alias = "computers" ;
 		
-		InventoryItem cat = new InventoryItem(id, name, alias);
+		Category cat = new Category(id, name, alias);
 		
 		Mockito.when(catRepo.findByName(name)).thenReturn(null);
 		Mockito.when(catRepo.findByAlias(alias)).thenReturn(null);
