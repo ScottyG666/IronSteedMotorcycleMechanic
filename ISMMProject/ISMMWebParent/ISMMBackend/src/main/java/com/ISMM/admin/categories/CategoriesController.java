@@ -30,18 +30,26 @@ public class CategoriesController {
 
 	@GetMapping("")
 	public String listFirstPage(@Param("sortDir") String sortDir, ModelMap model) {
-		return listByPage(1, sortDir, model);
+		return listByPage(1, sortDir, null, model);
 	}
 	
 	@GetMapping("/page/{pageNum}") 
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
-			@Param("sortDir") String sortDir, ModelMap model) {
+							 @Param("sortDir") String sortDir, String keyword,
+							 ModelMap model) {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
 		CategoryPageInfo pageInfo = new CategoryPageInfo();
-		List<Category> listCategories = catService.listByPage(pageInfo, pageNum, sortDir);
-
+		List<Category> listCategories = catService.listByPage(pageInfo, pageNum, sortDir, keyword);
+		
+		long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+		if (endCount > pageInfo.getTotalElements()) {
+			endCount = pageInfo.getTotalElements();
+		}
+		
+		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
 		model.put("totalPages", pageInfo.getTotalPages());
@@ -49,6 +57,9 @@ public class CategoriesController {
 		model.put("currentPage", pageNum);
 		model.put("sortField", "name");
 		model.put("sortDir", sortDir);
+		model.put("keyword", keyword);
+		model.put("startCount", startCount);
+		model.put("endCount", endCount);
 
 		model.put("listCategories", listCategories);
 		model.put("reverseSortDir", reverseSortDir);
