@@ -16,6 +16,9 @@
 			[[${message}]]
 		</div>
 
+<<<<<<< HEAD:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/categories/categories.html
+		<div th:replace="fragments/lists/lists :: search_form('/categories/page/1')"/>
+=======
 
 
 		<div>
@@ -32,6 +35,7 @@
 				</button>
 			</form>
 		</div>
+>>>>>>> main:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/inventory/inventory_list.html
 
 		<div class="full-details">
 			<table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -40,7 +44,11 @@
 						<th>ID</th>
 						<th>Item Image</th>
 						<th>
+<<<<<<< HEAD:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/categories/categories.html
+							<a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
+=======
 							<a class="text-white" th:href="@{'/inventory/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Item Name</a>
+>>>>>>> main:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/inventory/inventory_list.html
 							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Alias</th>
@@ -67,7 +75,21 @@
 			</table>
 		</div>
 
+<<<<<<< HEAD:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/categories/categories.html
+			
+		<div th:if="${keyword != null}" class="text-center">
+			<span>Search result does not show categories in hierarchical form</span>
+			<div th:replace="fragments/lists/lists :: pagination('/categories', 'categories')"></div>
+		</div>
+		
+		<th:block th:unless="${keyword != null}">
+			<div th:replace="fragments/lists/lists :: pagination('/categories', 'top-level Categories')"></div>
+		</div>
+
+		
+=======
 		<div th:replace="fragments/lists/lists :: pagination('/inventory', 'top-level Items')"></div>
+>>>>>>> main:ISMMProject/ISMMWebParent/ISMMBackend/src/main/resources/templates/inventory/inventory_list.html
 
 
 		<div th:replace="fragments/modal_fragments/modal :: confirm_modal"></div>

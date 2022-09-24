@@ -10,9 +10,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+<<<<<<< HEAD
+import com.ISMM.admin.categories.CategoryRepository;
+import com.ISMM.admin.categories.CategoryService;
+import com.ISMM.common.domain.Category;
+=======
 import com.ISMM.admin.inventory.InventoryRepository;
 import com.ISMM.admin.inventory.InventoryService;
 import com.ISMM.common.domain.InventoryItem;
+>>>>>>> main
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)

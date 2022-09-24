@@ -45,6 +45,10 @@ public class RoleRepositoryTest {
 	
 	@Test
 	public void testCreateAdditionalRoles() {
+<<<<<<< HEAD
+		
+=======
+>>>>>>> main
 		Role roleShopManager = new Role("Shop Manager", "Oversees hiring, training, and evaluating"
 				+ " mechanics and support staff.");
 		

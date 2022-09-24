@@ -12,8 +12,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+<<<<<<< HEAD
+import com.ISMM.admin.categories.CategoryRepository;
+import com.ISMM.common.domain.Category;
+=======
 import com.ISMM.admin.inventory.InventoryRepository;
 import com.ISMM.common.domain.InventoryItem;
+>>>>>>> main
 
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
