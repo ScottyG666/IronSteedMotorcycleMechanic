@@ -1,5 +1,3 @@
-
-
 var eyeIcons = document.querySelectorAll('.fa-eye');
 
 eyeIcons.forEach( (eyeIcon) => {
