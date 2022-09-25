@@ -1,7 +1,6 @@
 package com.ISMM.admin.categories;
 
 public class CategoryPageInfo {
-
 	private int totalPages;
 	private long totalElements;
 

@@ -32,6 +32,10 @@
                 [[${message}]]
             </div>
     
+<<<<<<< HEAD
+            <div th:replace="fragments/lists/lists :: search_form('/users/page/1')"/>
+
+=======
             <div>
                 <form th:action="@{/users/page/1}" class="form-inline m-3">
                     <input type="hidden" name="sortField" th:value="${sortField}" />
@@ -47,6 +51,7 @@
     
                 </form>
             </div>
+>>>>>>> main
             
             <div class="full-details">
                 <table class="table table-bordered table-striped table-hover table-responsive-xl">

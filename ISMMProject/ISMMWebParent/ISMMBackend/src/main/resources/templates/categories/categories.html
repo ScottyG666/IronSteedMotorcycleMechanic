@@ -16,31 +16,16 @@
 			[[${message}]]
 		</div>
 
-
-
-		<div>
-			<form th:action="@{/category/page/1}" class="form-inline m-3">
-				Filter:&nbsp;
-				<input type="search" name="keyWord" th:value="${keyWord}" class="form-control" required/>
-				&nbsp;&nbsp;
-				<button type="submit" class="btn btn-primary">
-					<i class="fas fa-search"></i>
-				</button>
-				&nbsp;&nbsp;
-				<button type="button" class="btn btn-secondary" onclick="clearFilter()">
-					<i class="fas fa-eraser"></i>
-				</button>
-			</form>
-		</div>
+		<div th:replace="fragments/lists/lists :: search_form('/categories/page/1')"/>
 
 		<div class="full-details">
 			<table class="table table-bordered table-striped table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<tr>
 						<th>ID</th>
-						<th>Item Image</th>
+						<th>Category Image</th>
 						<th>
-							<a class="text-white" th:href="@{'/category/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
+							<a class="text-white" th:href="@{'/categories/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
 							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 						</th>
 						<th>Alias</th>
@@ -57,17 +42,27 @@
 						<td>[[${cat.name}]]</td>
 						<td>[[${cat.alias}]]</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: category_item_status" />
+							<div th:replace="fragments/lists/lists :: category_status" />
 						</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: category_item_action" />
+							<div th:replace="fragments/lists/lists :: category_actions" />
 						</td>					
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div th:replace="fragments/lists/lists :: pagination('/category', 'top-level Categories')"></div>
+			
+		<div th:if="${keyword != null}" class="text-center">
+			<span>Search result does not show categories in hierarchical form</span>
+			<div th:replace="fragments/lists/lists :: pagination('/categories', 'categories')"></div>
+		</div>
+		
+		<th:block th:unless="${keyword != null}">
+			<div th:replace="fragments/lists/lists :: pagination('/categories', 'top-level Categories')"></div>
+		</div>
+
+		
 
 
 		<div th:replace="fragments/modal_fragments/modal :: confirm_modal"></div>
@@ -78,7 +73,7 @@
 	</div>
 	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
-		moduleURL = "[[@{/category}]]";
+		moduleURL = "[[@{/categories}]]";
 
 		$(document).ready(function() {
 			$(".link-delete").on("click", function(e) {
