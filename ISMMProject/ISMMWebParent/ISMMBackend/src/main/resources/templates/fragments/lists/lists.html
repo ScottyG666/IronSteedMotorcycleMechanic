@@ -31,7 +31,7 @@
                             [[${label}]]
     </a>
 
-    <div th:fragment="category_item_status" th:remove="tag">
+    <div th:fragment="category_status" th:remove="tag">
         <a th:if="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
             th:href="@{'/category/' + ${cat.id} + '/enabled/false'}"
             title="Disable this Item"
@@ -43,7 +43,7 @@
             ></a>	
     </div>
 
-    <div th:fragment="category_item_action" th:remove="tag">
+    <div th:fragment="category_actions" th:remove="tag">
 		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/category/edit/' + ${cat.id}}"
 			title="Edit this Item"></a>
 		&nbsp; 
