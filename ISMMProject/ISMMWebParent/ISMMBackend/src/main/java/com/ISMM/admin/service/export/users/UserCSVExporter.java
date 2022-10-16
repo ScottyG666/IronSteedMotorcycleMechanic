@@ -1,4 +1,4 @@
-package com.ISMM.admin.service.export;
+package com.ISMM.admin.service.export.users;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.ISMM.admin.service.export.AbstractExporter;
 import com.ISMM.common.domain.User;
 
 public class UserCSVExporter extends AbstractExporter{
@@ -16,7 +17,7 @@ public class UserCSVExporter extends AbstractExporter{
 	
 	 public void export( List<User> listToExport, HttpServletResponse response) throws IOException {
 		
-		 super.setResponseHeader(response, "text/csv", ".csv");
+		 super.setResponseHeader(response, "text/csv", ".csv", "users_");
 		 
 		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), 
 				CsvPreference.STANDARD_PREFERENCE);

@@ -1,4 +1,4 @@
-package com.ISMM.admin.service.export;
+package com.ISMM.admin.service.export.users;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.ISMM.admin.service.export.AbstractExporter;
 import com.ISMM.common.domain.User;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -22,7 +23,7 @@ public class UserPDFExporter extends AbstractExporter{
 	
 	 public void export( List<User> listToExport, HttpServletResponse response) throws IOException {
 			
-		 super.setResponseHeader(response, "application/pdf", ".pdf");
+		 super.setResponseHeader(response, "application/pdf", ".pdf" , "users_");
 		
 		 Document document = new Document(PageSize.A4);
 		 PdfWriter.getInstance(document, response.getOutputStream());

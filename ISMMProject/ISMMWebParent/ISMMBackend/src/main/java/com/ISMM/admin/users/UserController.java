@@ -23,9 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ISMM.admin.exceptions.UserNotFoundException;
 import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.admin.service.RoleService;
-import com.ISMM.admin.service.export.UserCSVExporter;
-import com.ISMM.admin.service.export.UserExcelExporter;
-import com.ISMM.admin.service.export.UserPDFExporter;
+import com.ISMM.admin.service.export.users.UserCSVExporter;
+import com.ISMM.admin.service.export.users.UserExcelExporter;
+import com.ISMM.admin.service.export.users.UserPDFExporter;
 import com.ISMM.common.domain.User;
 
 @Controller
@@ -62,10 +62,10 @@ public class UserController {
  		
 		model.put("currentPage", pageNum);
 		model.put("totalPages", page.getTotalPages());
+		model.put("totalItems", page.getTotalElements());
 
 		model.put("startCount", startCount);
 		model.put("endCount", endCount);
-		model.put("totalItems", page.getTotalElements());
 		model.put("listOfUsers", listOfUsers);
 		model.put("sortField", sortField);
 		model.put("sortDir", sortDir);

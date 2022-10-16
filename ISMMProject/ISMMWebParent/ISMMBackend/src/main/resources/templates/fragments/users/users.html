@@ -4,16 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-                        <th th:fragment="column_link( fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
-                            <a  class="text-white"
-                                th:href="@{'/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} + '&sortDir=' + ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyWord != null ? '&keyWord=' + keyWord : ''}}">
-                                [[${columnLabel}]]
-                            </a>
-                            <span   th:if="${sortField == fieldName}" 
-                                    th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
-                            </span>
-                        </th>
-
+    
                         <div th:fragment="user_photos" th:remove="tag">
                             <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
                             <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
@@ -21,6 +12,8 @@
                         </div>
 
 
+                        <!--Condensed to standard enabled status fragment in lists
+                        
                         <div th:fragment="user_status" th:remove="tag">
                             <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
                                 th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
@@ -31,7 +24,7 @@
                                 th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
                                 title="Enable this user"
                                 ></a>	
-                        </div>
+                        </div>-->
 
                         <div th:fragment="user_actions" th:remove="tag">
                             <a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.id}}"

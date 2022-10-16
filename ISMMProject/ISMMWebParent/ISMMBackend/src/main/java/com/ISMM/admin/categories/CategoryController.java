@@ -3,6 +3,8 @@ package com.ISMM.admin.categories;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.exceptions.CategoryNotFoundException;
 import com.ISMM.admin.service.FileUploadUtil;
+import com.ISMM.admin.service.export.categories.CategoryCsvExporter;
 import com.ISMM.common.domain.Category;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
 
 	@Autowired 
@@ -46,13 +49,22 @@ public class CategoryController {
 		CategoryPageInfo pageInfo = new CategoryPageInfo();
 		List<Category> listCategories = catService.listByPage(pageInfo, pageNum, sortDir, keyword);
 
+		long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+		if (endCount > pageInfo.getTotalElements()) {
+			endCount = pageInfo.getTotalElements();
+		}
+		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
 		model.put("totalPages", pageInfo.getTotalPages());
-		model.put("totals", pageInfo.getTotalElements());
+		model.put("totalItems", pageInfo.getTotalElements());
 		model.put("currentPage", pageNum);
 		model.put("sortField", "name");
 		model.put("sortDir", sortDir);
+		model.put("keyword", keyword);
+		model.put("startCount", startCount);
+		model.put("endCount", endCount);
 
 		model.put("listCategories", listCategories);
 		model.put("reverseSortDir", reverseSortDir);
@@ -91,7 +103,7 @@ public class CategoryController {
 			catService.save(category);
 		}	
 		rA.addFlashAttribute("message", "The Category  has been saved successfully!");
-		return "redirect:/category";
+		return "redirect:/categories";
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -108,7 +120,7 @@ public class CategoryController {
 			return "categories/category_form";			
 		} catch (CategoryNotFoundException ex) {
 			rA.addFlashAttribute("message", ex.getMessage());
-			return "redirect:/category";
+			return "redirect:/categories";
 		}
 	}
 	
@@ -120,7 +132,7 @@ public class CategoryController {
 		String message = "The Category ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
 
-		return "redirect:/category";
+		return "redirect:/categories";
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -138,7 +150,7 @@ public class CategoryController {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 		}
 
-		return "redirect:/category";
+		return "redirect:/categories";
 	}	
 	
 	
@@ -148,5 +160,13 @@ public class CategoryController {
 								@Param("alias") String alias) {
 		return catService.checkUnique(id, name, alias);
 	}
+	
+	@GetMapping("/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<Category> listCategories = catService.listCategoriesUsedInForm();
+		CategoryCsvExporter exporter = new CategoryCsvExporter();
+		exporter.export(listCategories, response);
+	}
+	
 
 }

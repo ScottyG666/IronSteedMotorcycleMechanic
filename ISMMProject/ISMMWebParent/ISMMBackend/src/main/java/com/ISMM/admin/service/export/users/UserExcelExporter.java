@@ -1,4 +1,4 @@
-package com.ISMM.admin.service.export;
+package com.ISMM.admin.service.export.users;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.ISMM.admin.service.export.AbstractExporter;
 import com.ISMM.common.domain.User;
 
 public class UserExcelExporter extends AbstractExporter{
@@ -63,7 +64,7 @@ public class UserExcelExporter extends AbstractExporter{
 	
 	
 	public void export( List<User> listToExport, HttpServletResponse response) throws IOException {
-		super.setResponseHeader(response, "application/octet-stream", ".xlsx");
+		super.setResponseHeader(response, "application/octet-stream", ".xlsx" , "users_");
 		
 		writeHeaderLine();
 		writeDataLines(listToExport);

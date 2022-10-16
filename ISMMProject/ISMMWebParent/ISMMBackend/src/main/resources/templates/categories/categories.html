@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headers/header :: page_head('Categories - ISMM Admin')" />
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/lists.css}">
+</head>
 <body>
 	<div class="container-fluid">
 		<div th:replace="fragments/navigation/nav :: menu"></div>
@@ -12,23 +15,16 @@
 
 		</div>
 
-		<div th:if="${message != null}" class="alert alert-success text-center">
-			[[${message}]]
-		</div>
-
-		<div th:replace="fragments/lists/lists :: search_form('/categories/page/1')"/>
+		<div th:replace="fragments/lists/lists :: search_form_and_message('/categories/page/1')"/>
 
 		<div class="full-details">
 			<table class="table table-bordered table-striped table-hover table-responsive-xl">
-				<thead class="thead-dark">
+				<thead>
 					<tr>
 						<th>ID</th>
 						<th>Category Image</th>
-						<th>
-							<a class="text-white" th:href="@{'/categories/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category Name</a>
-							<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-						</th>
-						<th>Alias</th>
+						<th th:replace="fragments/lists/lists :: column_link('/categories', 'name', 'Category Name', 'none')" />	
+						<th class="hideable-column">Alias</th>
 						<th>Enabled</th>
 						<th></th>
 					</tr>								
@@ -40,9 +36,9 @@
 							<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>
 						</td>
 						<td>[[${cat.name}]]</td>
-						<td>[[${cat.alias}]]</td>
+						<td class="hideable-column">[[${cat.alias}]]</td>
 						<td>
-							<div th:replace="fragments/lists/lists :: category_status" />
+							<div th:replace="fragments/lists/lists :: status(${cat.enabled}, 'categories' , '/categories/' + ${cat.id})"></div>
 						</td>
 						<td>
 							<div th:replace="fragments/lists/lists :: category_actions" />
@@ -50,6 +46,24 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+
+		<div class="less-details">
+			<div th:each="cat : ${listCategories}" class="row m-1">
+				<div class="col-4">
+					<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>			
+				</div>
+				<div class="col-8">
+					<div>[[${cat.name}]]</div>
+					<div class="mt-2">
+						<div th:replace="fragments/lists/lists :: status(${cat.enabled}, 'categories' , '/categories/' + ${cat.id})"></div>
+						&nbsp; 			
+						<div th:replace="fragments/lists/lists :: category_actions" />
+					</div>
+				</div>
+				<div>&nbsp;</div>
+			</div>	
 		</div>
 
 			
