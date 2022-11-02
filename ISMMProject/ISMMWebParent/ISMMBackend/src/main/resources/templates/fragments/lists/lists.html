@@ -45,18 +45,6 @@
                             [[${label}]]
     </a>
 
-    <div th:fragment="category_status" th:remove="tag">
-        <a th:if="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
-            th:href="@{'/category/' + ${cat.id} + '/enabled/false'}"
-            title="Disable this Item"
-            ></a>
-
-        <a th:if="${cat.enabled == false}" class="fas fa-circle fa-2x icon-dark" 
-            th:href="@{'/category/' + ${cat.id} + '/enabled/true'}"
-            title="Enable this Item"
-            ></a>	
-    </div>
-
     <!--Common Status fragment for lists-->
     <div th:fragment="status(enabled, entityName, entityURL)" th:remove="tag">
         <a th:if="${enabled == true}" class="fas fa-check-circle fa-2x icon-green" 
@@ -70,17 +58,20 @@
             ></a>	
     </div>
 
-    <div th:fragment="category_actions" th:remove="tag">
-		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/category/edit/' + ${cat.id}}"
-			title="Edit this Item"></a>
-		&nbsp; 
-        <th:block th:if="${cat.hasChildren== false}">
-            <a class="fas fa-trash fa-2x icon-dark link-delete" 
-                th:href="@{'/category/delete/' + ${cat.id}}"
-                th:entityId="${cat.id}"
-                title="Delete this Item"></a>	
-        </th:block>
-	</div>	
+    
+    <div th:fragment="edit(entityName, editURL)" th:remove="tag">
+        <a class="fas fa-edit fa-2x icon-green" th:href="@{${editURL}}"
+            th:title="'Edit this' + ${entityName}"></a>
+    </div> 
+
+    <div th:fragment="delete(entityName, entityId, deleteURL, visible)" th:remove="tag">
+        <th:block th:if="${visible}">		
+        <a class="fas fa-trash fa-2x icon-dark link-delete" 
+            th:href="@{${deleteURL}}"
+            th:entityId="${entityId}"
+            th:title="'Delete this ' + ${entityName}"></a>
+        </th:block>	
+    </div>
 
 
     <div  th:fragment="pagination(moduleURL, entityName)" th:remove="tag">

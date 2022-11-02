@@ -80,7 +80,7 @@
 
         <script th:src="@{/js/common_form.js}"></script>
         <script>
-            moduleURL = "[[@{/category}]]";
+            moduleURL = "[[@{/categories}]]";
 
             function checkUnique(form) {
                 catId = $("#id").val();
@@ -89,7 +89,7 @@
 
                 csrfValue = $("input[name='_csrf']").val();
 
-                url = "[[@{/category/check_unique}]]";
+                url = "[[@{/categories/check_unique}]]";
 
                 params = {id: catId, name: catName, alias: catAlias, _csrf: csrfValue};
 
