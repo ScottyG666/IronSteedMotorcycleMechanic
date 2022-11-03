@@ -10,7 +10,7 @@
                 <h2>Manage Categories| [[${pageTitle}]]</h2>
             </div>
         
-            <form th:action="@{/category/save}" method="post" style="max-width: 700px; margin: 0 auto;"
+            <form th:action="@{/categories/save}" method="post" style="max-width: 700px; margin: 0 auto;"
             enctype="multipart/form-data" onsubmit="return checkUnique(this)"
             th:object="${Category}" >
 

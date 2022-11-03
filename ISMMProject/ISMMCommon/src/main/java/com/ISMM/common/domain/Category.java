@@ -43,8 +43,7 @@ public class Category extends IDBasedEntity{
 	public Category () {};
 	
 	public Category(Integer id) {
-		super();
-		this.id = id;
+		super(id);
 	}
 	
 	public Category(String name) {
@@ -171,6 +170,11 @@ public class Category extends IDBasedEntity{
 
 	@Transient
 	private boolean hasChildren;
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 	
 }

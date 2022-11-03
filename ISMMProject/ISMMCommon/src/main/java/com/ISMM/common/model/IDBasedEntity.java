@@ -11,6 +11,12 @@ public abstract class IDBasedEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
+	public IDBasedEntity () {}
+	
+	public IDBasedEntity (Integer id) {
+		this.id = id;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
