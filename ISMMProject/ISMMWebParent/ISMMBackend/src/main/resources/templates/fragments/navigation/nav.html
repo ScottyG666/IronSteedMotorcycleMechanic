@@ -44,13 +44,20 @@
                     </th:block>
 
 
+                    <th:block sec:authorize="hasAnyAuthority('Admin' , 'Mechanic' )">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/brands}">Brands</a>
+                        </li>
+                    </th:block>
+
+
                     <th:block sec:authorize="hasAnyAuthority('Admin' , 'Salesperson', 'Assistant' , 'Editor' , 'Shipper')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/salesReport}">Sales Report</a>
                         </li>
                     </th:block>
                 
-                        <th:block sec:authorize="hasAuthority('Admin')">
+                        <th:block sec:authorize="hasAnyAuthority('Admin' , 'Shop Manager')">
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/settings}">Settings</a>
                         </li>
