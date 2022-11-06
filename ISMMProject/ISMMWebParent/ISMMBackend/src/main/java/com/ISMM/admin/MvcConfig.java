@@ -13,7 +13,8 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		/*
-		 * Exposes the absolute path *user-photos* directory under the Root of the ISMMBackend
+		 * 	Exposes the absolute path *user-photos* directory 
+		 * under the Root of the ISMMBackend
 		 * 	to be accessible client side
 		 */
 		String userPhotosDirName = "user-photos";
