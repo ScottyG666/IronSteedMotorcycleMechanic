@@ -8,4 +8,6 @@ import com.ISMM.common.domain.Brand;
 @Repository
 public interface BrandRepository  extends PagingAndSortingRepository<Brand, Integer>{
 
+
+	public Long countById(Integer id);
 }

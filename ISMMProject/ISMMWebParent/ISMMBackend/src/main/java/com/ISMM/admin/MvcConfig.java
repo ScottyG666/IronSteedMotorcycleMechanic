@@ -17,7 +17,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		 * 	to be accessible client side
 		 */
 		String userPhotosDirName = "user-photos";
-		
 		Path userPhotosDir = Paths.get(userPhotosDirName);
 		
 		String userPhotosPath = userPhotosDir.toFile().getAbsolutePath();
@@ -26,7 +25,6 @@ public class MvcConfig implements WebMvcConfigurer {
 				.addResourceLocations("file:/" + userPhotosPath + "/");
 
 		
-		
 		String inventoryImagesDirName = "../category-images";
 		Path inventoryImagesDir = Paths.get(inventoryImagesDirName);
 
@@ -34,6 +32,15 @@ public class MvcConfig implements WebMvcConfigurer {
 
 		registry.addResourceHandler("/category-images/**")
 			.addResourceLocations("file:/" + inventoryImagesPath + "/");
+		
+		
+		String brandLogosDirName = "../brand-logos";
+		Path brandLogosDir = Paths.get(brandLogosDirName);
+		
+		String brandLogosPath = brandLogosDir.toFile().getAbsolutePath();
+		
+		registry.addResourceHandler("/brand-logos/**")
+			.addResourceLocations("file:/" + brandLogosPath + "/");	
 	}
 	
 

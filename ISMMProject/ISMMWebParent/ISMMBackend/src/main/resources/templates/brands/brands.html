@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/headers/header :: page_head('Brands - Shopme Admin')" />
+<head th:replace="fragments/headers/header :: list_page_head('Brands - ISMM Admin')" />
 <body>
 <div class="container-fluid">
 	<div th:replace="fragments/navigation/nav :: menu"></div>
@@ -17,7 +17,7 @@
 	
 	<div class="full-details">
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
-			<thead class="thead-dark">
+			<thead>
 				<tr>
 					<th>Brand ID</th>
 					<th>Logo</th>
