@@ -75,12 +75,12 @@ public class CategoryController {
 	
 	@GetMapping("/new") 
 	public String newCategory (ModelMap model) {
-
-		model.put("Category", new Category());
-		
 		List<Category> listCategories = catService.listCategoriesUsedInForm();
+		Category newCat = new Category();
+		newCat.setEnabled(true);
+		
+		model.put("Category", newCat);
 		model.put("listCategories", listCategories);
-
 		model.put("pageTitle", "Create New Category ");
 		
 		return "categories/category_form";
