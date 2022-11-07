@@ -203,4 +203,9 @@ public class Product  extends IDBasedEntity{
 	}
 
 
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + "]";
+	}
+
 }

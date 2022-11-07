@@ -1,0 +1,18 @@
+package com.ISMM.admin.products;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ISMM.common.domain.Product;
+
+@Service
+public class ProductService {
+
+	@Autowired private ProductRepository repo;
+
+	public List<Product> listAll() {
+		return (List<Product>) repo.findAll();
+	}
+}
