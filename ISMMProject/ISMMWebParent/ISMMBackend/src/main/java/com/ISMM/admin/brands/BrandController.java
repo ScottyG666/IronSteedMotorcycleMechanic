@@ -50,7 +50,7 @@ public class BrandController {
 		return "brands/brand_form";		
 	}
 	
-	@PostMapping("/brands/save")
+	@PostMapping("/save")
 	public String saveBrand(Brand brand, @RequestParam("fileImage") MultipartFile multipartFile,
 			RedirectAttributes ra) throws IOException {
 		if (!multipartFile.isEmpty()) {
@@ -71,16 +71,16 @@ public class BrandController {
 		return "redirect:/brands";		
 	}
 
-	@GetMapping("/brands/edit/{id}")
-	public String editBrand(@PathVariable(name = "id") Integer id, Model model,
+	@GetMapping("/edit/{id}")
+	public String editBrand(@PathVariable(name = "id") Integer id, ModelMap model,
 			RedirectAttributes ra) {
 		try {
 			Brand brand = brandService.get(id);
 			List<Category> listCategories = catService.listCategoriesUsedInForm();
 
-			model.addAttribute("brand", brand);
-			model.addAttribute("listCategories", listCategories);
-			model.addAttribute("pageTitle", "Edit Brand (ID: " + id + ")");
+			model.put("brand", brand);
+			model.put("listCategories", listCategories);
+			model.put("pageTitle", "Edit Brand (ID: " + id + ")");
 
 			return "brands/brand_form";			
 		} catch (BrandNotFoundException ex) {
@@ -89,7 +89,7 @@ public class BrandController {
 		}
 	}
 
-	@GetMapping("/brands/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteBrand(@PathVariable(name = "id") Integer id, 
 			ModelMap model,
 			RedirectAttributes redirectAttributes) {
