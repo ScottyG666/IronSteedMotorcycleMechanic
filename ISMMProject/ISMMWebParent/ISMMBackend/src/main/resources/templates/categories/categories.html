@@ -16,7 +16,7 @@
 		<div th:replace="fragments/lists/lists :: search_form_and_message('/categories/page/1')"/>
 
 		<div class="full-details">
-			<table class="table table-bordered table-striped table-hover table-responsive-xl">
+			<table class="table table-bordered table-striped table-hover">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -38,7 +38,7 @@
 						<td>
 							<div th:replace="fragments/lists/lists :: status(${cat.enabled}, 'categories' , '/categories/' + ${cat.id})"></div>
 						</td>
-						<td>
+						<td class="crud-icons">
 							<div th:replace="fragments/lists/lists :: edit('category', '/categories/edit/' + ${cat.id})" />
 							&nbsp; 
 							<div th:replace="fragments/lists/lists :: delete('category', ${cat.id}, '/categories/delete/' + ${cat.id}, ${!cat.hasChildren})" />	

@@ -3,14 +3,21 @@
 	--textContrastColor: white;
 }
 
+table{
+	width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
 thead {
 	background: var(--pageAccentColor);
 	color: var(--textContrastColor);
 }
 
 
-.user-edit-icons {
+td.crud-icons {
 	display: flex;
+	border: none;
 }
 
 

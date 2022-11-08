@@ -14,7 +14,7 @@
 	<div th:replace="fragments/lists/lists :: search_form_and_message('/products/page/1')" />
 
 	<div class="full-details">
-		<table class="table table-bordered table-striped table-hover table-responsive-xl">
+		<table class="table table-bordered table-striped table-hover ">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -38,7 +38,7 @@
 					<td>
 						<div th:replace="fragments/lists/lists :: status(${product.enabled}, 'product', '/products/' + ${product.id})" />
 					</td>
-					<td>
+					<td class="crud-icons">
 						<a class="fas fa-file-alt fa-2x icon-green"
 							th:href="@{'/products/detail/' + ${product.id}}"
 							title="View details of this product"

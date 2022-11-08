@@ -31,7 +31,7 @@
 
             
             <div class="full-details">
-                <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <table class="table table-bordered table-striped table-hover ">
                     <thead>
                         <tr>
                             <th class="hideable-column">
@@ -62,7 +62,7 @@
                                 <div th:replace="fragments/lists/lists :: status(${user.enabled}, 'users' , '/users/' + ${user.id})" />
                                 
                             </td>
-                            <td class="user-edit-icons">
+                            <td class="crud-icons">
                                 <div th:replace="fragments/lists/lists :: edit('user', '/users/edit/' + ${user.id})" />
                                 &nbsp;&nbsp;
 						        <div th:replace="fragments/lists/lists :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)" />
@@ -71,28 +71,30 @@
                     </tbody>
                 </table>
             </div>
-    
-            <div class="less-details">
-                <div th:each="user : ${listOfUsers}" class="row m-1">
-                    <div class="col-4">
-                        <div th:replace="fragments/users/users :: user_photos"></div>
-                    </div>
-                    <div class="col-8">
-                        <div>[[${user.fullName}]]</div>
-                        <div class="mt-2">[[${user.userRoles}]]</div>
-                        <div class="mt-2">
-                            <div th:replace="fragments/lists/lists :: status(${user.enabled}, 'users' , '/users/' + ${user.id})"></div>
-                            &nbsp;
-                            <div th:replace="fragments/lists/lists :: edit('user', '/users/edit/' + ${user.id})"></div>
-                            &nbsp;
-                            <div th:replace="fragments/lists/lists :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)" ></div>
 
-                        </div>
-                    </div>
-                    <div>&nbsp;</div>
-    
+        
+            
+            <div class="less-details">
+            <div th:each="user : ${listOfUsers}" class="row m-1">
+                <div class="col-4">
+                    <div th:replace="fragments/users/users :: user_photos"></div>
                 </div>
+                <div class="col-8">
+                    <div>[[${user.fullName}]]</div>
+                    <div class="mt-2">[[${user.userRoles}]]</div>
+                    <div class="mt-2">
+                        <div th:replace="fragments/lists/lists :: status(${user.enabled}, 'users' , '/users/' + ${user.id})"></div>
+                        &nbsp;
+                        <div th:replace="fragments/lists/lists :: edit('user', '/users/edit/' + ${user.id})"></div>
+                        &nbsp;
+                        <div th:replace="fragments/lists/lists :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)" ></div>
+
+                    </div>
+                </div>
+                <div>&nbsp;</div>
+
             </div>
+        </div>
 
         <div th:replace="fragments/lists/lists :: pagination('/users', 'users')"></div>
 

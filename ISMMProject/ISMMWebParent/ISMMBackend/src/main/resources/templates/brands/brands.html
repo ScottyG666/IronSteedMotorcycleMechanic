@@ -16,7 +16,7 @@
     <div th:replace="fragments/lists/lists :: search_form_and_message('/brands/page/1')"/>
 	
 	<div class="full-details">
-		<table class="table table-bordered table-striped table-hover table-responsive-xl">
+		<table class="table table-bordered table-striped table-hover ">
 			<thead>
 				<tr>
 					<th>Brand ID</th>
@@ -39,7 +39,7 @@
 						</th:block>
 					</td>
 
-					<td>
+					<td class="crud-icons">
 						<div th:replace="fragments/lists/lists :: edit('brand', '/brands/edit/' + ${brand.id})" />
 						&nbsp;
 						<div th:replace="fragments/lists/lists :: delete('brand', ${brand.id}, '/brands/delete/' + ${brand.id}, true)" />						
