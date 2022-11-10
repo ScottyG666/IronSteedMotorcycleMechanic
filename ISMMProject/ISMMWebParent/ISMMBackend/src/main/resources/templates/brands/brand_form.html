@@ -27,7 +27,6 @@
 					<span style="font-size: 12px;">(Hold CTRL to select multiple)</span>
 				</label>
 
-				
 				<div class="col-sm-8">
 					<select class="form-control" th:field="*{categories}" multiple required
 							style="resize: vertical; height: 200px">
@@ -52,7 +51,7 @@
 				<div class="col-sm-8">
 					<input type="hidden" th:field="*{logo}" />
 					<input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg"
-						required
+						th:required="${brand.id == null}"
 						class="mb-2" />
 
 					<div class="mt-2">
@@ -76,8 +75,44 @@
 </div>
 <script>
 	moduleURL = "[[@{/brands}]]";
+
+
+
+	/**
+	 *      This function is confined within the Script of the HTML page to take advantage of the Thymleaf 
+	 * 	syntax that directs to the same URL for validation, otherwise it would connect to different URLs
+	 * 	when creating a brand @/brands/new and editing a brand @ /brands/edit/{id}
+	 * 
+	 * @param {*} form 
+	 * @returns     "OK" if the Brand's name is unique, or "Duplicate" if that brand name already exists
+	 *          within the BrandRepository
+	 */
+	function checkUnique(form) {
+		brandId = $("#id").val();
+		brandName = $("#name").val();
+		
+		csrfValue = $("input[name='_csrf']").val();
+		
+		url =  "[[@{/brands/check_unique}]]";
+		
+		params = {id: brandId, name: brandName, _csrf: csrfValue};
+		
+		$.post(url, params, function(response) {
+			if (response == "OK") {
+				form.submit();
+			} else if (response == "Duplicate") {
+				showWarningModal("There is another brand that has the name " + brandName);	
+			} else {
+				showErrorModal("Unknown response from server");
+			}
+			
+		}).fail(function() {
+			showErrorModal("Could not connect to the server");
+		});
+		
+		return false;
+	}
 </script>
 <script th:src="@{/js/common_form.js}"></script>
-<script th:src="@{/js/brand_form.js}"></script>
 </body>
 </html>

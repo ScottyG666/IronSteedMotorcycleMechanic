@@ -10,4 +10,7 @@ public interface BrandRepository  extends PagingAndSortingRepository<Brand, Inte
 
 
 	public Long countById(Integer id);
+	
+
+	public Brand findByName(String name);
 }
