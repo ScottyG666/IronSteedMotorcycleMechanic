@@ -75,7 +75,7 @@ public class BrandController {
 
 	@GetMapping("/edit/{id}")
 	public String editBrand(@PathVariable(name = "id") Integer id, ModelMap model,
-			RedirectAttributes ra) {
+							RedirectAttributes ra) {
 		try {
 			Brand brand = brandService.get(id);
 			List<Category> listCategories = catService.listCategoriesUsedInForm();
@@ -92,9 +92,9 @@ public class BrandController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteBrand(@PathVariable(name = "id") Integer id, 
-			ModelMap model,
-			RedirectAttributes redirectAttributes) {
+	public String deleteBrand(	@PathVariable(name = "id") Integer id, 
+								ModelMap model,
+								RedirectAttributes redirectAttributes) {
 		try {
 			brandService.delete(id);
 			String brandDir = "../brand-logos/" + id;
