@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +35,41 @@ public class BrandController {
 	private CategoryService catService;
 
 	@GetMapping("")
-	public String listAll(ModelMap model) {
-		List<Brand> listBrands = brandService.listAll();
-		model.put("listBrands", listBrands);
-
-		return "brands/brands";
+	public String listFirstPage(ModelMap model) {
+		return listByPage(1, model, "name" , "asc", null);
 	}
+	
+	@GetMapping("/page/{pageNum}")
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum,
+				ModelMap model, @Param("sortField") String sortField,
+				@Param("sortDir") String sortDir, @Param("keyword") String keyword ) {
+		Page<Brand> page = brandService.listByPage(pageNum, sortField, sortDir, keyword);
+		List<Brand> listBrands = page.getContent();
+		
+		long startCount = (pageNum - 1) * BrandService.BRANDS_PER_PAGE + 1;
+		long endCount = startCount + BrandService.BRANDS_PER_PAGE - 1;
+		if (endCount > page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
+		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		
+		model.put("currentPage", pageNum);
+		model.put("totalPages", page.getTotalPages());
+		model.put("startCount", startCount);
+		model.put("endCount", endCount);
+		model.put("totalItems", page.getTotalElements());
+		model.put("sortField", sortField);
+		model.put("sortDir", sortDir);
+		model.put("reverseSortDir", reverseSortDir);
+		model.put("keyword", keyword);		
+		model.put("listBrands", listBrands);
+		
+		return "brands/brands";		
+	}
+	
+	
+	
 	
 	@GetMapping("/new")
 	public String newBrand(ModelMap model) {
