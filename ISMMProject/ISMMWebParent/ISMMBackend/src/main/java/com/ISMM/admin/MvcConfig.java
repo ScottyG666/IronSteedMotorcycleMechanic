@@ -12,36 +12,22 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		/*
-		 * 	Exposes the absolute path *user-photos* directory 
-		 * under the Root of the ISMMBackend
-		 * 	to be accessible client side
-		 */
-		String userPhotosDirName = "user-photos";
-		Path userPhotosDir = Paths.get(userPhotosDirName);
 		
-		String userPhotosPath = userPhotosDir.toFile().getAbsolutePath();
 		
-		registry.addResourceHandler("/" + userPhotosDirName + "/**")
-				.addResourceLocations("file:/" + userPhotosPath + "/");
+		exposeDirectory("user-photos", registry);
+		exposeDirectory("../category-images", registry);
+		exposeDirectory("../brand-logos", registry);
+	}
+	
+	
+	private void exposeDirectory(String pathPattern, ResourceHandlerRegistry registry) {
+		Path path = Paths.get(pathPattern);
+		String absolutePath = path.toFile().getAbsolutePath();
 
-		
-		String inventoryImagesDirName = "../category-images";
-		Path inventoryImagesDir = Paths.get(inventoryImagesDirName);
+		String logicalPath = pathPattern.replace("../", "") + "/**";
 
-		String inventoryImagesPath = inventoryImagesDir.toFile().getAbsolutePath();
-
-		registry.addResourceHandler("/category-images/**")
-			.addResourceLocations("file:/" + inventoryImagesPath + "/");
-		
-		
-		String brandLogosDirName = "../brand-logos";
-		Path brandLogosDir = Paths.get(brandLogosDirName);
-		
-		String brandLogosPath = brandLogosDir.toFile().getAbsolutePath();
-		
-		registry.addResourceHandler("/brand-logos/**")
-			.addResourceLocations("file:/" + brandLogosPath + "/");	
+		registry.addResourceHandler(logicalPath)
+			.addResourceLocations("file:/" + absolutePath + "/");		
 	}
 	
 
