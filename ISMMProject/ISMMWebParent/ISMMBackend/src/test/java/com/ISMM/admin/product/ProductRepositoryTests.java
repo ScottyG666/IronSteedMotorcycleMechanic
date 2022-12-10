@@ -58,7 +58,7 @@ public class ProductRepositoryTests {
 	}
 	
 	@Test
-	public void testCreate2Product() {
+	public void testCreateSecondProduct() {
 		Brand brand = entityManager.find(Brand.class, 5);
 		Category category = entityManager.find(Category.class, 31);
 
@@ -88,21 +88,21 @@ public class ProductRepositoryTests {
 	}
 	
 	@Test
-	public void testCreate3Product() {
-		Brand brand = entityManager.find(Brand.class, 1);
-		Category category = entityManager.find(Category.class, 5);
+	public void testCreateThirdProduct() {
+		Brand brand = entityManager.find(Brand.class, 17);
+		Category category = entityManager.find(Category.class, 41);
 
 		Product product = new Product();
-		product.setName("Atlas 4.0 Helmet- El Cobre");
-		product.setAlias("atlas_el_cobre");
-		product.setShortDescription("ATLAS 4.0 is one of the first motorcycle helmets on the road to meet ECE 22.06. ");
-		product.setFullDescription("Full description for El Cobra Helmet");
+		product.setName("Mustanf Wide Tripper Forward Passanger Seat");
+		product.setAlias("mustang_wide_tripper");
+		product.setShortDescription("Wide Tripper Forward Passenger Seat by Mustang. Cut low with a wide 13\" driver seat that has extra width in the hip area for all-day comfort.");
+		product.setFullDescription("Full description for Wide Tripper Forward Passenger Seat by Mustang");
 
 		product.setBrand(brand);
 		product.setCategory(category);
 
-		product.setPrice(525);
-		product.setCost(250);
+		product.setPrice(225);
+		product.setCost(95);
 		product.setEnabled(true);
 		product.setInStock(true);
 
