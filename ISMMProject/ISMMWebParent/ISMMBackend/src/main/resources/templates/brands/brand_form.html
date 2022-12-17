@@ -77,6 +77,26 @@
 	moduleURL = "[[@{/brands}]]";
 
 
+	$(function() {
+		dropdownCategories = $("#categories");
+		divChosenCategories = $("#chosenCategories");
+
+		dropdownCategories.change(function() {
+			divChosenCategories.empty();
+			showChosenCategories();
+		});
+		});
+
+
+		function showChosenCategories() {
+		dropdownCategories.children("option:selected").each(function() {
+			selectedCategory = $(this);
+			catId = selectedCategory.val();
+			catName = selectedCategory.text().replace(/-/g, "");
+
+			divChosenCategories.append("<span class='badge badge-secondary m-1'>" + catName + "</span>");
+		});
+	}
 
 	/**
 	 *      This function is confined within the Script of the HTML page to take advantage of the Thymleaf 
@@ -90,9 +110,7 @@
 	function checkUnique(form) {
 		brandId = $("#id").val();
 		brandName = $("#name").val();
-		
 		csrfValue = $("input[name='_csrf']").val();
-		
 		url =  "[[@{/brands/check_unique}]]";
 		
 		params = {id: brandId, name: brandName, _csrf: csrfValue};
@@ -105,11 +123,9 @@
 			} else {
 				showErrorModal("Unknown response from server");
 			}
-			
 		}).fail(function() {
 			showErrorModal("Could not connect to the server");
 		});
-		
 		return false;
 	}
 </script>

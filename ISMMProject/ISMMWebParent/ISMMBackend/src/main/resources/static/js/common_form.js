@@ -73,31 +73,3 @@ function showErrorModal(message) {
 function showWarningModal(message) {
 	showModalDialog("Warning" ,message)
 }
-
-
-
-	/**
-	 * 			USED WITHIN THE BRAND FORM 
-	 * 		Allows for multiple categories to be selected, with common
-	 * 	styling by appending a div containing the 
-	 */
-	 $(function() {
-		dropdownCategories = $("#categories");
-		divChosenCategories = $("#chosenCategories");
-
-		dropdownCategories.change(function() {
-			divChosenCategories.empty();
-			showChosenCategories();
-		});
-		});
-
-
-		function showChosenCategories() {
-		dropdownCategories.children("option:selected").each(function() {
-			selectedCategory = $(this);
-			catId = selectedCategory.val();
-			catName = selectedCategory.text().replace(/-/g, "");
-
-			divChosenCategories.append("<span class='badge badge-secondary m-1'>" + catName + "</span>");
-		});
-	}
