@@ -1,13 +1,14 @@
 package com.ISMM.admin.brands;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -144,4 +145,27 @@ public class BrandController {
 	public String checkUnique(	@Param("id") Integer id, @Param("name") String name) {
 		return brandService.checkUnique(id, name);
 	}
+	
+	
+	@GetMapping("/{id}/categories")
+	@ResponseBody
+	public List<CategoryDTO> listCategoriesByBrand(@PathVariable(name = "id") Integer brandId) throws BrandNotFoundRestException {
+		List<CategoryDTO> listCategories = new ArrayList<>(); 
+		
+		
+		try {
+			Brand brand = brandService.get(brandId);
+			Set<Category> categories = brand.getCategories();
+
+			for (Category category : categories) {
+				CategoryDTO dto = new CategoryDTO(category.getId(), category.getName());
+				listCategories.add(dto);
+			}
+			return listCategories;
+		} catch (BrandNotFoundException e) {
+			throw new BrandNotFoundRestException();
+		}
+	}
+	
+	
 }
