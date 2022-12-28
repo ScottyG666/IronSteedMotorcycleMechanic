@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
-<head th:replace="fragments/headers/header :: page_head('Your Account Details')"></head>
+<head th:replace="fragments/headers/header :: common_page_head(${pageTitle})" />
 <head>
     <link th:href="@{/css/user_form.css}" type="text/css" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
             th:object="${user}" >
                 
                 <div>
-                    <h2>Your Account Details</h2>
+                    <h2>[[${pageTitle}]]</h2>
                 </div>
 
                 <div th:if="${message != null}" class="alert alert-success text-center">
