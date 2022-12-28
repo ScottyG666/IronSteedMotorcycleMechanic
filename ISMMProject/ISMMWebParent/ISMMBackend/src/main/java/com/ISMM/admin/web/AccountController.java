@@ -33,6 +33,7 @@ public class AccountController {
 							  ModelMap model) {
 		String email = loggedUser.getUsername();
 		model.put("user", userService.getByEmail(email));
+		model.put("pageTitle", "Your Account Details");
 		return "users/account_form";
 	}
 	
