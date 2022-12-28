@@ -76,9 +76,9 @@ public class BrandController {
 	public String newBrand(ModelMap model) {
 		List<Category> listCategories = catService.listCategoriesUsedInForm();
 
-		model.addAttribute("listCategories", listCategories);
-		model.addAttribute("brand", new Brand());
-		model.addAttribute("pageTitle", "Create New Brand");
+		model.put("listCategories", listCategories);
+		model.put("brand", new Brand());
+		model.put("pageTitle", "Create New Brand");
 
 		return "brands/brand_form";		
 	}
