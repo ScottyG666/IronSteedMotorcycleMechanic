@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.brands.BrandService;
 import com.ISMM.common.domain.Brand;
@@ -50,10 +51,9 @@ public class ProductController {
 	}
 
 	@PostMapping("/save")
-	public String saveProduct(Product product) {
-		System.out.println("Product Name: " + product.getName());
-		System.out.println("Brand ID: " + product.getBrand().getId());
-		System.out.println("Category ID: " + product.getCategory().getId());
+	public String saveProduct(Product product, RedirectAttributes ra) {
+		prodService.save(product);
+		ra.addFlashAttribute("message", "The product has been saved successfully.");
 
 		return "redirect:/products";
 	}
