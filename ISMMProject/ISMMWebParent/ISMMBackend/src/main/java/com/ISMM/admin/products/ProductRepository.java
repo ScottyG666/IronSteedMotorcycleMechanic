@@ -8,4 +8,5 @@ import com.ISMM.common.domain.Product;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 
+	public Product findByName(String name);
 }

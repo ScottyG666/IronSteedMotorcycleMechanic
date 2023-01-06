@@ -43,4 +43,32 @@ public class ProductService {
 
 		return repo.save(product);
 	}
+	
+	/**
+	 * When the ID passed into the function is null, then the 
+	 * 	database is checked for any matching Product Name. Otherwise when 
+	 * 	both ID and Product Name are populated within the function's 
+	 * 	arguments, then the function will still verify if there is a 
+	 * 	duplicate, but will let the duplication pass if the returned 
+	 * 	product shares the same ID and NAME of the passed arguments.
+	 * 
+	 * @param id
+	 * @param name
+	 * @return
+	 */
+	public String checkUnique(Integer id, String name) {
+		boolean isCreatingNew = (id == null || id == 0);
+		Product productByName = repo.findByName(name);
+
+		if (isCreatingNew) {
+			if (productByName != null) return "Duplicate";
+		} else {
+			if (productByName != null && productByName.getId() != id) {
+				return "Duplicate";
+			}
+		}
+
+		return "OK";
+	}
+	
 }

@@ -3,11 +3,13 @@ package com.ISMM.admin.products;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ISMM.admin.brands.BrandService;
@@ -57,7 +59,12 @@ public class ProductController {
 
 		return "redirect:/products";
 	}
-
+	
+	@PostMapping("/check_unique")
+	@ResponseBody
+	public String checkUnique(@Param("id") Integer id, @Param("name") String name) {
+		return prodService.checkUnique(id, name);
+	}	
 
 	
 }
