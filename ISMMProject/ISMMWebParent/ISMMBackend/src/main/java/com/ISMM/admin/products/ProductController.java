@@ -72,27 +72,62 @@ public class ProductController {
 	 */
 	@PostMapping("/save")
 	public String saveProduct(Product product, RedirectAttributes ra,
-			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+			@RequestParam("fileImage") MultipartFile mainImageMultipart,			
+			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts) 
+					throws IOException {
 
-		if (!multipartFile.isEmpty()) {
-			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			product.setMainImage(fileName);
-
-			Product savedProduct = prodService.save(product);
-			String uploadDir = "../product-images/" + savedProduct.getId();
-
-			FileUploadUtil.cleanDir(uploadDir);
-			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
-		} else {
-			prodService.save(product);
-		}
+		setMainImageName(mainImageMultipart, product);
+		setExtraImageNames(extraImageMultiparts, product);
+		
+		Product savedProduct = prodService.save(product);
+		
+		saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
 		
 		ra.addFlashAttribute("message", "The product has been saved successfully.");
-
+		
 		return "redirect:/products";
 	}
 	
+	private void saveUploadedImages(MultipartFile mainImageMultipart, 
+			MultipartFile[] extraImageMultiparts, Product savedProduct) throws IOException {
+		if (!mainImageMultipart.isEmpty()) {
+			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
+			String uploadDir = "../product-images/" + savedProduct.getId();
+			
+			FileUploadUtil.cleanDir(uploadDir);
+			FileUploadUtil.saveFile(uploadDir, fileName, mainImageMultipart);		
+		}
+		
+		if (extraImageMultiparts.length > 0) {
+			String uploadDir = "../product-images/" + savedProduct.getId() + "/extras";
+			
+			for (MultipartFile multipartFile : extraImageMultiparts) {
+				if (multipartFile.isEmpty()) continue;
+				
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			}
+		}
+		
+	}
+
+	private void setExtraImageNames(MultipartFile[] extraImageMultiparts, Product product) {
+		if (extraImageMultiparts.length > 0) {
+			for (MultipartFile multipartFile : extraImageMultiparts) {
+				if (!multipartFile.isEmpty()) {
+					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+					product.addExtraImage(fileName);
+				}
+			}
+		}
+	}
+
+	private void setMainImageName(MultipartFile mainImageMultipart, Product product) {
+		if (!mainImageMultipart.isEmpty()) {
+			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
+			product.setMainImage(fileName);
+		}
+	}
 	
 	/**
 	 * Used when the Product form is submitted for New / Editing Products. 
@@ -124,12 +159,20 @@ public class ProductController {
 	 * Deletes a product by a specified ID, which is passed along in the URL when the get request is sent. If
 	 * 	the ID passed does not exist within the database, the user is alerted with a friendly custom message 
 	 * 	from the Product Not Found Exception.
+	 * 
+	 * This method also cleans the Product images directory of previously uploaded images. Once deleted images
+	 * 	are removed permanently.
 	 */
 	@GetMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable(name = "id") Integer id, 
 			ModelMap model, RedirectAttributes redirectAttributes) {
 		try {
 			prodService.delete(id);
+			String productExtraImagesDir = "../product-images/" + id + "/extras";
+			String productImagesDir = "../product-images/" + id;
+			
+			FileUploadUtil.removeDir(productExtraImagesDir);
+			FileUploadUtil.removeDir(productImagesDir);
 
 			redirectAttributes.addFlashAttribute("message", 
 					"The product ID " + id + " has been deleted successfully");
