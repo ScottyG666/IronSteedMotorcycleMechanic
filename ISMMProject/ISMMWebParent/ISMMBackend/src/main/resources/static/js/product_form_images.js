@@ -1,12 +1,11 @@
 var extraImagesCount = 0;
-$(document).ready(function() {
 
+$(document).ready(function() {
 	$("input[name='extraImage']").each(function(index) {
 		extraImagesCount++;
 
 		$(this).change(function() {
-
-			if (!checkFileSize(fileInput)) {
+			if (!checkFileSize(this)) {
 				return;
 			  }
 			  
