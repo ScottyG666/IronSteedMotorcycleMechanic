@@ -1,7 +1,12 @@
 package com.ISMM.admin.products;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +26,7 @@ import com.ISMM.admin.brands.BrandService;
 import com.ISMM.admin.service.FileUploadUtil;
 import com.ISMM.common.domain.Brand;
 import com.ISMM.common.domain.Product;
+import com.ISMM.common.domain.ProductImage;
 
 @Controller
 @RequestMapping("/products")
@@ -75,21 +81,67 @@ public class ProductController {
 			@RequestParam("fileImage") MultipartFile mainImageMultipart,			
 			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts, 
 			@RequestParam(name = "detailNames", required=false) String[] detailNames,
-			@RequestParam(name = "detailValues" , required=false) String[] detailValues
+			@RequestParam(name = "detailValues" , required=false) String[] detailValues,
+			@RequestParam(name = "imageIDs", required = false) String[] imageIDs,
+			@RequestParam(name = "imageNames", required = false) String[] imageNames
 			) 
 					throws IOException {
 
 		setMainImageName(mainImageMultipart, product);
-		setExtraImageNames(extraImageMultiparts, product);
-		setProductDetails(detailNames, detailValues, product);
+		setExistingExtraImageNames(imageIDs, imageNames, product);
+		setNewExtraImageNames(extraImageMultiparts, product);
+		setProductDetails(detailIDs, detailNames, detailValues, product);
 		
 		Product savedProduct = prodService.save(product);
+
+		deleteExtraImagesWeredRemovedOnForm(product);
 		
 		saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
 		
 		ra.addFlashAttribute("message", "The product has been saved successfully.");
 		
 		return "redirect:/products";
+	}
+	
+	private void deleteExtraImagesWeredRemovedOnForm(Product product) {
+		String extraImageDir = "../product-images/" + product.getId() + "/extras";
+		Path dirPath = Paths.get(extraImageDir);
+		
+		try {
+			Files.list(dirPath).forEach(file -> {
+				String filename = file.toFile().getName();
+				
+				if (!product.containsImageName(filename)) {
+					try {
+						Files.delete(file);
+						LOGGER.info("Deleted extra image: " + filename);
+						
+					} catch (IOException e) {
+						LOGGER.error("Could not delete extra image: " + filename);
+					}
+				}
+				
+			});
+		} catch (IOException ex) {
+			LOGGER.error("Could not list directory: " + dirPath);
+		}
+	}
+
+	private void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, 
+			Product product) {
+		if (imageIDs == null || imageIDs.length == 0) return;
+		
+		Set<ProductImage> images = new HashSet<>();
+		
+		for (int count = 0; count < imageIDs.length; count++) {
+			Integer id = Integer.parseInt(imageIDs[count]);
+			String name = imageNames[count];
+			
+			images.add(new ProductImage(id, name, product));
+		}
+		
+		product.setImages(images);
+		
 	}
 	
 	private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
@@ -201,5 +253,28 @@ public class ProductController {
 		return "redirect:/products";
 	}	
 	
+	
+	@GetMapping("/edit/{id}")
+	public String editProduct(@PathVariable("id") Integer id, ModelMap model,
+			RedirectAttributes ra) {
+		try {
+			Product product = prodService.get(id);
+			List<Brand> listBrands = brandService.listAll();
+			Integer numberOfExistingExtraImages = product.getImages().size();
+
+			model.addAttribute("product", product);
+			model.addAttribute("listBrands", listBrands);
+			model.addAttribute("pageTitle", "Edit Product (ID: " + id + ")");
+			model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
+
+
+			return "products/product_form";
+
+		} catch (ProductNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/products";
+		}
+	}
 	
 }
