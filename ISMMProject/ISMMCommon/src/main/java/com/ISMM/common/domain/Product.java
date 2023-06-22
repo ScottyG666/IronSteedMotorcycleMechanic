@@ -276,6 +276,13 @@ public class Product  extends IDBasedEntity{
 		this.details.add(new ProductDetail(id, name, value, this));
 	}
 
+	/**
+	 * Runs a check on whether the Product in which this method is invoked from has an 
+	 * image containing the provided String name
+	 * 
+	 * @param imageName
+	 * @return Boolean
+	 */
 	public boolean containsImageName(String imageName) {
 		Iterator<ProductImage> iterator = images.iterator();
 
@@ -285,9 +292,7 @@ public class Product  extends IDBasedEntity{
 				return true;
 			}
 		}
-
 		return false;
-	
 	}
 	
 }

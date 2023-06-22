@@ -22,12 +22,16 @@ $(document).ready(function() {
 });
 
 function showExtraImageThumbnail(fileInput, index) {
-
-	if (!checkFileSize(fileInput)) {
-		return;
-	  }
-	
 	var file = fileInput.files[0];
+
+	fileName = file.name;
+
+	imageNameHiddenField = $("#imageName" + index);
+
+	if (imageNameHiddenField.length) {
+		imageNameHiddenField.val(fileName);
+	}
+
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		$("#extraThumbnail" + index).attr("src", e.target.result);
