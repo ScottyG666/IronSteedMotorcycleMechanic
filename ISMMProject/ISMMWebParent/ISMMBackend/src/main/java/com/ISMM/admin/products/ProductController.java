@@ -11,6 +11,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,14 +47,46 @@ public class ProductController {
 	 * 	to enable/disable a product, editing a product, and deleting a product.
 	 */
 	@GetMapping("")
-	public String listAll(ModelMap model) {
-		List<Product> listProducts = prodService.listAll();
-
-		model.put("listProducts", listProducts);
-
-		return "products/products";
+	public String listFirstPage(ModelMap model) {
+		return listByPage(1, model, "name", "asc", null);
 	}
+
 	
+	/**
+	 * Creates an accessible start for navigation with pagination.
+	 	
+	 */
+	@GetMapping("/page/{pageNum}")
+	public String listByPage(
+			@PathVariable(name = "pageNum") int pageNum, ModelMap model,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
+			@Param("keyword") String keyword
+			) {
+		Page<Product> page = prodService.listByPage(pageNum, sortField, sortDir, keyword);
+		List<Product> listProducts = page.getContent();
+
+		long startCount = (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
+		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE - 1;
+		if (endCount > page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
+
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("startCount", startCount);
+		model.addAttribute("endCount", endCount);
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", reverseSortDir);
+		model.addAttribute("keyword", keyword);		
+		model.addAttribute("listProducts", listProducts);
+
+		return "products/products";		
+	}
+
 	/**
 	 * Controller mapping for creating a new Product object. The object is added to the model so that
 	 * 	it's field's can be edited depending on the inputs.
@@ -291,5 +324,22 @@ public class ProductController {
 			return "redirect:/products";
 		}
 	}
+	
+	
+	@GetMapping("/detail/{id}")
+	public String viewProductDetails(@PathVariable("id") Integer id, ModelMap model,
+			RedirectAttributes ra) {
+		try {
+			Product product = prodService.get(id);			
+			model.addAttribute("product", product);		
+			
+			return "products/product_detail_modal";
+			
+		} catch (ProductNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+			
+			return "redirect:/products";
+		}
+	}	
 	
 }
